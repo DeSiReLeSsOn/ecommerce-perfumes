@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'cart.apps.CartConfig',
     'orders.apps.OrdersConfig',
     'payment.apps.PaymentConfig',
+    'yookassa',
+    
+    
 ]
 
 MIDDLEWARE = [
@@ -137,6 +140,17 @@ MEDIA_ROOT = BASE_DIR / 'media'
 CART_SESSION_ID = 'cart'
 
 
+#YANDEX_MERCHANT_ID = '274933'
+#YANDEX_SECRET_KEY = 'test_FzZwHWcqu5EJ66sLsF0t0cc3hUbhvlOtTgsL_-NtT6w'
+#YANDEX_IS_TEST = True
+
 STRIPE_PUBLISHABLE_KEY = 'pk_test_51NzRyJCd6dWw2lbBvV1Qu8E9pOOdkiNQfHuC1AlfSL28AVCc2hwiYsUkaKVgosvJoVn6d9WfsxLwdNysXpDzbGPA00OdqDH3rT' 
 STRIPE_SECRET_KEY = 'sk_test_51NzRyJCd6dWw2lbBs4CgLfIkTew7JxNVAmhptCyp4ETbRZy0lzzTz26WOCvo0s9WQ10ofLlRPL4Xb31P1M6BLPfH00VZfHZU5T' 
 STRIPE_API_VERSION = '2022-08-01'
+
+
+YOOKASSA = {
+    'SHOP_ID': '274933',
+    SECRET_KEY: 'test_FzZwHWcqu5EJ66sLsF0t0cc3hUbhvlOtTgsL_-NtT6w',
+    'IS_TEST_MODE': True  # Рекомендуется использовать тестовый режим для начала
+}
