@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'payment.apps.PaymentConfig',
     'yookassa',
     'stripe',
+    'coupons.apps.CouponsConfig',
     
     
     
@@ -138,6 +139,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+STATIC_ROOT = BASE_DIR / 'static'
 
 
 CART_SESSION_ID = 'cart'
