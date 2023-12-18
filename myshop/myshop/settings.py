@@ -166,4 +166,11 @@ YOO_KASSA = {
     'ACCOUNT_ID': '274933',
     'SECRET_KEY': 'test_1ytArpck6tOLy96Y5--5KPdELWzeYWuwkeqmHBixWZI',
     'IS_TEST_MODE': True  # Рекомендуется использовать тестовый режим для начала
-}
+} 
+
+
+REDIS_HOST = 'localhost'
+REDIS_PORT = 6379
+REDIS_DB = 1
+
+
