@@ -11,4 +11,11 @@ class Recommender:
         return f'product:{id}:purchased_with'
 
 
-    
+    def product_bought(self, products):
+        product_ids = [p.id for p in products]
+        for product_id in product_ids:
+            # получить другие товары, купленные
+            # вместе с каждым товаром
+            if product_id != with_id:
+                # увеличить балл товара,купленного вместе
+                r.zincrby(self.get_product_key(product_id), 1, with_id)
