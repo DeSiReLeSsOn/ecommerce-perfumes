@@ -47,11 +47,11 @@ msgstr "Город"
 #: orders/templates/orders/order/create.html:5
 #: orders/templates/orders/order/create.html:9
 msgid "Checkout"
-msgstr ""
+msgstr "Оплата"
 
 #: orders/templates/orders/order/create.html:11
 msgid "Your order"
-msgstr ""
+msgstr "Ваш заказ"
 
 #: orders/templates/orders/order/create.html:21
 #, python-format
@@ -63,12 +63,12 @@ msgstr ""
 
 #: orders/templates/orders/order/create.html:28
 msgid "Total"
-msgstr ""
+msgstr "Итог"
 
 #: orders/templates/orders/order/create.html:32
 msgid "Place order"
-msgstr ""
+msgstr "Разместить заказ"
 
 #: orders/urls.py:10
 msgid "create/"
-msgstr ""
+msgstr "создать/"

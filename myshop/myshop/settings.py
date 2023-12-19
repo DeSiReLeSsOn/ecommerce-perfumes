@@ -123,11 +123,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGES = [
     ('ru', _('Russian')),
-    ('en', _('English')),
+    ('en', ('English')),
 
 ]
 
-#LANGUAGE_CODE = 'ru-RU'
+LANGUAGE_CODE = 'ru'
 
 LOCALE_PATHS = [
     BASE_DIR / 'locale',
