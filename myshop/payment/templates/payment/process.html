@@ -58,9 +58,10 @@
       </tr>
     </tbody>
   </table>
-  <a href="{% url 'payment:process' %}">Оплатить через Stripe</a>
+  <a href="{% url 'payment:process' %}">
   <form action="{% url "payment:process" %}" method="post">
     <input type="submit" value="Pay now">
     {% csrf_token %}
+  </a>
   </form>
 {% endblock %} 

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-19 17:54+0300\n"
-"PO-Revision-Date: 2023-12-19 17:40+0300\n"
+"POT-Creation-Date: 2023-12-20 10:14+0300\n"
+"PO-Revision-Date: 2023-12-20 10:11+0300\n"
 "Last-Translator:   <test@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -26,8 +26,6 @@ msgid "Quantity"
 msgstr "Количество"
 
 #: cart/templates/cart/detail.html:7 cart/templates/cart/detail.html:11
-#, fuzzy
-#| msgid "Your cart"
 msgid "Your shopping cart"
 msgstr "Ваша корзина"
 
@@ -36,22 +34,24 @@ msgid "Image"
 msgstr "Фото"
 
 #: cart/templates/cart/detail.html:16
-#, fuzzy
-#| msgid "Products"
 msgid "Product"
-msgstr "Товары"
+msgstr "Товар"
 
-#: cart/templates/cart/detail.html:18
+#: cart/templates/cart/detail.html:18 cart/templates/cart/detail.html:44
 msgid "Remove"
-msgstr "Удалить товар из корзины"
+msgstr "Удалить"
 
 #: cart/templates/cart/detail.html:19
 msgid "Unit price"
-msgstr "Общая цена заказа"
+msgstr "Общая цена"
 
 #: cart/templates/cart/detail.html:20
 msgid "Price"
 msgstr "Цена"
+
+#: cart/templates/cart/detail.html:38
+msgid "Update"
+msgstr "Обновить"
 
 #: cart/templates/cart/detail.html:80
 #: shop/templates/shop/product/detail.html:28
@@ -62,9 +62,13 @@ msgstr "Вместе с данным товаром, также покупают
 msgid "Apply a coupon:"
 msgstr "Добавить скидочный купон"
 
+#: cart/templates/cart/detail.html:95
+msgid "Apply"
+msgstr "Применить купон"
+
 #: cart/templates/cart/detail.html:100
 msgid "Continue shopping"
-msgstr "Продалжить покупку"
+msgstr "Продолжить покупки"
 
 #: cart/templates/cart/detail.html:101
 msgid "Checkout"
@@ -92,7 +96,7 @@ msgstr "оплата/"
 
 #: myshop/urls.py:29
 msgid "coupons/"
-msgstr "Скидочный купон/"
+msgstr "купон/"
 
 #: payment/urls.py:9
 msgid "process/"
@@ -128,8 +132,8 @@ msgid_plural ""
 " \n"
 "                %(items)s items, ₽%(total)s \n"
 "              "
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(items)s товар, ₽%(total)s"
+msgstr[1] "%(items)s товаров, ₽%(total)s"
 msgstr[2] ""
 msgstr[3] ""
 
@@ -138,8 +142,6 @@ msgid "Your cart is empty."
 msgstr "Ваша корзина пуста"
 
 #: shop/templates/shop/product/detail.html:23
-#, fuzzy
-#| msgid "Your cart"
 msgid "Add to cart"
 msgstr "Добавить в корзину"
 

@@ -47,7 +47,7 @@ msgstr "Город"
 #: orders/templates/orders/order/create.html:5
 #: orders/templates/orders/order/create.html:9
 msgid "Checkout"
-msgstr "Оплата"
+msgstr "Расчет"
 
 #: orders/templates/orders/order/create.html:11
 msgid "Your order"
