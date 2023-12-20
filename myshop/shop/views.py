@@ -2,11 +2,20 @@ from django.shortcuts import render, get_object_or_404
 from .models import Category, Product
 from cart.forms import CartAddProductForm 
 from .recommender import Recommender
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def product_list(request, category_slug=None):
     category = None
     categories = Category.objects.all()
-    products = Product.objects.filter(available=True)
+    product = Product.objects.filter(available=True)
+    paginator = Paginator(product, 3) 
+    page_number = request.GET.get('page', 1)
+    try:
+        products = paginator.page(page_number)
+    except PageNotAnInteger:
+        products = paginator.page(1)
+    except EmptyPage:
+        products = paginator.page(paginator.num_pages)
     if category_slug:
         language = request.LANGUAGE_CODE
         category = get_object_or_404(Category,

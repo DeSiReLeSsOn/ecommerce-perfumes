@@ -32,5 +32,6 @@
         ₽{{ product.price }}
       </div>
     {% endfor %}
+    <div class="paginator">{% include "shop/pagination.html" with page=products %}</div>
   </div>
 {% endblock %}
