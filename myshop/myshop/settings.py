@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-from yookassa import Configuration
+#from yookassa import Configuration
 from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'cart.apps.CartConfig',
     'orders.apps.OrdersConfig',
     'payment.apps.PaymentConfig',
-    'yookassa',
     'stripe',
     'coupons.apps.CouponsConfig',
     'rosetta',
@@ -174,8 +173,8 @@ YANDEX_KASSA_SECRET_KEY = 'test_1ytArpck6tOLy96Y5--5KPdELWzeYWuwkeqmHBixWZI'
 YANDEX_KASSA_SCID = '274932'
 YANDEX_KASSA_TEST_MODE = True
 
-Configuration.account_id = '274933'
-Configuration.secret_key = 'test_1ytArpck6tOLy96Y5--5KPdELWzeYWuwkeqmHBixWZI'
+#Configuration.account_id = '274933'
+#Configuration.secret_key = 'test_1ytArpck6tOLy96Y5--5KPdELWzeYWuwkeqmHBixWZI'
 
 YOO_KASSA = {
     'ACCOUNT_ID': '274933',
