@@ -12,12 +12,12 @@
     <table class="cart">
         <thead>
             <tr>
-                <th>{% translate "Image" %}</th>
-                <th>{% translate "Product" %}</th>
-                <th>{% translate "Quantity" %}</th>
-                <th>{% translate "Remove" %}</th>
-                <th>{% translate "Unit price" %}</th>
-                <th>{% translate "Price" %}</th>
+                <th>Фото</th>
+                <th>Товар</th>
+                <th>Количество</th>
+                <th>Удалить</th>
+                <th>Общая цена</th>
+                <th>Цена</th>
             </tr>
         </thead>
         <tbody>
@@ -77,7 +77,7 @@
     </table>
     {% if recommended_products %}
     <div class="recommendations cart">
-      <h3>{% translate "People who bought this also bought" %}</h3>
+      <h3>С этим товаром так-же покупают</h3>
       {% for p in recommended_products %}
         <div class="item">
           <a href="{{ p.get_absolute_url }}">
@@ -89,15 +89,15 @@
       {% endfor %}
     </div>
    {% endif %}
-    <p>{% translate "Apply a coupon:" %}</p>
+    <p>Применить купон</p>
     <form action="{% url "coupons:apply" %}" method="post">
         {{ coupon_apply_form }}
-        <input type="submit" value="{% translate "Apply" %}">
+        <input type="submit" value="Применить">
         {% csrf_token %}
     </form>
     </form>
     <p class="text-right">
-        <a href="{% url "shop:product_list" %}" class="button light">{% translate "Continue shopping" %}</a>
-        <a href="{% url "orders:order_create" %}" class="button">{% translate "Checkout" %}</a>
+        <a href="{% url "shop:product_list" %}" class="button light">Продолжить покупки</a>
+        <a href="{% url "orders:order_create" %}" class="button">Расчет</a>
     </p>
 {% endblock %}  

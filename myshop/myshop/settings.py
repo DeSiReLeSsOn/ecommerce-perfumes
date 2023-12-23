@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'stripe',
     'coupons.apps.CouponsConfig',
     'rosetta',
-    'parler',
     
     
     
@@ -55,7 +54,6 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -91,8 +89,8 @@ WSGI_APPLICATION = "myshop.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "myshop",
-        "USER": 'shop_admin',
+        "NAME": "perfums",
+        "USER": 'perfume_admin',
         "PASSWORD": 'qwerty',
     }
 }
@@ -120,17 +118,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGES = [
-    ('ru', _('Russian')),
-    ('en', ('English')),
 
-]
 
 LANGUAGE_CODE = 'ru'
 
-LOCALE_PATHS = [
+"""LOCALE_PATHS = [
     BASE_DIR / 'locale',
-]
+]"""
 
 TIME_ZONE = 'Europe/Moscow'
 #TIME_ZONE = "UTC"
@@ -188,14 +182,14 @@ REDIS_PORT = 6379
 REDIS_DB = 1
 
 
-PARLER_LANGUAGES = {
+"""PARLER_LANGUAGES = {
     None: (
         {'code': 'ru'},
         {'code': 'en'},
         
     ),
     'default': {
-        'fallback': 'ru',
+        'fallback': 'en',
         'hide_untranslated': False,
     }
-}
+}"""
