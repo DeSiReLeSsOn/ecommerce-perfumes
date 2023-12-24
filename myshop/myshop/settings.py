@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'payment.apps.PaymentConfig',
     'stripe',
     'coupons.apps.CouponsConfig',
-    'rosetta',
     
     
     
