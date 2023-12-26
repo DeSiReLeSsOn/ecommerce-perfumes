@@ -17,7 +17,7 @@ def product_list(request, category_slug=None):
         products = paginator.page(paginator.num_pages)
     if category_slug:
         category = get_object_or_404(Category, slug=category_slug)
-        products = products.filter(category=category)
+        products = product.filter(category=category)
     return render(request, 
                   'shop/product/list.html',
                   {'category': category,
