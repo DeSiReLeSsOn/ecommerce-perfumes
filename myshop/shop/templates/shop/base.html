@@ -5,18 +5,27 @@
     <meta charset="utf-8" />
     <title>{% block title %}Магазин элитной парфюмерии{% endblock %}</title>
     <link href="{% static "css/base.css" %}" rel="stylesheet">
+    <script src="{% static "js/script.js" %}"></script>
   </head>
   <body>
-    <div id="header">
-      <a href="/" class="logo">ПарфюмДон</a>
-    </div>
+    <header>
+      <nav>
+        <div class="topnav" id="myTopnav">
+          <a href="#">Главная</a>
+          <a href="#">Главная</a>
+          <a href="#">Главная</a>
+          <a href="#">Главная</a>
+          <a href="#" id="menu" class="icon">&#9776;</a>
+        </div>
+      </nav>
+    </header>
     <div id="subheader">
       <div class="cart">
         {% with total_item=cart|length %}
           {% if total_item > 0 %}
             Корзина:
             <a href="{% url "cart:cart_detail" %}">
-              {{ total_items }} item{{ total_items|pluralize }},
+              {{ total_item }} Товаров{{ total_item|pluralize }},
               ₽{{ cart.get_total_price }}
             </a>
           {% elif not order %}
@@ -29,6 +38,7 @@
       {% block content %}
       {% endblock %}
     </div>
+    
   </body>
 </html> 
 
