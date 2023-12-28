@@ -1,39 +1,39 @@
 {% extends "shop/base.html" %}
-{% load static %}  
-
+{% load static %}
 {% block title %}
-    {{ product.name }}
-{% endblock %} 
+{{ product.name }}
+{% endblock %}
+{% block content %}
+    <div class="bg-light py-3">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 mb-0"><a href="index.html">Главная</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">{{ product.name }}</strong></div>
+        </div>
+      </div>
+    </div>  
 
-
-{% block content %} 
-    <div class="product-detail">
-        <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
-        <h1>{{ product.name }}</h1>
-        <h2>
-            <a href="{{ product.category.get_absolute_url }}">
-                {{ product.category }}
-            </a>
-        </h2>
-        <p class="price">₽{{ product.price }}</p>
-        <form action="{% url "cart:cart_add" product.id %}" method="post">
-            {{ cart_product_form }} 
-            {% csrf_token %} 
-            <input type="submit" value="Добавить в корзину">
-        </form>
-        {{ product.description|linebreaks }}
-        {% if recommended_products %} 
-            <div class="recommendations">
-                <h3>С этим товаром также покупают</h3> 
-                {% for p in recommended_products %} 
-                    <div class="item">
-                        <a href="{{ p.get_absolute_url }}">
-                            <img src="{% if p.image %}{{ p.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
-                        </a>
-                        <p><a href="{{ p.get_absolute_url }}">{{ p.name }}</a></p>
-                    </div>
-                {% endfor %}
+    <div class="site-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <img src="{{ product.image.url }}" alt="Image" class="img-fluid">
+          </div>
+          <div class="col-md-6">
+            <h2 class="text-black mr-2">{{ product.name }}</h2>
+            <p>{{ product.description|linebreaks }}</p>
+            <p><strong class="text-primary h4">₽{{ product.price }}</strong></p>
+            <div class="mt-5 col-md-5">
+              <form action="{% url "cart:cart_add" product.id %}" method="post">
+                {% csrf_token %}
+                {{ cart_product_form }}
+                <input type="submit" class="buy-now btn btn-sm btn-primary" value="В корзину">
+              </form>
             </div>
-        {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-{% endblock %} 
+
+    
+{% endblock %}

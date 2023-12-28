@@ -6,15 +6,15 @@
  
 
 {% block content %}
-  <h1>Order summary</h1>
+  <h1>Сумма заказа</h1>
   <table class="cart">
     <thead>
       <tr>
-        <th>Image</th>
-        <th>Product</th>
-        <th>Price</th>
-        <th>Quantity</th>
-        <th>Total</th>
+        <th>Фото</th>
+        <th>Товар</th>
+        <th>Цена</th>
+        <th>Количество</th>
+        <th>Итговая цена</th>
       </tr>
     </thead>
     <tbody>
@@ -32,7 +32,7 @@
       {% endfor %}
       {% if order.coupon %}
         <tr class="subtotal">
-          <td>Subtotal</td>
+          <td>Итог</td>
           <td colspan="3"></td>
           <td class="num">
             ₽{{ order.get_total_cost_before_discount|floatformat:2 }}
@@ -50,7 +50,7 @@
         </tr>
       {% endif %}
       <tr class="total">
-        <td>Total</td>
+        <td>Итог</td>
         <td colspan="3"></td>
         <td class="num">
           ₽{{ order.get_total_cost|floatformat:2 }}

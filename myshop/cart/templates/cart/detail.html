@@ -1,103 +1,128 @@
 {% extends "shop/base.html" %}
-{% load i18n %}
-{% load static %} 
-
-
+{% load static %}
 {% block title %}
-    {% translate "Your shopping cart" %}
-{% endblock %} 
+Корзина
+{% endblock %}
+{% block content %}
 
-{% block content %}  
-    <h1>{% translate "Your shopping cart" %}</h1>
-    <table class="cart">
-        <thead>
-            <tr>
-                <th>Фото</th>
-                <th>Товар</th>
-                <th>Количество</th>
-                <th>Удалить</th>
-                <th>Общая цена</th>
-                <th>Цена</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in cart %}  
-                {% with product=item.product %} 
-                    <tr>
-                        <td>
-                            <a href="{{ product.get_absolute_url }}">
-                                <img src="{% if product.image %}{{ product.image.url }}
-                                {% else %}{% static "img/no_image.png" %}{% endif %}">
-                            </a>
-                        </td>
-                        <td colspan="product">{{ product.name }}</td>
-                        <td>
-                            <form action="{% url "cart:cart_add" product.id %}" method="post">
-                                {{ item.update_quantity_form.quantity }}
-                                {{ item.update_quantity_form.override }}
-                                <input type="submit" value="{% translate "Update" %}">
-                                {% csrf_token %} 
-                            </form>
-                        </td>
-                        <td>
-                            <form action="{% url "cart:cart_remove" product.id %}" method="post">
-                                <input type="submit" value="{% translate "Remove" %}">
-                                {% csrf_token %}
-                            </form>
-                        </td>
-                        <td class="num">₽{{ item.price }}</td>
-                        <td class="num">₽{{ item.total_price }}</td>
-                    </tr>
-                {% endwith %} 
-            {% endfor %}  
-            {% if cart.coupon %}
-                <tr class="subtotal">
-                    <td>Subtotal</td>
-                    <td colspan="4"></td>
-                    <td class="num">₽{{ cart.get_total_price|floatformat:2 }}</td>
-                </tr>
-                <tr>
-                    <td>
-                        "{{ cart.coupon.code }}" coupon
-                        ({{ cart.coupon.discount }}% off)
-                    </td>
-                    <td colspan="4"></td>
-                    <td class="num neg">
-                        - ₽{{ cart.get_discount|floatformat:2 }}
-                    </td>
-                </tr>
-            {% endif %}
-            <tr class="total">
-                <td colspan="4"></td>
-                <td class="num">
-                    ₽{{ cart.get_total_price_after_discount|floatformat:2 }}
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    {% if recommended_products %}
-    <div class="recommendations cart">
-      <h3>С этим товаром так-же покупают</h3>
-      {% for p in recommended_products %}
-        <div class="item">
-          <a href="{{ p.get_absolute_url }}">
-            <img src="{% if p.image %}{{ p.image.url }}{% else %}
-            {% static "img/no_image.png" %}{% endif %}">
-          </a>
-          <p><a href="{{ p.get_absolute_url }}">{{ p.name }}</a></p>
+
+<div class="bg-light py-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 mb-0"><a href="index.html">Главная</a> <span class="mx-2 mb-0">/</span> <strong
+                    class="text-black">Cart</strong></div>
         </div>
-      {% endfor %}
     </div>
-   {% endif %}
-    <p>Применить купон</p>
-    <form action="{% url "coupons:apply" %}" method="post">
-        {{ coupon_apply_form }}
-        <input type="submit" value="Применить">
-        {% csrf_token %}
-    </form>
-    </form>
-    <p class="text-right">
-        <a href="{% url "shop:product_list" %}" class="button light">Продолжить покупки</a>
-        <a href="{% url "orders:order_create" %}" class="button">Расчет</a>
-    </p>
-{% endblock %}  
+</div>
+
+<div class="site-section">
+    <div class="container">
+        <div class="row mb-5">
+            <form class="col-md-12" method="post">
+                <div class="site-blocks-table">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="product-thumbnail">Фото</th>
+                                <th class="product-name">Товар</th>
+                                <th class="product-price">Цена</th>
+                                <th class="product-quantity">Количество</th>
+                                <th class="product-total">Цена заказа</th>
+                                <th class="product-remove">Удалить</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>{% for item in cart %}
+                                {% with product=item.product %}
+                            <tr>
+                                <td class="product-thumbnail">
+                                    <img src="{{ product.image.url }}" alt="Image" class="img-fluid">
+                                </td>
+                                <td class="product-name">
+                                    <h2 class="h5 text-black">{{ product.name }}</h2>
+                                </td>
+                                <td>₽{{ item.price }}</td>
+                                <td>
+                                    <div class="input-group mb-3" style="max-width: 120px;">
+                                        <div class="input-group-prepend">
+                                            <form action="{% url "cart:cart_add" product.id %}" method="post">
+                                                {% csrf_token %}
+                                                {{ item.update_quantity_form.quantity }}
+                                                {{ item.update_quantity_form.override }}
+                                                <input class="btn btn-outline-primary js-btn-plus" type="submit"
+                                                    value="Обновить">
+                                            </form>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>₽{{ item.total_price }}</td>
+                                <td><a href="{% url "cart:cart_remove" product.id %}"
+                                        class="btn btn-primary btn-sm">X</a></td>
+                            </tr>
+                            {% endwith %}
+                            {% endfor %}
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row mb-5">
+                    <div class="col-md-6 mb-3 mb-md-0">
+                        <button onclick="window.location='{% url "shop:product_list" %}' class="btn btn-primary btn-sm btn-block">Продолжить покупки</button>
+                    </div>
+                    <div class="col-md-6">
+                        <button class="btn btn-outline-primary btn-sm btn-block">Расчет</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label class="text-black h4" for="coupon">Скидочный купон</label>
+                        <p>Введите скидочный купон</p>
+                    </div>
+                    <form action="{% url "coupons:apply" %}" method="post">
+                        {% csrf_token %}
+                        <div class="col-md-8 mb-3 mb-md-0">
+                            {{ coupon_apply_form.code }}
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary btn-sm">Применить купон</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-6 pl-5">
+                <div class="row justify-content-end">
+                    <div class="col-md-7">
+                        <div class="row">
+                            <div class="col-md-12 text-right border-bottom mb-5">
+                                <h3 class="text-black h4 text-uppercase">Сумма заказа</h3>
+                            </div>
+                        </div>
+
+                        <div class="row mb-5">
+                            <div class="col-md-6">
+                                <span class="text-black">Всего</span>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <strong class="text-black">{{ cart.get_total_price_after_discount|floatformat:"2" }}</strong>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button class="btn btn-primary btn-lg py-3 btn-block"
+                                    onclick="window.location='{% url "orders:order_create" %}'">Продолжить покупки</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

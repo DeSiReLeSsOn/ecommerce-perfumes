@@ -1,46 +1,37 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
+<html lang="en">
+
+<head>
     <title>{% block title %}Магазин элитной парфюмерии{% endblock %}</title>
-    <link href="{% static "css/base.css" %}" rel="stylesheet">
-    <script src="{% static "js/script.js" %}"></script>
-  </head>
-  <body>
-    <header>
-      <nav>
-        <div class="topnav" id="myTopnav">
-          <a href="#">Главная</a>
-          <a href="#">Главная</a>
-          <a href="#">Главная</a>
-          <a href="#">Главная</a>
-          <a href="#" id="menu" class="icon">&#9776;</a>
-        </div>
-      </nav>
-    </header>
-    <div id="subheader">
-      <div class="cart">
-        {% with total_item=cart|length %}
-          {% if total_item > 0 %}
-            Корзина:
-            <a href="{% url "cart:cart_detail" %}">
-              {{ total_item }} Товаров{{ total_item|pluralize }},
-              ₽{{ cart.get_total_price }}
-            </a>
-          {% elif not order %}
-            Корзина пуста
-          {% endif %}
-        {% endwith %}
-      </div>
-    </div>
-    <div id="content">
-      {% block content %}
-      {% endblock %}
-    </div>
-    
-  </body>
-</html> 
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
+    <link rel="stylesheet" href="{% static "fonts/icomoon/style.css" %}">
+    <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/magnific-popup.css" %}">
+    <link rel="stylesheet" href="{% static "css/jquery-ui.css" %}">
+    <link rel="stylesheet" href="{% static "css/owl.carousel.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/owl.theme.default.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/aos.css" %}">
+    <link rel="stylesheet" href="{% static "css/style.css" %}">
+</head>
 
+<body>
+    <div class="site-wrap">
+        {% include 'shop/header.html' %}
+        {% block content %}
+        {% endblock %}
+    </div>
+    <script src="{% static "js/jquery-3.3.1.min.js" %}"></script>
+    <script src="{% static "js/jquery-ui.js" %}"></script>
+    <script src="{% static "js/popper.min.js" %}"></script>
+    <script src="{% static "js/bootstrap.min.js" %}"></script>
+    <script src="{% static "js/owl.carousel.min.js" %}"></script>
+    <script src="{% static "js/jquery.magnific-popup.min.js" %}"></script>
+    <script src="{% static "js/aos.js" %}"></script>
+    <script src="{% static "js/main.js" %}"></script>
+</body>
+</html>
 
