@@ -1,5 +1,6 @@
 {% extends "shop/base.html" %}
 {% load static %}
+{% load crispy_forms_tags %}
 {% block title %}
 Корзина
 {% endblock %}
@@ -9,7 +10,7 @@
 <div class="bg-light py-3">
     <div class="container">
         <div class="row">
-            <div class="col-md-12 mb-0"><a href="index.html">Главная</a> <span class="mx-2 mb-0">/</span> <strong
+            <div class="col-md-12 mb-0"><a href="{% url "shop:product_list" %}">Главная</a> <span class="mx-2 mb-0">/</span> <strong
                     class="text-black">Cart</strong></div>
         </div>
     </div>
@@ -36,7 +37,8 @@
                                 {% with product=item.product %}
                             <tr>
                                 <td class="product-thumbnail">
-                                    <img src="{{ product.image.url }}" alt="Image" class="img-fluid">
+                                    <img src="{% if product.image %}{{ product.image.url }}
+                                    {% else %}{% static "img/no_image.jpg" %}{% endif %}" alt="Image" class="img-fluid">
                                 </td>
                                 <td class="product-name">
                                     <h2 class="h5 text-black">{{ product.name }}</h2>
@@ -46,18 +48,20 @@
                                     <div class="input-group mb-3" style="max-width: 120px;">
                                         <div class="input-group-prepend">
                                             <form action="{% url "cart:cart_add" product.id %}" method="post">
-                                                {% csrf_token %}
                                                 {{ item.update_quantity_form.quantity }}
                                                 {{ item.update_quantity_form.override }}
-                                                <input class="btn btn-outline-primary js-btn-plus" type="submit"
-                                                    value="Обновить">
+                                                <input  type="submit" class="btn btn-outline-primary js-btn-plus" value="Обновить">
+                                                {% csrf_token %}
                                             </form>
                                         </div>
                                     </div>
                                 </td>
                                 <td>₽{{ item.total_price }}</td>
-                                <td><a href="{% url "cart:cart_remove" product.id %}"
-                                        class="btn btn-primary btn-sm">X</a></td>
+                                <td><form action="{% url "cart:cart_remove" product.id %}" method="post">
+                                    <input type="submit" value="X"  class="btn btn-primary btn-sm">
+                                    {% csrf_token %}
+                                </form>
+                                </td>
                             </tr>
                             {% endwith %}
                             {% endfor %}
@@ -73,10 +77,10 @@
             <div class="col-md-6">
                 <div class="row mb-5">
                     <div class="col-md-6 mb-3 mb-md-0">
-                        <button onclick="window.location='{% url "shop:product_list" %}' class="btn btn-primary btn-sm btn-block">Продолжить покупки</button>
+                        <button onclick="window.location='{% url "shop:product_list" %}'" class="btn btn-primary btn-sm btn-block">Продолжить покупки</button>
                     </div>
                     <div class="col-md-6">
-                        <button class="btn btn-outline-primary btn-sm btn-block">Расчет</button>
+                        
                     </div>
                 </div>
                 <div class="row">
@@ -116,7 +120,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <button class="btn btn-primary btn-lg py-3 btn-block"
-                                    onclick="window.location='{% url "orders:order_create" %}'">Продолжить покупки</button>
+                                    onclick="window.location='{% url "orders:order_create" %}'">Оплата</button>
                             </div>
                         </div>
                     </div>

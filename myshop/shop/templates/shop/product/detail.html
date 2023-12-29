@@ -1,5 +1,6 @@
 {% extends "shop/base.html" %}
 {% load static %}
+{% load crispy_forms_tags %}
 {% block title %}
 {{ product.name }}
 {% endblock %}
@@ -7,7 +8,7 @@
     <div class="bg-light py-3">
       <div class="container">
         <div class="row">
-          <div class="col-md-12 mb-0"><a href="index.html">Главная</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">{{ product.name }}</strong></div>
+          <div class="col-md-12 mb-0"><a href="{% url "shop:product_list" %}">Главная</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">{{ product.name }}</strong></div>
         </div>
       </div>
     </div>  
@@ -16,7 +17,7 @@
       <div class="container">
         <div class="row">
           <div class="col-md-6">
-            <img src="{{ product.image.url }}" alt="Image" class="img-fluid">
+            <img src="{% if p.image %}{{ p.image.url }}{% else %}{% static "img/no_image.jpg" %}{% endif %}" alt="Image" class="img-fluid">
           </div>
           <div class="col-md-6">
             <h2 class="text-black mr-2">{{ product.name }}</h2>

@@ -28,7 +28,7 @@ SECRET_KEY = "django-insecure-i8t-^!74-#_b-m3u@n)6t64vzktr)dx=h7b%t_wg85fre(cw04
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'payment.apps.PaymentConfig',
     'stripe',
     'coupons.apps.CouponsConfig',
+    'crispy_forms',
     
     
     
