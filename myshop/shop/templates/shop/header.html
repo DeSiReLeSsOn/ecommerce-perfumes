@@ -12,7 +12,7 @@
 
                 <div class="col-12 mb-3 mb-md-0 col-md-4 order-1 order-md-2 text-center">
                     <div class="site-logo">
-                        <a href="#" class="js-logo-clone">Магазин элитной парфюмерии</a>
+                        <a href="{% url "shop:product_list" %}" class="js-logo-clone">Магазин элитной парфюмерии</a>
                     </div>
                 </div>
 
@@ -46,7 +46,7 @@
     <nav class="site-navigation text-right text-md-center" role="navigation">
         <div class="container">
             <ul class="site-menu js-clone-nav d-none d-md-block">
-                <li><a href="#">Домашняя</a></li>
+                <li><a href="{% url "shop:product_list" %}">Домашняя</a></li>
                 <li><a href="{% url "shop:product_list" %}">Каталог</a></li>
                 <li><a href="shop.html">Отзывы</a></li>
                 <li><a href="contact.html">Контакты</a></li>
