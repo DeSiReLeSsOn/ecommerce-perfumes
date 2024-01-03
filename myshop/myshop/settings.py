@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'stripe',
     'coupons.apps.CouponsConfig',
     'crispy_forms',
+    'django.contrib.postgres',
     
     
     

@@ -1,8 +1,13 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Category, Product
 from cart.forms import CartAddProductForm 
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+#from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse
+from django.db.models import Q, Max, Min
+
+
+
+
 
 """def product_list(request, category_slug=None):
     category = None
@@ -51,4 +56,12 @@ def product_detail(request, id, slug):
                   'shop/product/detail.html',
                   {'product': product,
                    'cart_product_form': cart_product_form,})
+
+
+def search(request):
+	query = request.GET.get('q')
+	products = Product.objects.filter(title__icontains=query).all()
+	context = {'products': products}
+	return render(request, 'shop/product/list.html', context)
+
 

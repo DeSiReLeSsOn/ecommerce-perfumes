@@ -1,5 +1,8 @@
 from django.db import models
 from django.urls import reverse
+from django.db.models.query import QuerySet
+
+
 
 class Category(models.Model):
     name = models.CharField(max_length=200)
@@ -36,6 +39,8 @@ class Product(models.Model):
     available = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+
 
     class Meta:
         ordering = ['name']
