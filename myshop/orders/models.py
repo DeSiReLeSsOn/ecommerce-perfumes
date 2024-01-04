@@ -5,6 +5,7 @@ from django.core.validators import MinValueValidator, \
                                    MaxValueValidator
 from coupons.models import Coupon
 from django.utils.translation import gettext_lazy as _
+from myshop import settings 
 
 
 class Order(models.Model):

@@ -13,6 +13,11 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 #from yookassa import Configuration
 from django.utils.translation import gettext_lazy as _
+from dotenv import load_dotenv 
+import os
+
+
+load_dotenv()
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -23,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-i8t-^!74-#_b-m3u@n)6t64vzktr)dx=h7b%t_wg85fre(cw04"
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -94,6 +99,7 @@ DATABASES = {
         "NAME": "perfums",
         "USER": 'perfume_admin',
         "PASSWORD": 'qwerty',
+
     }
 }
 
@@ -159,26 +165,19 @@ CART_SESSION_ID = 'cart'
 
 
 
-STRIPE_PUBLISHABLE_KEY = 'pk_test_51NzRyJCd6dWw2lbBvV1Qu8E9pOOdkiNQfHuC1AlfSL28AVCc2hwiYsUkaKVgosvJoVn6d9WfsxLwdNysXpDzbGPA00OdqDH3rT' 
-STRIPE_SECRET_KEY = 'sk_test_51NzRyJCd6dWw2lbBs4CgLfIkTew7JxNVAmhptCyp4ETbRZy0lzzTz26WOCvo0s9WQ10ofLlRPL4Xb31P1M6BLPfH00VZfHZU5T' 
-STRIPE_API_VERSION = '2022-08-01' 
-STRIPE_WEBHOOK_SECRET = 'whsec_3399fe96f6f7eebaee04f8aad4aa671857f4ba77910081cfbf0071a1c42f2afd'
+STRIPE_PUBLISHABLE_KEY = os.getenv('STRIPE_PUBLISHABLE_KEY')
+STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
+STRIPE_API_VERSION = os.getenv('STRIPE_API_VERSION') 
+STRIPE_WEBHOOK_SECRET = os.getenv('STRIPE_WEBHOOK_SECRET')
 
 
 
-YANDEX_KASSA_SHOP_ID = '274933'
-YANDEX_KASSA_SECRET_KEY = 'test_1ytArpck6tOLy96Y5--5KPdELWzeYWuwkeqmHBixWZI'
-YANDEX_KASSA_SCID = '274932'
-YANDEX_KASSA_TEST_MODE = True
 
-#Configuration.account_id = '274933'
-#Configuration.secret_key = 'test_1ytArpck6tOLy96Y5--5KPdELWzeYWuwkeqmHBixWZI'
 
-YOO_KASSA = {
-    'ACCOUNT_ID': '274933',
-    'SECRET_KEY': 'test_1ytArpck6tOLy96Y5--5KPdELWzeYWuwkeqmHBixWZI',
-    'IS_TEST_MODE': True  # Рекомендуется использовать тестовый режим для начала
-} 
+YOOKASSA_SECRET_KEY = os.getenv('YOOKASSA_SECRET_KEY')
+YOOKASSA_SHOP_ID = os.getenv('YOOKASSA_SHOP_ID')
+
+
 
 
 REDIS_HOST = 'localhost'

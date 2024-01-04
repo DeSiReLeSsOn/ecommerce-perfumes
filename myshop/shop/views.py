@@ -59,8 +59,8 @@ def product_detail(request, id, slug):
 
 
 def search(request):
-	query = request.GET.get('q')
-	products = Product.objects.filter(title__icontains=query).all()
+	query = request.POST.get('q')
+	products = Product.objects.filter(name__icontains=query).all()
 	context = {'products': products}
 	return render(request, 'shop/product/list.html', context)
 
