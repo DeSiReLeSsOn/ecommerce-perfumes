@@ -751,3 +751,20 @@ a {
   width: 120px;
   border-radius: 50%;
   margin-bottom: 20px; }
+
+  .my-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+  }
+  .my-form input[type="submit"] {
+    padding: 10px 20px;
+    background-color: #ff69b4;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  .my-form input[type="submit"]:hover {
+    background-color: #ff1493;
+  }

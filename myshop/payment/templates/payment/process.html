@@ -1,20 +1,22 @@
 {% extends "shop/base.html" %}
-{% load i18n %}
+
 {% load static %}  
 
-{% block title %}Pay your order{% endblock %} 
+{% block title %}Оплата заказа{% endblock %} 
  
 
 {% block content %}
+<div class="container-fluid bg-white shadow-md p-5" style="width:100%; border-radius:20px;">
   <h1>Сумма заказа</h1>
-  <table class="cart">
+  <div class="table-responsive">
+  <table class="container-fluid" style="width: 100%;" >
     <thead>
       <tr>
-        <th>Фото</th>
-        <th>Товар</th>
-        <th>Цена</th>
-        <th>Количество</th>
-        <th>Итговая цена</th>
+        <th style="text-align: center;">Фото</th>
+        <th style="text-align: center;">Товар</th>
+        <th style="text-align: center;">Цена</th>
+        <th style="text-align: center;">Количество</th>
+        <th style="text-align: center;">Цена заказа</th>
       </tr>
     </thead>
     <tbody>
@@ -22,46 +24,48 @@
         <tr class="row{% cycle "1" "2" %}">
           <td>
             <img src="{% if item.product.image %}{{ item.product.image.url }}
-            {% else %}{% static "img/no_image.png" %}{% endif %}">
+            {% else %}{% static "img/no_image.png" %}{% endif %}" class="img-fluid" style="height: 10vw;text-align: center;" >
           </td>
           <td>{{ item.product.name }}</td>
-          <td class="num">₽{{ item.price }}</td>
-          <td class="num">{{ item.quantity }}</td>
-          <td class="num">₽{{ item.get_cost }}</td>
+          <td class="num" style="text-align: center;">₽{{ item.price }}</td>
+          <td class="num" style="text-align: center;">{{ item.quantity }}</td>
+          <td class="num" style="text-align: center;">₽{{ item.get_cost }}</td>
         </tr>
       {% endfor %}
       {% if order.coupon %}
         <tr class="subtotal">
-          <td>Итог</td>
+          <td>Цена заказа без скидки</td>
           <td colspan="3"></td>
-          <td class="num">
+          <td class="num" style="text-align: center;">
             ₽{{ order.get_total_cost_before_discount|floatformat:2 }}
           </td>
         </tr>
         <tr>
-          <td>
-            "{{ order.coupon.code }}" coupon 
-            ({{ order.discount }}% off)
+          <td style="text-align: left;">
+            "{{ order.coupon.code }}" Купон
+            ({{ order.discount }}%)
           </td>
           <td colspan="3"></td>
-          <td class="num neg">
+          <td class="num neg" style="text-align: center;">
             - ₽{{ order.get_discount|floatformat:2 }}
           </td>
         </tr>
       {% endif %}
       <tr class="total">
-        <td>Итог</td>
-        <td colspan="3"></td>
-        <td class="num">
+        <td style="text-align: left;">Итоговая цена</td>
+        <td colspan="3" style="text-align: center;"></td>
+        <td class="num" style="text-align: center;">
           ₽{{ order.get_total_cost|floatformat:2 }}
         </td>
       </tr>
     </tbody>
   </table>
   <a href="{% url 'payment:process' %}">
-  <form action="{% url "payment:process" %}" method="post">
-    <input type="submit" value="Pay now">
+  <form action="{% url "payment:process" %}" method="post" class="my-form">
+    <input type="submit" value="Оплатить сейчас">
     {% csrf_token %}
   </a>
   </form>
+</div>
 {% endblock %} 
+

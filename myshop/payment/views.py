@@ -168,14 +168,11 @@ def payment_process(request):
         success_url = request.build_absolute_uri(reverse('payment:completed'))
         cancel_url = request.build_absolute_uri(reverse('payment:canceled'))
         
-        for item in order.items.all():
-            total_amount += int(item.price)
-        sum_with_coupon = total_amount*order.discount/100
-        res = total_amount-sum_with_coupon
+
             
         payment = Payment.create({
             "amount": {
-                "value": res,
+                "value": float(order.get_total_cost()),
                 "currency": "RUB"
             },
             "confirmation": {
