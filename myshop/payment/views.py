@@ -11,6 +11,7 @@ import stripe
 import uuid
 from django.http import JsonResponse
 import requests
+from coupons.models import Coupon
 
 #stripe
 stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -160,6 +161,8 @@ def payment_process(request):
     order = get_object_or_404(Order, id=order_id)
     
     total_amount = 0
+ 
+    
     
     if request.method == 'POST':
         success_url = request.build_absolute_uri(reverse('payment:completed'))
@@ -167,10 +170,12 @@ def payment_process(request):
         
         for item in order.items.all():
             total_amount += int(item.price)
+        sum_with_coupon = total_amount*order.discount/100
+        res = total_amount-sum_with_coupon
             
         payment = Payment.create({
             "amount": {
-                "value": total_amount,
+                "value": res,
                 "currency": "RUB"
             },
             "confirmation": {
@@ -179,7 +184,7 @@ def payment_process(request):
             },
             "capture": True,
             "test": True,
-            "description": "Payment for order {}".format(order.id)
+            "description": "Оплата за заказ {}".format(order.id)
         })
         
         return redirect(payment.confirmation.confirmation_url, code=303)
