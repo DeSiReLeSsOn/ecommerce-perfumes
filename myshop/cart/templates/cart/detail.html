@@ -16,18 +16,18 @@
     </div>
 </div>
 
-<div class="site-section">
-    <div class="container">
+<div  class="site-blocks-table table-responsive">
+    <div class="container-fluid">
         <div class="row mb-5">
             <form class="col-md-12" method="post">
-                <div class="site-blocks-table">
+                <div class="site-blocks-table" >
                     <table class="table table-bordered">
                         <thead>
                             <tr>
                                 <th class="product-thumbnail">Фото</th>
                                 <th class="product-name">Товар</th>
                                 <th class="product-price">Цена</th>
-                                <th class="product-quantity">Количество</th>
+                                <th class="product-quantity" style="text-align: center;">Количество</th>
                                 <th class="product-total">Цена заказа</th>
                                 <th class="product-remove">Удалить</th>
                             </tr>
@@ -45,12 +45,10 @@
                                 </td>
                                 <td>₽{{ item.price }}</td>
                                 <td>
-                                    <div class="input-group mb-3" style="max-width: 120px;">
-                                        <div class="input-group-prepend">
-                                            <form action="{% url "cart:cart_add" product.id %}" method="post">
-                                                {{ item.update_quantity_form.quantity }}
-                                                {{ item.update_quantity_form.override }}
-                                                <input  type="submit" class="btn btn-outline-primary js-btn-plus" value="Обновить">
+                                    <div class="input-group mb-3"  style="display: flex; justify-content: center;">
+                                        <div class="input-group-prepend" style="display: flex; justify-content: center;">
+                                            <form action="{% url "cart:cart_add" product.id %}" method="post" style="display: flex; flex-direction: column; align-items: center;">
+                                                {{ item.quantity }}
                                                 {% csrf_token %}
                                             </form>
                                         </div>
@@ -108,15 +106,14 @@
                             </div>
                         </div>
 
-                        <div class="row mb-5">
-                            <div class="col-md-6">
+                        <div class="row mb-5 d-flex align-items-center">
+                            <div class="col-md-6 col-12">
                                 <span class="text-black">Всего</span>
                             </div>
-                            <div class="col-md-6 text-right">
+                            <div class="col-md-6 col-12 text-md-right text-start">
                                 <strong class="text-black">{{ cart.get_total_price_after_discount|floatformat:"2" }}</strong>
                             </div>
                         </div>
-
                         <div class="row">
                             <div class="col-md-12">
                                 <button class="btn btn-primary btn-lg py-3 btn-block"

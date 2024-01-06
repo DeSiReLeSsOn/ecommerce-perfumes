@@ -2,7 +2,7 @@
 {% load i18n %}  
 
 {% block title %}
-  {% trans "Checkout" %}
+  Расчет
 {% endblock %}
 
 {% block content %}
@@ -29,7 +29,7 @@
   </div>
   <form method="post" class="order-form">
     {{ form.as_p }}
-    <p><input type="submit" value="{% translate "Place order" %}"></p>
+    <p><input type="submit" value="Оплатить заказ"></p>
     {% csrf_token %}
   </form>
 {% endblock %}
