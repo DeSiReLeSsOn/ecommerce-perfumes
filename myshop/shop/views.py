@@ -58,10 +58,17 @@ def product_detail(request, id, slug):
                    'cart_product_form': cart_product_form,})
 
 
-def search(request):
+"""def search(request):
 	query = request.POST.get('q')
 	products = Product.objects.filter(name__icontains=query).all()
-	context = {'products': products}
-	return render(request, 'shop/product/list.html', context)
+	return render(request, 'shop/product/list.html', {'products': products}) """
+
+def search(request):
+    query = request.GET.get('q')
+    if query:
+        products = Product.objects.filter(Q(name__icontains=query))
+    else:
+        products = Product.objects.all()
+    return render(request, 'shop/product/list.html', {'products': products}) 
 
 
