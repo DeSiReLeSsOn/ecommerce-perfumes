@@ -29,7 +29,7 @@
   </div>
   <form method="post" class="order-form">
     {{ form.as_p }}
-    <p><input type="submit" value="Оплатить заказ"></p>
+    <p><input type="submit" value="Оплатить заказ" class="payment-input"></p>
     {% csrf_token %}
   </form>
 {% endblock %}

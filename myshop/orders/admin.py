@@ -10,14 +10,13 @@ from django.urls import reverse
 
 
 
-def order_stripe_payment(obj):
-    url = obj.get_stripe_url()
-    if obj.stripe_id:
-        html = f'<a href="{url}" target="_blank">{obj.stripe_id}</a>'
+def order_yookassa_payment(obj):
+    url = obj.get_yookassa_url()
+    if obj.yookassa_id:
+        html = f'<a href="{url}" target="_blank">{obj.yookassa_id}</a>'
         return mark_safe(html)
     return ''
-order_stripe_payment.short_description = 'Stripe payment'
-
+order_yookassa_payment.short_description = 'Yookassa payment'
 #@admin.register(Order)
 class OrderItemInline(admin.TabularInline):
     model = OrderItem
@@ -58,7 +57,7 @@ order_pdf.short_description = 'Invoice'"""
 class OrderAdmin(admin.ModelAdmin):
     list_display = ['id', 'first_name', 'last_name', 'email',
                     'address', 'postal_code', 'city', 'paid',
-                    order_stripe_payment, 'created', 'updated', order_detail,]# order_pdf]
+                    order_yookassa_payment, 'created', 'updated', order_detail,]# order_pdf]
     list_filter = ['paid', 'created', 'updated']
     inlines = [OrderItemInline]
     actions = [export_to_csv]

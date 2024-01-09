@@ -69,6 +69,5 @@ def search(request):
         products = Product.objects.filter(Q(name__icontains=query))
     else:
         products = Product.objects.all()
-    return render(request, 'shop/product/list.html', {'products': products}) 
-
+    return render(request, 'shop/product/list.html', {'products': products})
 

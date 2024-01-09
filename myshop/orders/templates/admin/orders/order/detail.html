@@ -50,8 +50,8 @@
             <th>Оплата yookassa</th>
             <td>
                 {% if order.stripe_id %}
-                    <a href="{{ order.get_stripe_url }}" target="_blank">
-                        {{ order.stripe_id }}
+                    <a href="{{ order.get_yookassa_url }}" target="_blank">
+                        {{ order.yookassa_id }}
                     </a>
                 {% endif %}
             </td>

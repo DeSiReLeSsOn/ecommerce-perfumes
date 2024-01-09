@@ -18,7 +18,7 @@ class Order(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     paid = models.BooleanField(default=False)
-    stripe_id = models.CharField(max_length=250, blank=True)
+    yookassa_id = models.CharField(max_length=250, blank=True)
     coupon = models.ForeignKey(Coupon, related_name='orders', null=True, blank=True, on_delete=models.SET_NULL)
     discount = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(100)])
 
@@ -38,14 +38,10 @@ class Order(models.Model):
         return total_cost - self.get_discount()
 
 
-    def get_stripe_url(self):
-        if not self.stripe_id:
+    def get_yookassa_url(self):
+        if not self.yookassa_id:
             return ''
-        if '_test_' in settings.STRIPE_SECRET_KEY:
-            path = '/test/'
-        else:
-            path = '/'
-        return f'https://dashboard.stripe.com{path}payments/{self.stripe_id}'
+        return f'https://yookassa.ru/payments/{self.yookassa_id}'
 
     def get_total_cost_before_discount(self):
         return sum(item.get_cost() for item in self.items.all()) 
