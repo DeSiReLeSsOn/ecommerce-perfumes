@@ -54,7 +54,10 @@ INSTALLED_APPS = [
     'stripe',
     'coupons.apps.CouponsConfig',
     'crispy_forms',
+    "crispy_bootstrap5",
     'django.contrib.postgres',
+    'account.apps.AccountConfig',
+    'django_email_verification',
     
     
     
@@ -151,6 +154,11 @@ STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / 'static'
 
 
+#crispy-forms
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
@@ -166,7 +174,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 CART_SESSION_ID = 'cart'
 
 
-
+#stripe settings
 STRIPE_PUBLISHABLE_KEY = os.getenv('STRIPE_PUBLISHABLE_KEY')
 STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
 STRIPE_API_VERSION = os.getenv('STRIPE_API_VERSION') 
@@ -175,7 +183,7 @@ STRIPE_WEBHOOK_SECRET = os.getenv('STRIPE_WEBHOOK_SECRET')
 
 
 
-
+#yookassa settings
 YOOKASSA_SECRET_KEY = os.getenv('YOOKASSA_SECRET_KEY')
 YOOKASSA_SHOP_ID = os.getenv('YOOKASSA_SHOP_ID')
 
@@ -198,3 +206,10 @@ REDIS_DB = 1
         'hide_untranslated': False,
     }
 }"""
+#django-email-verification 
+def email_verified_callback(user):
+    user.is_active = True
+
+
+def password_change_callback(user, password):
+    user.set_password(password)
