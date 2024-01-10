@@ -207,64 +207,6 @@ def get_client_ip(request):
     return ip 
 
 
-@csrf_exempt
-def yookassa_webhook(request):
-    webhook = Webhook(request.body, request.headers['Content-Type'])
-    event = webhook.parse()
-    
-    # Обработка события оплаты
-    if event.type == 'payment.succeeded':
-        
-        return HttpResponse(status=200)
-    
-    return HttpResponse(status=200) 
-    
-    #2Второй вариант
-    ip = get_client_ip(request)  # Получите IP запроса
-    if not SecurityHelper().is_ip_trusted(ip):
-        return HttpResponse(status=400)
-
-    # Извлечение JSON объекта из тела запроса
-    event_json = json.loads(request.body)
-    try:
-        # Создание объекта класса уведомлений в зависимости от события
-        notification_object = WebhookNotificationFactory().create(event_json)
-        response_object = notification_object.object
-        if notification_object.event == WebhookNotificationEventType.PAYMENT_SUCCEEDED:
-            some_data = {
-                'paymentId': response_object.id,
-                'paymentStatus': response_object.status,
-            }
-            # Специфичная логика
-            # ...
-
-        elif notification_object.event == WebhookNotificationEventType.PAYMENT_CANCELED:
-            some_data = {
-                'paymentId': response_object.id,
-                'paymentStatus': response_object.status,
-            }
-        else:
-            # Обработка ошибок
-            return HttpResponse(status=400)  # Сообщаем кассе об ошибке
-
-        Configuration.configure('XXXXXX', 'test_XXXXXXXX')
-        # Получим актуальную информацию о платеже
-        payment_info = Payment.find_one(some_data['paymentId'])
-        if payment_info:
-            payment_status = payment_info.status
-            # Специфичная логика
-            # ...
-        else:
-            # Обработка ошибок
-            return HttpResponse(status=400)  # Сообщаем кассе об ошибке
-
-    except Exception:
-        # Обработка ошибок
-        return HttpResponse(status=400)  # Сообщаем кассе об ошибке
-
-    return HttpResponse(status=200) 
-
-
 
 
 
