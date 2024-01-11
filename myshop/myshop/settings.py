@@ -211,5 +211,30 @@ def email_verified_callback(user):
     user.is_active = True
 
 
-def password_change_callback(user, password):
-    user.set_password(password)
+#def password_change_callback(user, password):
+#    user.set_password(password) 
+
+
+# Global Package Settings
+EMAIL_FROM_ADDRESS = 'uchdjango@gmail.com'  # mandatory
+EMAIL_PAGE_DOMAIN = 'http://127.0.0.1:8000/'  # mandatory (unless you use a custom link)
+EMAIL_MULTI_USER = False  # optional (defaults to False)
+
+# Email Verification Settings (mandatory for email sending)
+EMAIL_MAIL_SUBJECT = 'Confirm your email {{ user.username }}'
+EMAIL_MAIL_HTML = 'account/email/mail_body.html'
+EMAIL_MAIL_PLAIN = 'account/email/mail_body.txt'
+EMAIL_MAIL_TOKEN_LIFE = 60 * 60  # one hour
+
+
+
+# For Django Email Backend
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'uchdjango@gmail.com'
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')  # os.environ['password_key'] suggested
+EMAIL_USE_TLS = True
+
+
