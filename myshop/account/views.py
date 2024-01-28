@@ -44,7 +44,6 @@ def login_user(request):
         return redirect('shop:product_list')
 
     if request.method == 'POST':
-
         form = LoginForm(request.POST, request.FILES)
 
         username = request.POST.get('username')
