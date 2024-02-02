@@ -15,6 +15,7 @@ from pathlib import Path
 from django.utils.translation import gettext_lazy as _
 from dotenv import load_dotenv 
 import os
+from django.contrib import messages
 
 
 load_dotenv()
@@ -31,7 +32,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*', 'https://a4a0-195-184-202-203.ngrok-free.app'] 
 
@@ -217,7 +218,7 @@ def email_verified_callback(user):
 
 
 # Global Package Settings
-EMAIL_FROM_ADDRESS = 'don_perfume@gmail.com'  # mandatory
+EMAIL_FROM_ADDRESS = 'theproblemdi@gmail.com'  # mandatory
 EMAIL_PAGE_DOMAIN = 'http://127.0.0.1:8000/'  # mandatory (unless you use a custom link)
 EMAIL_MULTI_USER = False  # optional (defaults to False)
 
@@ -226,20 +227,23 @@ EMAIL_MAIL_SUBJECT = 'Confirm your email {{ user.username }}'
 EMAIL_MAIL_HTML = 'account/email/mail_body.html'
 EMAIL_MAIL_PLAIN = 'account/email/mail_body.txt'
 EMAIL_MAIL_TOKEN_LIFE = 60 * 60  # one hour
+EMAIL_MAIL_PAGE_TEMPLATE = 'account/email/email_success_template.html'
 EMAIL_MAIL_CALLBACK = email_verified_callback
 
 
 
+
+
 # For Django Email Backend
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'don_perfume@gmail.com'
+EMAIL_HOST_USER = 'theproblemdi@gmail.com'
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')  # os.environ['password_key'] suggested
 EMAIL_USE_TLS = True
 
 ACCOUNT_EMAIL_UNIQUE = True
-ACCOUNT_EMAIL_CONFIRMATION_REQUIRED = True
+#ACCOUNT_EMAIL_CONFIRMATION_REQUIRED = True
 
 

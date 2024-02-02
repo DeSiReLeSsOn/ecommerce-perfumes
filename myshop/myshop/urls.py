@@ -20,6 +20,9 @@ from django.conf.urls.static import static
 from payment import webhooks
 from django_email_verification import urls as email_urls 
 
+
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('account/', include('account.urls', namespace='account')),
@@ -27,7 +30,7 @@ urlpatterns = [
     path('orders/', include('orders.urls', namespace='orders')),
     path('payment/', include('payment.urls', namespace='payment')),
     path('coupons/', include('coupons.urls', namespace='coupons')),
-    path('email/', include('account.urls'), name='email-verification'),
+    path('email/', include(email_urls), name='email-verification'),
     path('', include('shop.urls', namespace='shop')),
 ]
 
