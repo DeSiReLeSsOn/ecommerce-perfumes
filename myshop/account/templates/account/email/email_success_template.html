@@ -43,7 +43,7 @@
     
     $(document).ready(function() {
         // Set the initial timer value
-        var timerValue = 7;
+        var timerValue = 5;
         $('#timer').html(timerValue);
         
         // Start a timer that updates the timer every second
@@ -56,7 +56,7 @@
     
             // If the timer value reaches 0, stop the timer
             if (timerValue === 0) {
-                window.location.href = '/shop/';
+                window.location.href = '/';
             }
         }, 1000);
     });
