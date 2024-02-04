@@ -111,50 +111,7 @@ stripe.api_version = settings.STRIPE_API_VERSION
         return render(request, 'payment/process.html', locals())"""
 
 
-"""def payment_process(request):
-    Configuration.account_id = settings.YOOKASSA_SHOP_ID
-    Configuration.secret_key = settings.YOOKASSA_SECRET_KEY
-    order_id = request.session.get('order_id', None)
-    order = get_object_or_404(Order, id=order_id)
-    if request.method == 'POST':
-        success_url = request.build_absolute_uri(
-                        reverse('payment:completed'))
-        cancel_url = request.build_absolute_uri(
-                        reverse('payment:canceled'))
-        payment = {
-            'mode': 'payment',
-            'client_reference_id': order.id,
-            'success_url': success_url,
-            'cancel_url': cancel_url,
-            'line_items': []
-        }
-        for item in order.items.all():
-            payment['line_items'].append({
-                'price_data': {
-                    'unit_amount': int(item.price * Decimal('100')),
-                    'currency': 'RUB',
-                    'product_data': {
-                        'name': item.product.name,
-                    },
-                },
-                'quantity': item.quantity,
-                "capture": True,
-                "test": True,
-                "confirmation": {
-                    "type": "redirect",
-                    "return_url": success_url
-                },
-            }) 
-        if order.coupon:
-            # Replace this with the appropriate code to create a yookassa discount
-            payment['discounts'] = [{
-                'coupon': order.coupon.code 
-        }]
-        session = Payment.create(payment['line_items'])
-        return redirect(session.confirmation.confirmation_url, code=303)
-    else:
-        return render(request, 'payment/process.html', locals())"""
-
+]
 
 
 
