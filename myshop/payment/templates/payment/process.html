@@ -62,7 +62,7 @@
   </table>
   <a href="{% url 'payment:process' %}">
   <form action="{% url "payment:process" %}" method="post" class="my-form">
-    <input type="submit" value="Оплатить сейчас">
+    <input type="submit" value="Оплатить сейчас" class="btn">
     {% csrf_token %}
   </a>
   </form>

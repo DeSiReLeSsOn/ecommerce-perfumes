@@ -1,4 +1,6 @@
-<header class="site-navbar" role="banner">
+{% load static %}
+
+<header class="site-navbar" role="banner" class="site-wrap">
     <div class="site-navbar-top">
         <div class="container">
             <div class="row align-items-center">
@@ -9,13 +11,11 @@
                         <input type="text" class="form-control border-0" placeholder="Поиск" name="q">
                     </form>
                 </div>
-
                 <div class="col-12 mb-3 mb-md-0 col-md-4 order-1 order-md-2 text-center">
                     <div class="site-logo">
                         <a href="{% url "shop:product_list" %}" class="js-logo-clone">Магазин элитной парфюмерии</a>
                     </div>
                 </div>
-
                 <div class="col-6 col-md-4 order-3 order-md-3 text-right">
                     <div class="site-top-icons">
                         <ul>
@@ -26,8 +26,7 @@
                                     <span class="count">
                                     {% with total_items=cart|length %}
                                         {% if total_items > 0 %} 
-                                            {{ total_items }}
-                                            
+                                            {{ total_items }}                                        
                                         {% else %}
                                             0
                                         {% endif %}

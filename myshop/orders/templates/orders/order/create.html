@@ -5,31 +5,58 @@
   Расчет
 {% endblock %}
 
+
+
+
 {% block content %}
-  <h1>Расчет</h1>
+  <h1 class="create_ord">Расчет</h1>
   <div class="order-info">
-    <h3>Ваш заказ</h3>
-    <ul>
+    <h3 class="create_ord">Ваш заказ</h3>
+    <ul class="ul1">
       {% for item in cart %}
-        <li>
+        <li class="li1">
           {{ item.quantity }}x {{ item.product.name }}
-          <span >₽{{ item.total_price }}</span>
+          <span class="sp1">₽{{ item.total_price }}</span>
         </li>
       {% endfor %}
       {% if cart.coupon %}
-        <li>
-          {% blocktrans with code=cart.coupon.code discount=cart.coupon.discount %}
+        <li class="create_ord">
+            {% blocktrans with code=cart.coupon.code discount=cart.coupon.discount %}
             "{{ code }}" ({{ discount }}% off)
           {% endblocktrans %}
-          <span class="neg">- ₽{{ cart.get_discount|floatformat:2 }}</span>
+          <span class="create_ord">- ₽{{ cart.get_discount|floatformat:2 }}</span>
         </li>
       {% endif %}
     </ul>
-    <p>Итог: ₽{{ cart.get_total_price_after_discount|floatformat:2 }}</p>
+    <p class="create_ord">Итог: ₽{{ cart.get_total_price_after_discount|floatformat:2 }}</p>
   </div>
   <form method="post" class="order-form">
-    {{ form.as_p }}
-    <p><input type="submit" value="Оплатить заказ" class="payment-input"></p>
+    <div>
+      <label for="{{ form.full_name.id_for_label }}">ФИО:</label>
+      <input type="text" id="{{ form.full_name.id_for_label }}" name="{{ form.full_name.html_name }}" placeholder="ФИО">
+    </div>
+    
+    <div>
+      <label for="{{ form.email.id_for_label }}">Имейл:</label>
+      <input type="email" id="{{ form.email.id_for_label }}" name="{{ form.email.html_name }}" placeholder="E-mail">
+    </div>
+    
+    <div>
+      <label for="{{ form.address.id_for_label }}">Адрес доставки:</label>
+      <input type="text" id="{{ form.address.id_for_label }}" name="{{ form.address.html_name }}" placeholder="адрес доставки">
+    </div>
+    
+    <div>
+      <label for="{{ form.postal_code.id_for_label }}">Почтовый индекс:</label>
+      <input type="text" id="{{ form.postal_code.id_for_label }}" name="{{ form.postal_code.html_name }}" placeholder="почтовый индекс">
+    </div>
+    
+    <div>
+      <label for="{{ form.phone.id_for_label }}">Телефон:</label>
+      <input type="text" id="{{ form.phone.id_for_label }}" name="{{ form.phone.html_name }}" placeholder="номер телефона">
+    </div>
+    
+    <input type="submit" value="Оплатить" class="btn">
     {% csrf_token %}
   </form>
 {% endblock %}

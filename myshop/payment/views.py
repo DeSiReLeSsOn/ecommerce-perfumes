@@ -111,7 +111,7 @@ stripe.api_version = settings.STRIPE_API_VERSION
         return render(request, 'payment/process.html', locals())"""
 
 
-]
+
 
 
 
@@ -127,7 +127,7 @@ def payment_process(request):
 
         payment = Payment.create({
             "amount": {
-                "value": float(order.get_total_cost()),
+                "value": Decimal(order.get_total_cost()),
                 "currency": "RUB"
             },
             "confirmation": {
@@ -142,6 +142,8 @@ def payment_process(request):
         return redirect(payment.confirmation.confirmation_url, code=303)
     else:
         return render(request, 'payment/process.html', locals())
+
+
 
 
     
