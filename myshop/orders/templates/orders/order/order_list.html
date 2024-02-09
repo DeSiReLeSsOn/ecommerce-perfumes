@@ -1,0 +1,26 @@
+{% extends 'shop/base.html' %}
+
+
+{% block content %}
+{% for order in orders %}
+    <div>
+        <h3>Заказ №{{ order.id }}</h3>
+        <p>ФИО: {{ order.full_name }}</p>
+        <p>Имейл: {{ order.email }}</p>
+        <p>Адрес: {{ order.address }}</p>
+        <p>Почтовый код: {{ order.postal_code }}</p>
+        <p>Телефон: {{ order.phone }}</p>
+        <p>Создано: {{ order.created }}</p>
+        <p>Обновлено: {{ order.updated }}</p>
+        <p>Статус оплаты: {% if order.paid %}Оплачен{% else %}Не оплачен{% endif %}</p>
+        <p>Скидка: {{ order.discount }}</p>
+    </div>
+    {% for item in order.items.all %}
+                        <li>
+                            Продукт: {{ item.product.name }}
+                            Цена: {{ item.price }}
+                            Количество: {{ item.quantity }}
+                        </li>
+                    {% endfor %}
+{% endfor %}
+{% endblock %}

@@ -13,6 +13,8 @@ User = get_user_model()
 
 
 class Order(models.Model):
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, blank=True, null=True)
     full_name = models.CharField('ФИО', max_length=150, null=False, blank=False, default='')
     email = models.EmailField('Имейл', max_length=254)
     address = models.CharField('Адрес' ,max_length=250)

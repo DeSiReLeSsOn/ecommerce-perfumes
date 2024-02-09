@@ -134,9 +134,7 @@ a {
 .site-navbar {
   background: #fff;
   margin-bottom: 0px;
-  position: fixed;
-  top: 0;
-  width: 100%;
+  position: relative;
   z-index: 999; }
   .site-navbar.transparent {
     background: transparent; }
