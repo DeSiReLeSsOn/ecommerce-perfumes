@@ -1,7 +1,6 @@
 from decimal import Decimal
-import yookassa
 from django.conf import settings
-from django.shortcuts import render, redirect, reverse, get_object_or_404, HttpResponseRedirect, HttpResponse
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from orders.models import Order, OrderItem
 from yookassa import Payment , Configuration , Webhook
 from yookassa.domain.notification import WebhookNotification
@@ -14,6 +13,9 @@ from django.http import JsonResponse
 import requests
 from coupons.models import Coupon
 import json
+from django.http import HttpResponse
+from yookassa.domain.notification import WebhookNotificationEventType, WebhookNotificationFactory
+
 
 #stripe
 stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -132,10 +134,10 @@ def payment_process(request):
             },
             "confirmation": {
                 "type": "redirect",
-                "return_url": success_url
+                "return_url": success_url,
+                #"return_url": 'https://e57e-195-184-202-203.ngrok-free.app/payment/webhooks/', 
             },
             "capture": True,
-            "test": True,
             "description": "Оплата за заказ {}".format(order.id),
         })
 
@@ -155,6 +157,57 @@ def payment_completed(request):
 
 def payment_canceled(request):
     return render(request, 'payment/canceled.html') 
+
+
+
+@csrf_exempt
+def yookassa_webhook(request):
+    order_id = request.session.get('order_id', None)
+    order = get_object_or_404(Order, id=order_id)
+    # Если хотите убедиться, что запрос пришел от ЮКасса, добавьте проверку:
+    if request.method == 'POST':
+        event_json = json.loads(request.body)
+        try:
+            # Создание объекта класса уведомлений в зависимости от события
+            notification_object = WebhookNotificationFactory().create(event_json)
+            response_object = notification_object.object
+            if notification_object.event == WebhookNotificationEventType.PAYMENT_SUCCEEDED:
+                some_data = {
+                    'paymentId': response_object.id,
+                    'paymentStatus': response_object.status,
+            }
+                    # пометить заказ как оплаченный
+                order.paid = True
+                order.save()   
+
+            elif notification_object.event == WebhookNotificationEventType.PAYMENT_CANCELED:
+                some_data = {
+                    'paymentId': response_object.id,
+                    'paymentStatus': response_object.status,
+            }
+                order.paid = False
+                order.save()
+            
+
+            else:
+                # Обработка ошибок
+                return HttpResponse(status=400)  # Сообщаем кассе об ошибке
+            
+            Configuration.configure(settings.YOOKASSA_SECRET_KEY, settings.YOOKASSA_SHOP_ID)
+            # Получим актуальную информацию о платеже
+            payment_info = Payment.find_one(some_data['paymentId'])
+            if payment_info:
+                payment_status = payment_info.status
+                print('payment_status: ', payment_status)
+            else:
+                # Обработка ошибок
+                return HttpResponse(status=400)  # Сообщаем кассе об ошибке
+        
+        except Exception:
+            # Обработка ошибок
+            return HttpResponse(status=400)  # Сообщаем кассе об ошибке
+
+    return HttpResponse(status=200)  # Сообщаем кассе, что все хорошо
 
 
 """def get_client_ip(request):

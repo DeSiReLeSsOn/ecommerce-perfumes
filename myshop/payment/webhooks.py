@@ -1,16 +1,14 @@
-import yookassa 
-from yookassa import Webhook, Configuration, Payment
-from yookassa.domain.notification import WebhookNotificationEventType, WebhookNotificationFactory,  WebhookNotification
-from yookassa.domain.common import SecurityHelper
-from django.conf import settings
+import json
 from django.http import HttpResponse
+from yookassa import Configuration, Payment, Webhook
+from yookassa.domain.notification import WebhookNotificationEventType, WebhookNotificationFactory
+from yookassa.domain.common import SecurityHelper
 from django.views.decorators.csrf import csrf_exempt
-from orders.models import Order
-from shop.models import Product
-from django.shortcuts import render, redirect, reverse, get_object_or_404, HttpResponseRedirect, HttpResponse
-import json 
-
 #from .tasks import payment_completed
+from orders.models import Order
+from myshop import settings 
+from django.shortcuts import render, redirect, reverse, get_object_or_404
+
 
 
 """@csrf_exempt
@@ -42,7 +40,7 @@ def yookassa_webhook(request, order_id):
         # пометить заказ как оплаченный
             order.paid = True
             order.save()
-    return HttpResponse(status=200)"""
+    return HttpResponse(status=200)
 
             # save items bought for product recommendations
             #product_ids = order.items.values_list('product_id')
@@ -51,63 +49,56 @@ def yookassa_webhook(request, order_id):
             #r.products_bought(products)
             
             # launch asynchronous task
-            #payment_completed.delay(order.id)
+            #payment_completed.delay(order.id)"""
 
 
 @csrf_exempt
 def yookassa_webhook(request):
-    webhook = Webhook(request.body, request.headers['Content-Type'])
-    event = webhook.parse()
-    
-    # Обработка события оплаты
-    if event.type == 'payment.succeeded':
+    order_id = request.session.get('order_id', None)
+    order = get_object_or_404(Order, id=order_id)
+    # Если хотите убедиться, что запрос пришел от ЮКасса, добавьте проверку:
+    if request.method == 'POST':
+        event_json = json.loads(request.body)
+        try:
+            # Создание объекта класса уведомлений в зависимости от события
+            notification_object = WebhookNotificationFactory().create(event_json)
+            response_object = notification_object.object
+            if notification_object.event == WebhookNotificationEventType.PAYMENT_SUCCEEDED:
+                some_data = {
+                    'paymentId': response_object.id,
+                    'paymentStatus': response_object.status,
+            }
+                    # пометить заказ как оплаченный
+                order.paid = True
+                order.save()    
+            
+
+            elif notification_object.event == WebhookNotificationEventType.PAYMENT_CANCELED:
+                some_data = {
+                    'paymentId': response_object.id,
+                    'paymentStatus': response_object.status,
+            }
+                order.paid = False
+                order.save()
+            
+
+            else:
+                # Обработка ошибок
+                return HttpResponse(status=400)  # Сообщаем кассе об ошибке
+            
+            Configuration.configure('XXXXXX', 'test_XXXXXXXX')
+            # Получим актуальную информацию о платеже
+            payment_info = Payment.find_one(some_data['paymentId'])
+            if payment_info:
+                payment_status = payment_info.status
+                print('payment_status: ', payment_status)
+            else:
+                # Обработка ошибок
+                return HttpResponse(status=400)  # Сообщаем кассе об ошибке
         
-        return HttpResponse(status=200)
-    
-    return HttpResponse(status=200) 
-    
-    #2Второй вариант
-    ip = get_client_ip(request)  # Получите IP запроса
-    if not SecurityHelper().is_ip_trusted(ip):
-        return HttpResponse(status=400)
-
-    # Извлечение JSON объекта из тела запроса
-    event_json = json.loads(request.body)
-    try:
-        # Создание объекта класса уведомлений в зависимости от события
-        notification_object = WebhookNotificationFactory().create(event_json)
-        response_object = notification_object.object
-        if notification_object.event == WebhookNotificationEventType.PAYMENT_SUCCEEDED:
-            some_data = {
-                'paymentId': response_object.id,
-                'paymentStatus': response_object.status,
-            }
-            # Специфичная логика
-            # ...
-
-        elif notification_object.event == WebhookNotificationEventType.PAYMENT_CANCELED:
-            some_data = {
-                'paymentId': response_object.id,
-                'paymentStatus': response_object.status,
-            }
-        else:
+        except Exception:
             # Обработка ошибок
             return HttpResponse(status=400)  # Сообщаем кассе об ошибке
 
-        Configuration.configure('XXXXXX', 'test_XXXXXXXX')
-        # Получим актуальную информацию о платеже
-        payment_info = Payment.find_one(some_data['paymentId'])
-        if payment_info:
-            payment_status = payment_info.status
-            # Специфичная логика
-            # ...
-        else:
-            # Обработка ошибок
-            return HttpResponse(status=400)  # Сообщаем кассе об ошибке
-
-    except Exception:
-        # Обработка ошибок
-        return HttpResponse(status=400)  # Сообщаем кассе об ошибке
-
-    return HttpResponse(status=200) 
+    return HttpResponse(status=200)  # Сообщаем кассе, что все хорошо
 
