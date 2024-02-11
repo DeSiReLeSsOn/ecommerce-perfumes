@@ -1,10 +1,14 @@
 from django.contrib import admin
+from django.db.models.query import QuerySet
+from django.http.request import HttpRequest
 from .models import Order, OrderItem
 from django.utils.safestring import mark_safe
 import csv
 import datetime
 from django.http import HttpResponse
 from django.urls import reverse
+from django.utils import timezone
+from datetime import timedelta
 
 
 
@@ -25,28 +29,41 @@ class OrderItemInline(admin.TabularInline):
 
 def export_to_csv(modeladmin, request, queryset):
     opts = modeladmin.model._meta
-    content_disposition = f'attachment; filename={opts.verbose_name}.csv'
+    content_disposition = f'attachment; filename={opts.verbose_name_plural}.csv'
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = content_disposition
-    writer = csv.writer(response)
-    fields = [field for field in opts.get_fields() if not \
-              field.many_to_many and not field.one_to_many]
-    writer.writerow([field.verbose_name for field in fields])
+    writer = csv.writer(response)  # Добавляем поле для общей стоимости заказа
+    field_names = ['ID Заказа', 'Покупатель', 'ФИО', 'Email', 'Адрес', 'Почтовый индекс', 'Телефон', 'Создан', 'Обновлен', 'Оплачен', 'Купон', 'Скидка', 'Сумма заказа']
+    writer.writerow(field_names)
+
+
     for obj in queryset:
-        data_row = []
-        for field in fields:
-            value = getattr(obj, field.name)
-            if isinstance(value, datetime.datetime):
-                value = value.strftime('%d/%m/%Y')
-            data_row.append(value)
+        data_row = [
+            obj.id,
+            obj.user.username if obj.user else '',  # Пример получения имени пользователя
+            obj.full_name,
+            obj.email,
+            obj.address,
+            obj.postal_code,
+            obj.phone,
+            obj.created.strftime('%d/%m/%Y %H:%M:%S'),
+            obj.updated.strftime('%d/%m/%Y %H:%M:%S'),
+            obj.paid,
+            obj.coupon.code if obj.coupon else '',  # Пример получения кода купона
+            obj.discount,
+            obj.get_total_cost()  # Общая стоимость заказа
+        ]
+
         writer.writerow(data_row)
+
     return response
-export_to_csv.short_description = 'Export to CSV'
+
+export_to_csv.short_description = 'Экспорт в CSV'
 
 
 def order_detail(obj):
     url = reverse('orders:admin_order_detail', args=[obj.id])
-    return mark_safe(f'<a href="{url}">View</a>')
+    return mark_safe(f'<a href="{url}">Обзор</a>')
 
 """def order_pdf(obj):
     url = reverse('orders:admin_order_pdf', args=[obj.id])
@@ -57,10 +74,11 @@ order_pdf.short_description = 'Invoice'"""
 class OrderAdmin(admin.ModelAdmin):
     list_display = ['id', 'full_name', 'email',
                     'address', 'postal_code', 'phone', 'paid',
-                    order_yookassa_payment, 'created', 'updated', order_detail,]# order_pdf]
+                    order_yookassa_payment, 'created', 'updated', 'get_total_cost', order_detail,]# order_pdf]
     list_filter = ['paid', 'created', 'updated']
     inlines = [OrderItemInline]
     actions = [export_to_csv]
-    list_per_page = 10
+    list_per_page = 6
+    order_detail.short_description = 'Детали заказа'
 
 

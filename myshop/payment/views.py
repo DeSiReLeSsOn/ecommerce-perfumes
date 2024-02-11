@@ -135,7 +135,7 @@ def payment_process(request):
             "confirmation": {
                 "type": "redirect",
                 "return_url": success_url,
-                #"return_url": 'https://e57e-195-184-202-203.ngrok-free.app/payment/webhooks/', 
+                #"return_url": 'https://6b34-195-184-202-202.ngrok-free.app/payment/webhooks/', 
             },
             "capture": True,
             "description": "Оплата за заказ {}".format(order.id),

@@ -91,7 +91,8 @@ def yookassa_webhook(request):
             payment_info = Payment.find_one(some_data['paymentId'])
             if payment_info:
                 payment_status = payment_info.status
-                print('payment_status: ', payment_status)
+                order.paid = True
+                order.save()   
             else:
                 # Обработка ошибок
                 return HttpResponse(status=400)  # Сообщаем кассе об ошибке

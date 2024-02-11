@@ -29,7 +29,10 @@ class Order(models.Model):
     coupon = models.ForeignKey(Coupon, related_name='orders', null=True, blank=True, on_delete=models.SET_NULL)
     discount = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(100)])
 
+
     class Meta:
+            verbose_name = 'Заказ'
+            verbose_name_plural = 'Заказы'
             ordering = ['-created']
             indexes = [
                 models.Index(fields=['-created']),
@@ -43,6 +46,9 @@ class Order(models.Model):
     def get_total_cost(self):
         total_cost = self.get_total_cost_before_discount()
         return total_cost - self.get_discount()
+    
+    
+    get_total_cost.short_description = 'Общая стоимость'
 
 
     def get_yookassa_url(self):

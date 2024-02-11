@@ -8,7 +8,13 @@ from .models import OrderItem, Order
 from .forms import OrderCreateForm
 #from .tasks import order_created
 from cart.cart import Cart
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required 
+from django.contrib.auth import get_user_model
+
+
+User = get_user_model()
+
+
 
 def order_create(request):
     cart = Cart(request)
@@ -16,6 +22,8 @@ def order_create(request):
         form = OrderCreateForm(request.POST)
         if form.is_valid():
             order = form.save(commit=False)
+            if request.user.is_authenticated:
+                order.user = request.user
             if cart.coupon:
                 order.coupon = cart.coupon
                 order.discount = cart.coupon.discount
