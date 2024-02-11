@@ -66,6 +66,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "myshop.middleware.RequestTimeMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -103,6 +104,7 @@ WSGI_APPLICATION = "myshop.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
+        #"ENGINE": "myshop",
         "NAME": os.getenv('POSTGRES_DB'),
         "USER": os.getenv('POSTGRES_USER'),
         "PASSWORD": os.getenv('POSTGRES_PASSWORD'),
@@ -244,6 +246,34 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')  # os.environ['password_k
 EMAIL_USE_TLS = True
 
 ACCOUNT_EMAIL_UNIQUE = True
-#ACCOUNT_EMAIL_CONFIRMATION_REQUIRED = True
+#ACCOUNT_EMAIL_CONFIRMATION_REQUIRED = True 
+
+
+
+#LOggins SQL-queries 
+LOGGING = {
+    'version': 1,
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        }
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+        }
+    },
+    'loggers': {
+        'django.db.backends': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+        }
+    }
+}
+
+
+
 
 

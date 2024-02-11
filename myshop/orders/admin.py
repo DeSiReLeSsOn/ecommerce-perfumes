@@ -59,7 +59,7 @@ def export_to_csv(modeladmin, request, queryset):
 
         total_orders_cost += obj.get_total_cost()
 
-    writer.writerow([f'Общая стоимость всех заказов = {total_orders_cost}руб'])
+    writer.writerow([f'Общая стоимость всех заказов = {total_orders_cost} руб'])
     
     return response
 

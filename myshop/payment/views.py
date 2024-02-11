@@ -164,7 +164,7 @@ def payment_canceled(request):
 def yookassa_webhook(request):
     order_id = request.session.get('order_id', None)
     order = get_object_or_404(Order, id=order_id)
-    # Если хотите убедиться, что запрос пришел от ЮКасса, добавьте проверку:
+ 
     if request.method == 'POST':
         event_json = json.loads(request.body)
         try:
@@ -176,18 +176,16 @@ def yookassa_webhook(request):
                     'paymentId': response_object.id,
                     'paymentStatus': response_object.status,
             }
+                if event.type == 'payment.succeeded':
                     # пометить заказ как оплаченный
-                order.paid = True
-                order.save()   
+                    order.paid = True
+                    order.save()   
 
             elif notification_object.event == WebhookNotificationEventType.PAYMENT_CANCELED:
                 some_data = {
                     'paymentId': response_object.id,
                     'paymentStatus': response_object.status,
-            }
-                order.paid = False
-                order.save()
-            
+            }          
 
             else:
                 # Обработка ошибок
@@ -198,7 +196,6 @@ def yookassa_webhook(request):
             payment_info = Payment.find_one(some_data['paymentId'])
             if payment_info:
                 payment_status = payment_info.status
-                print('payment_status: ', payment_status)
             else:
                 # Обработка ошибок
                 return HttpResponse(status=400)  # Сообщаем кассе об ошибке
