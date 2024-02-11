@@ -54,8 +54,6 @@ def yookassa_webhook(request, order_id):
 
 @csrf_exempt
 def yookassa_webhook(request):
-    order_id = request.session.get('order_id', None)
-    order = get_object_or_404(Order, id=order_id)
     # Если хотите убедиться, что запрос пришел от ЮКасса, добавьте проверку:
     if request.method == 'POST':
         event_json = json.loads(request.body)
@@ -68,7 +66,9 @@ def yookassa_webhook(request):
                     'paymentId': response_object.id,
                     'paymentStatus': response_object.status,
             }
-                    # пометить заказ как оплаченный
+                # пометить заказ как оплаченный
+                order_id = request.session.get('order_id', None)
+                order = get_object_or_404(Order, id=order_id)
                 order.paid = True
                 order.save()    
             
@@ -78,21 +78,18 @@ def yookassa_webhook(request):
                     'paymentId': response_object.id,
                     'paymentStatus': response_object.status,
             }
-                order.paid = False
-                order.save()
             
 
             else:
                 # Обработка ошибок
                 return HttpResponse(status=400)  # Сообщаем кассе об ошибке
             
-            Configuration.configure('XXXXXX', 'test_XXXXXXXX')
+            Configuration.configure(settings.YOOKASSA_SECRET_KEY, settings.YOOKASSA_SHOP_ID)
             # Получим актуальную информацию о платеже
             payment_info = Payment.find_one(some_data['paymentId'])
             if payment_info:
                 payment_status = payment_info.status
-                order.paid = True
-                order.save()   
+                return HttpResponse(status=200)
             else:
                 # Обработка ошибок
                 return HttpResponse(status=400)  # Сообщаем кассе об ошибке

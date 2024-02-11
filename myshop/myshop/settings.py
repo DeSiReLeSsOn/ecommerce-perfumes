@@ -34,9 +34,9 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*', 'https://6b34-195-184-202-202.ngrok-free.app'] 
+ALLOWED_HOSTS = ['*', 'https://4f8b-195-184-202-203.ngrok-free.app'] 
 
-CSRF_TRUSTED_ORIGINS = ['https://6b34-195-184-202-202.ngrok-free.app',]
+CSRF_TRUSTED_ORIGINS = ['https://4f8b-195-184-202-203.ngrok-free.app',]
 
 
 # Application definition
@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
     'account.apps.AccountConfig',
     'django_email_verification',
+    'django_extensions',
     #'django.contrib.sites', 
     
     
@@ -104,7 +105,6 @@ WSGI_APPLICATION = "myshop.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        #"ENGINE": "myshop",
         "NAME": os.getenv('POSTGRES_DB'),
         "USER": os.getenv('POSTGRES_USER'),
         "PASSWORD": os.getenv('POSTGRES_PASSWORD'),
