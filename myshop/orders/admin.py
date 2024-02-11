@@ -9,6 +9,7 @@ from django.http import HttpResponse
 from django.urls import reverse
 from django.utils import timezone
 from datetime import timedelta
+from decimal import Decimal
 
 
 
@@ -32,33 +33,37 @@ def export_to_csv(modeladmin, request, queryset):
     content_disposition = f'attachment; filename={opts.verbose_name_plural}.csv'
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = content_disposition
-    writer = csv.writer(response)  # Добавляем поле для общей стоимости заказа
-    field_names = ['ID Заказа', 'Покупатель', 'ФИО', 'Email', 'Адрес', 'Почтовый индекс', 'Телефон', 'Создан', 'Обновлен', 'Оплачен', 'Купон', 'Скидка', 'Сумма заказа']
+    writer = csv.writer(response)
+    
+    field_names = ['ID Заказа', 'Покупатель', 'ФИО', 'Email', 'Адрес', 'Почтовый индекс', 'Телефон', 'Создан', 'Оплачен', 'Купон', 'Скидка', 'Сумма заказа в рублях']
     writer.writerow(field_names)
 
+    total_orders_cost = Decimal(0)
 
     for obj in queryset:
         data_row = [
             obj.id,
-            obj.user.username if obj.user else '',  # Пример получения имени пользователя
+            obj.user.username if obj.user else '',
             obj.full_name,
             obj.email,
             obj.address,
             obj.postal_code,
             obj.phone,
             obj.created.strftime('%d/%m/%Y %H:%M:%S'),
-            obj.updated.strftime('%d/%m/%Y %H:%M:%S'),
             obj.paid,
-            obj.coupon.code if obj.coupon else '',  # Пример получения кода купона
+            obj.coupon.code if obj.coupon else 'Без купона',
             obj.discount,
-            obj.get_total_cost()  # Общая стоимость заказа
+            obj.get_total_cost()
         ]
-
         writer.writerow(data_row)
 
+        total_orders_cost += obj.get_total_cost()
+
+    writer.writerow([f'Общая стоимость всех заказов = {total_orders_cost}руб'])
+    
     return response
 
-export_to_csv.short_description = 'Экспорт в CSV'
+export_to_csv.short_description = 'Преобразовать в CSV'
 
 
 def order_detail(obj):
