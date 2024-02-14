@@ -35,31 +35,40 @@ def export_to_csv(modeladmin, request, queryset):
     response['Content-Disposition'] = content_disposition
     writer = csv.writer(response)
     
-    field_names = ['ID Заказа', 'Покупатель', 'ФИО', 'Email', 'Адрес', 'Почтовый индекс', 'Телефон', 'Создан', 'Оплачен', 'Купон', 'Скидка', 'Сумма заказа в рублях']
+    field_names = ['ID Заказа', 'Покупатель', 'ФИО', 'Email', 'Адрес', 'Почтовый индекс', 'Телефон', 'Создан', 'Оплачен', 'Купон', 'Скидка', 'Сумма заказа в рублях', 'Товар', 'Количество']
     writer.writerow(field_names)
 
     total_orders_cost = Decimal(0)
+    total_orders_paid = Decimal(0) 
+    
 
     for obj in queryset:
-        data_row = [
-            obj.id,
-            obj.user.username if obj.user else '',
-            obj.full_name,
-            obj.email,
-            obj.address,
-            obj.postal_code,
-            obj.phone,
-            obj.created.strftime('%d/%m/%Y %H:%M:%S'),
-            obj.paid,
-            obj.coupon.code if obj.coupon else 'Без купона',
-            obj.discount,
-            obj.get_total_cost()
-        ]
-        writer.writerow(data_row)
+        items_info = [(item.product.name, item.quantity) for item in obj.items.all()]
+        for item_info in items_info:
+            data_row = [
+                obj.id,
+                obj.user.username if obj.user else 'Не зарегистрирован',
+                obj.full_name,
+                obj.email,
+                obj.address,
+                obj.postal_code,
+                obj.phone,
+                obj.created.strftime('%d/%m/%Y %H:%M:%S'),
+                'Да' if obj.paid else 'Нет',  
+                obj.coupon.code if obj.coupon else 'Без купона',
+                obj.discount,
+                obj.get_total_cost(),
+                item_info[0],
+                item_info[1]
+            ]
+            writer.writerow(data_row)
 
         total_orders_cost += obj.get_total_cost()
+        total_orders_paid = total_orders_paid + obj.get_total_cost() if obj.paid else total_orders_paid + 0 
 
     writer.writerow([f'Общая стоимость всех заказов = {total_orders_cost} руб'])
+
+    writer.writerow([f'Общая стоимость всех оплаченных заказов = {total_orders_paid} руб'])
     
     return response
 

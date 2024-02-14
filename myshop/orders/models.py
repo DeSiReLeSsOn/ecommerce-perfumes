@@ -19,8 +19,8 @@ class Order(models.Model):
     email = models.EmailField('Имейл', max_length=254)
     address = models.CharField('Адрес' ,max_length=250)
     postal_code = models.CharField('Почтовый код',max_length=20)
-    phone = models.CharField('Телефон', null=True, validators=[
-        RegexValidator(r'^\+?\d{1,15}$', 'Введите корректный номер телефона,без тире и пробелов') 
+    phone = models.CharField('Телефон', null=True, validators=[RegexValidator(
+        regex=r'^(\+7|8)\d{10}$', message='Введите корректный номер телефона,без тире и пробелов') 
     ])
     created = models.DateTimeField("Создан",auto_now_add=True)
     updated = models.DateTimeField("Обновлен",auto_now=True)
@@ -67,6 +67,11 @@ class Order(models.Model):
         return Decimal(0)
 
 
+
+    def clean(self):
+        super().clean() 
+        clean_phone = self.phone.replace('-', '').replace(' ', '') 
+        self.phone = clean_phone
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order,
