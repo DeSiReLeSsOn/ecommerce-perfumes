@@ -40,7 +40,6 @@ def export_to_csv(modeladmin, request, queryset):
 
     total_orders_cost = Decimal(0)
     total_orders_paid = Decimal(0) 
-    
 
     for obj in queryset:
         items_info = [(item.product.name, item.quantity) for item in obj.items.all()]
@@ -63,17 +62,15 @@ def export_to_csv(modeladmin, request, queryset):
             ]
             writer.writerow(data_row)
 
-        total_orders_cost += obj.get_total_cost()
-        total_orders_paid = total_orders_paid + obj.get_total_cost() if obj.paid else total_orders_paid + 0 
+            total_orders_cost += obj.get_total_cost()
+            total_orders_paid += obj.get_total_cost() if obj.paid else 0 
 
     writer.writerow([f'Общая стоимость всех заказов = {total_orders_cost} руб'])
-
     writer.writerow([f'Общая стоимость всех оплаченных заказов = {total_orders_paid} руб'])
     
     return response
 
 export_to_csv.short_description = 'Преобразовать в CSV'
-
 
 def order_detail(obj):
     url = reverse('orders:admin_order_detail', args=[obj.id])
