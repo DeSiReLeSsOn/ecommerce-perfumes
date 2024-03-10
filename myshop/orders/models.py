@@ -16,10 +16,10 @@ class Order(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, blank=True, null=True)
     full_name = models.CharField('ФИО', max_length=150, null=False, blank=False, default='')
-    email = models.EmailField('Имейл', max_length=254)
-    address = models.CharField('Адрес' ,max_length=250)
-    postal_code = models.CharField('Почтовый код',max_length=20)
-    phone = models.CharField('Телефон', null=True, validators=[RegexValidator(
+    email = models.EmailField('Имейл', max_length=254, blank=False)
+    address = models.CharField('Адрес' ,max_length=250, blank=False)
+    postal_code = models.CharField('Почтовый код',max_length=20, blank=False)
+    phone = models.CharField('Телефон', blank=False, null=True, validators=[RegexValidator(
         regex=r'^(\+7|8)\d{10}$', message='Введите корректный номер телефона,без тире и пробелов') 
     ])
     created = models.DateTimeField("Создан",auto_now_add=True)
@@ -68,10 +68,6 @@ class Order(models.Model):
 
 
 
-    def clean(self):
-        super().clean() 
-        clean_phone = self.phone.replace('-', '').replace(' ', '') 
-        self.phone = clean_phone
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order,

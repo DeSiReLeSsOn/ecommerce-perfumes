@@ -1,0 +1,36 @@
+{% load static %}
+<!-- Offcanvas Menu Begin -->
+<div class="offcanvas-menu-overlay"></div>
+<div class="offcanvas-menu-wrapper">
+    <div class="offcanvas__option">
+        <div class="offcanvas__links">
+            <a href="#">Войти</a>
+        </div>
+
+    </div>
+    <div class="offcanvas__nav__option">
+        <a href="{% url "cart:cart_detail" %}"><img src="{% get_static_prefix %}img/icon/cart.png" alt=""> <span>
+            {% with total_items=cart|length %}
+            {% if total_items > 0 %} 
+                {{ total_items }}                                        
+            {% else %}
+                0
+            {% endif %}
+        {% endwith %}</span></a>
+        <div class="price">
+            {% for item in cart %}
+            {% with product=item.product %}
+                {% if item.total_price > 0 %}
+                    {{ item.total_price }}₽
+                {% else %}
+                    0₽
+                {% endif %}
+            {% endwith %}
+        {% endfor %}</div>
+    </div>
+    <div id="mobile-menu-wrap"></div>
+    <div class="offcanvas__text">
+        <p>Магазин элитной парфюмерии</p>
+    </div>
+</div>
+<!-- Offcanvas Menu End -->

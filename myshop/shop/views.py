@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Category, Product
+from .models import Category, Product 
 from cart.forms import CartAddProductForm 
 #from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse
@@ -38,6 +38,8 @@ def product_list(request, category_slug=None):
     if category_slug:
         category = get_object_or_404(Category, slug=category_slug)
         products = products.filter(category=category)
+
+
     return render(request,
                   'shop/product/list.html',
                   {'category': category,

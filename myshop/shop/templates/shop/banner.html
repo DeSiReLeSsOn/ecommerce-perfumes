@@ -1,0 +1,50 @@
+
+{% load static %}
+{% block mainbody %}
+
+ <style>
+     .hero__items {
+         height: 591px;
+         padding-top: 117px;
+     }
+
+     .banner__item.banner__item--middle {
+         margin-top: 31px;
+     }
+
+     .banner__item.banner__item--middle .banner__item__text {
+         padding: 5px;
+         margin-top: -114px;
+         background-color: rgba(251, 251, 251, 0.79);
+     }
+ </style>
+ <!-- Hero Section Begin -->
+ <section class="hero">
+     <div class="hero__slider owl-carousel">
+
+         {% for banner in homebanner %}
+         <div class="hero__items set-bg" data-setbg="{% get_media_prefix %}{{banner.background_image}}">
+             <div class="container">
+                 <div class="row">
+                     <div class="col-xl-5 col-lg-7 col-md-8">
+                         <div class="hero__text">
+                             <h6>{{banner.maintitle}}</h6>
+                             <h2>{{banner.title}}</h2>
+                             <p>{{banner.small_description}}</p>
+                             {% if banner.shop_link %}
+                             <a href="{{banner.shop_link}}" class="primary-btn">Shop now <span
+                                     class="arrow_right"></span></a>
+                             {% else %}
+                             <a href="{% url 'shop' %}" class="primary-btn">Shop now <span
+                                     class="arrow_right"></span></a>
+                             {% endif %}
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+         {% endfor %}
+     </div>
+ </section>
+ {% endblock mainbody %}
+ <!-- Hero Section End -->

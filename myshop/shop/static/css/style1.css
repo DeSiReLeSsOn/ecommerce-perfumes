@@ -1,0 +1,33 @@
+.menu-toggle {
+  text-align: left;
+  padding: 1rem;
+  order: 0;
+  margin-right: 2%; /* Используем относительное значение */
+  margin-left: 1%; /* Используем относительное значение */
+}
+
+.overlay {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0; /* меняем с 50% на 0 */
+  background-color: rgba(0, 0, 0, 0.9);
+  overflow-x: hidden;
+  transition: 0.5s;
+}
+
+.site-navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 2%; /* Используем относительное значение */
+}
+
+.site-logo, .site-top-icons {
+  padding: 1rem;
+}
+
+.site-top-icons ul li {
+  margin-left: 1%; /* Используем относительное значение */
+}
