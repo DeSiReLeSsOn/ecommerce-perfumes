@@ -42,6 +42,7 @@ CSRF_TRUSTED_ORIGINS = ['https://c685-195-184-202-202.ngrok-free.app',]
 # Application definition
 
 INSTALLED_APPS = [
+    'account.apps.AccountConfig',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -57,11 +58,11 @@ INSTALLED_APPS = [
     'crispy_forms',
     "crispy_bootstrap5",
     'django.contrib.postgres',
-    'account.apps.AccountConfig',
     'django_email_verification',
     'django_extensions',
     #'django.contrib.sites', 
     'site_settings',
+    'social_django',
     
     
     
@@ -92,6 +93,8 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "cart.context_processors.cart",
+                "social_django.context_processors.backends",
+                'social_django.context_processors.login_redirect'
             ],
         },
     },
@@ -249,6 +252,20 @@ EMAIL_USE_TLS = True
 ACCOUNT_EMAIL_UNIQUE = True
 #ACCOUNT_EMAIL_CONFIRMATION_REQUIRED = True 
 
+SOCIAL_AUTH_POSTGRES_JSONFIELD = True
+
+AUTHENTICATION_BACKENDS = [
+ 'django.contrib.auth.backends.ModelBackend',
+ 'account.authentication.EmailAuthBackend',
+ 'social_core.backends.vk.VKOAuth2',
+ #'social_core.backends.yandex.YandexOAuth2',
+]
+
+SOCIAL_AUTH_VK_OAUTH2_KEY = os.getenv('SOCIAL_AUTH_VK_OAUTH2_KEY')
+SOCIAL_AUTH_VK_OAUTH2_SECRET = os.getenv('SOCIAL_AUTH_VK_OAUTH2_SECRET')
+VK_OAUTH2_CALLBACK_URL = 'http://127.0.0.1:8000/social-auth/login/vk-oauth2/'
+SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['email']
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
 
 #LOggins SQL-queries 

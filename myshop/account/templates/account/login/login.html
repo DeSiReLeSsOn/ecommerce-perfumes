@@ -61,6 +61,15 @@
     <div class="text-center">
         <a href="{% url 'account:register' %}">Зарегистрироваться</a>
     </div>
+    <div class="social">
+        <ul>
+            <li class="vk">
+                <a href="{% url "social:begin" "vk-oauth2" %}" >
+                    Войти через ВК
+                    <img src="/static/vk.png">
+                </a>
+            </li>
+        </ul>
 
     <br>
     <div class="text-center">
