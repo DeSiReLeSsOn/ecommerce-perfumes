@@ -61,7 +61,7 @@ INSTALLED_APPS = [
     'django_email_verification',
     'django_extensions',
     #'django.contrib.sites', 
-    'site_settings',
+    'banner',
     'social_django',
     
     

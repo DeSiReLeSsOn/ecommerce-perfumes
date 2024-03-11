@@ -13,6 +13,8 @@
         <hr>
 
         <h6>Личная информация</h6>
+        <p>Ваш E-mail: {{ user.email }}</p>
+        <p>Дата регистрации: {{ user.date_joined }}</p>
 
         <a href="{% url 'account:logout' %}">
         <button class="btn btn-primary">

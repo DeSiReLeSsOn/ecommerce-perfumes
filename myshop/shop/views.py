@@ -4,7 +4,7 @@ from cart.forms import CartAddProductForm
 #from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse
 from django.db.models import Q, Max, Min
-
+from banner.models import Banner
 
 
 
@@ -73,3 +73,6 @@ def search(request):
         products = Product.objects.all()
     return render(request, 'shop/product/list.html', {'products': products})
 
+def index(request):
+    banners = Banner.objects.all()
+    return render(request, 'shop/navbar.html', {'banners': banners})

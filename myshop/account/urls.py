@@ -11,7 +11,6 @@ urlpatterns = [
     # Registration and verification
 
     path('register/', views.register_user, name='register'),
-    path('social-auth/', include('social_django.urls', namespace='social')),
     path('email-verification-sent/',
          lambda request:render(
              request, 'account/email/email-verification-sent.html'),
