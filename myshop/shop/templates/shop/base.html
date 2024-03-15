@@ -29,13 +29,18 @@
     <link rel="stylesheet" href="{% static "css/owl.theme.default.min.css" %}">
     <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
     <link rel="stylesheet" href="{% static "css/style.css" %}">
+    {% load banner_tags %}
 </head>
 
 
 
 <body>
-
         {% include 'shop/navbar.html' %}
+        {% if request.path == "/" %}
+          {% show_banner is_homepage=True %}
+        {% endif %}
+        
+
 
 
         {% block content %}

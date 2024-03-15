@@ -32,6 +32,7 @@ urlpatterns = [
     path('payment/', include('payment.urls', namespace='payment')),
     path('coupons/', include('coupons.urls', namespace='coupons')),
     path('email/', include(email_urls), name='email-verification'),
+    path('banner/', include('banner.urls', namespace='banner')),
     path('', include('shop.urls', namespace='shop')),
 ]
 

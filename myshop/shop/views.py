@@ -57,7 +57,7 @@ def product_detail(request, id, slug):
     return render(request,
                   'shop/product/detail.html',
                   {'product': product,
-                   'cart_product_form': cart_product_form,})
+                   'cart_product_form': cart_product_form})
 
 
 """def search(request):
@@ -74,5 +74,6 @@ def search(request):
     return render(request, 'shop/product/list.html', {'products': products})
 
 def index(request):
+    #banners = Banner.objects.filter(is_active=True)
     banners = Banner.objects.all()
-    return render(request, 'shop/navbar.html', {'banners': banners})
+    return render(request, 'shop/banner.html', {'banners': banners})
