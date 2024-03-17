@@ -5,6 +5,9 @@ from cart.forms import CartAddProductForm
 from django.http import HttpResponse
 from django.db.models import Q, Max, Min
 from banner.models import Banner
+from .models import FavoriteProduct
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
 
 
 
@@ -77,3 +80,15 @@ def index(request):
     #banners = Banner.objects.filter(is_active=True)
     banners = Banner.objects.all()
     return render(request, 'shop/banner.html', {'banners': banners})
+
+
+
+@login_required
+def add_to_favorite_ajax(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    favorite_product, created = FavoriteProduct.objects.get_or_create(user=request.user, product=product)
+    if created:
+        message = 'Товар успешно добавлен в избранное'
+    else:
+        message = 'Товар уже есть в избранном'
+    return JsonResponse({'message': message, 'created': created})

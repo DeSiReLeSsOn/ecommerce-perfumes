@@ -1,0 +1,14 @@
+{% extends "shop/base.html" %}
+{% block title %}Избранные товары{% endblock %}
+{% block content %}
+<div class="container">
+    <h1>Избранные товары</h1>
+    <ul>
+        {% for favorite_product in favorite_products %}
+            <li>
+                <a href="{{ favorite_product.product.get_absolute_url }}">{{ favorite_product.product.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

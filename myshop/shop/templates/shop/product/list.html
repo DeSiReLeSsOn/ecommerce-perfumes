@@ -28,6 +28,9 @@
                                 <h3><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h3>
                                 <p class="mb-0">{{ product.description }}</p>
                                 <p class="text-primary font-weight-bold">₽{{ product.price }}</p>
+                                <a href="javascript:void(0);" onclick="addToFavorites({{ product.id }})">
+                                    <i id="heart-icon-{{ product.id }}" class="fas fa-heart"></i> Добавить в избранное
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -61,4 +64,34 @@
         </div>
     </div>
 </div>
+{% csrf_token %}
+
+
+<script>
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    function addToFavorites(product_id) {
+    fetch(`/add-to-favorite/${product_id}/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': csrftoken,
+            'Content-Type': 'application/json'
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.created) {
+            alert(data.message); // Показать сообщение об успешном добавлении товара
+            // Изменить цвет иконки сердечка на другой цвет
+            const heartIcon = document.getElementById(`heart-icon-${product_id}`);
+            heartIcon.style.color = 'red'; // Измените цвет на желаемый, в данном случае на красный
+        } else {
+            alert(data.message); // Показать сообщение о том, что товар уже в избранном
+        }
+    })
+    .catch(error => {
+        console.error('Ошибка:', error);
+    });
+}
+</script>
+
 {% endblock %}

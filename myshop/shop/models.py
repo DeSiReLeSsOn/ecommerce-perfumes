@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.db.models.query import QuerySet
+from django.contrib.auth.models import User
 
 
 
@@ -59,5 +60,12 @@ class Product(models.Model):
         return reverse('shop:product_detail',
                        args=[self.id, self.slug]) 
     
+
+
+
+class FavoriteProduct(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    date_added = models.DateTimeField(auto_now_add=True)
 
 

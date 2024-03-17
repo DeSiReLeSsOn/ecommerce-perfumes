@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, get_user_model, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django_email_verification import send_email
+from shop.models import FavoriteProduct
 
 User = get_user_model()
 
@@ -104,3 +105,11 @@ def delete_user(request):
         user.delete()
         return redirect('shop:product_list')
     return render(request, 'account/dashboard/account-delete.html')
+
+
+
+
+@login_required
+def favorite_list(request):
+    favorite_products = FavoriteProduct.objects.filter(user=request.user)
+    return render(request, 'account/dashboard/favorites.html', {'favorite_products': favorite_products})
