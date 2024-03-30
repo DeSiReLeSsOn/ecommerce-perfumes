@@ -31,7 +31,7 @@ class Product(models.Model):
                                  related_name='products',
                                  on_delete=models.CASCADE)
     name = models.CharField(max_length=200, verbose_name='Продукт')
-    slug = models.SlugField(max_length=200)
+    slug = models.SlugField(max_length=200, verbose_name="Слаг")
     image = models.ImageField(upload_to='products/%Y/%m/%d',
                               blank=True, verbose_name='Фото товара')
     description = models.TextField(blank=True, verbose_name='Описание товара')
@@ -40,6 +40,7 @@ class Product(models.Model):
     available = models.BooleanField(default=True, verbose_name='В наличии/не в наличии')
     created = models.DateTimeField(auto_now_add=True, verbose_name='Товар создан')
     updated = models.DateTimeField(auto_now=True, verbose_name='Товар обновлен')
+    volume = models.CharField(max_length=10, verbose_name="Обьем флакона", blank=False, default="50ml")
 
 
 
