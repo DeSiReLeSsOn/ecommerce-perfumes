@@ -237,8 +237,27 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert('Товар успешно добавлен в корзину!');
-                    updateCart();
+                    if (link.dataset.added === 'true') {
+                        // Удаляем товар из корзины
+                        fetch(`/cart/ajax/remove/${productId}/`, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRFToken': getCookie('csrftoken'),
+                                'Content-Type': 'application/json'
+                            }
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            // Обновляем изображение и сбрасываем флаг добавления
+                            link.querySelector('img').setAttribute('src', '{% static "img/cart.png" %}');
+                            link.dataset.added = 'false';
+                        })
+                        .catch(error => console.error('Произошла ошибка при удалении товара из корзины:', error));
+                    } else {
+                        // Добавляем товар в корзину
+                        link.querySelector('img').setAttribute('src', '{% static "img/ok.png" %}');
+                        link.dataset.added = 'true';
+                    }
                 }
             })
             .catch(error => console.error('Произошла ошибка:', error));
@@ -248,15 +267,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function getCookie(name) {
     return document.cookie.split('; ').find(c => c.startsWith(name + '=')).split('=')[1];
-}
-
-function updateCart() {
-    fetch('/cart/', {
-        method: 'GET'
-    })
-    .then(response => response.text())
-    .then(data => document.getElementById('cart-content').innerHTML = data)
-    .catch(error => console.error('Произошла ошибка при обновлении корзины:', error));
 }
 </script>
 
