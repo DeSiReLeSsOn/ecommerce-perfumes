@@ -4,6 +4,8 @@ from shop.models import Product
 from .cart import Cart
 from .forms import CartAddProductForm
 from coupons.forms import CouponApplyForm
+from django.http.response import JsonResponse
+
 
 
 
@@ -18,6 +20,12 @@ def cart_add(request, product_id):
                  quantity=cd['quantity'],
                  override_quantity=cd['override'])
     return redirect('cart:cart_detail')
+@require_POST
+def cart_add_ajax(request, product_id):
+    cart = Cart(request)
+    product = get_object_or_404(Product, id=product_id)
+    cart.add(product=product, quantity=1, override_quantity=False)
+    return JsonResponse({'success': True})
 
 
 @require_POST

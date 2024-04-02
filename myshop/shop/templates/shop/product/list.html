@@ -162,18 +162,23 @@
     <div class="col-md-3 col-sm-6">
         <div class="product-grid" style="height: 300px; border: 2px solid rgb(224, 193, 88);">
             <div class="product-image">
-                <a href="#" class="image">
+                <a href="{{ product.get_absolute_url }}" class="image">
                     <img class="pic-1" src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.jpg" %}{% endif %}">
                 </a>
                 <ul class="product-links">
-                    <li><a href="javascript:void(0);" onclick="addToFavorites({{ product.id }})" data-tip="Add to Wishlist"><i class="fas fa-heart"></i></a></li>
-                    <li><a href="#" data-tip="Quick View"><i class="fa fa-search"></i></a></li>
-                    <li><a href="" data-tip="Add to Cart"><i class="fa fa-shopping-bag"></i></a></li>
+                    <li><a href="javascript:void(0);" onclick="addToFavorites({{ product.id }})" data-tip="Добавить в избранное"><i class="fas fa-heart"></i></a></li>
+                    <li><a href="#" data-tip="Обзор"><i class="fa fa-search"></i></a></li>
+                    <li>
+                        <a href="#" class="add-to-cart-link" data-product-id="{{ product.id }}" data-tip="Добавить в корзину">
+                            <img src="{% static "img/cart.png" %}" alt="Корзина">
+                            <img src="{% static "img/ok.png" %}" style="display: none;">
+                        </a>
+                    </li>
                 </ul>
                 <div class="price">{{ product.price }}</div>
             </div>
             <div class="product-content">
-                <h3 class="title"><a href="#">{{ product.name }}</a></h3>
+                <h3 class="title"><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h3>
                 <h3 class="title">{{ product.category }} / {{ product.volume }}</h3>
             </div>
         </div>
@@ -215,6 +220,46 @@
     });
 }
 </script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.add-to-cart-link').forEach(function(link) {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
+            
+            const productId = link.getAttribute('data-product-id');
+            fetch(`/cart/ajax/add/${productId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken'),
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Товар успешно добавлен в корзину!');
+                    updateCart();
+                }
+            })
+            .catch(error => console.error('Произошла ошибка:', error));
+        });
+    });
+});
+
+function getCookie(name) {
+    return document.cookie.split('; ').find(c => c.startsWith(name + '=')).split('=')[1];
+}
+
+function updateCart() {
+    fetch('/cart/', {
+        method: 'GET'
+    })
+    .then(response => response.text())
+    .then(data => document.getElementById('cart-content').innerHTML = data)
+    .catch(error => console.error('Произошла ошибка при обновлении корзины:', error));
+}
+</script>
+
 
 
 {% endblock %}
