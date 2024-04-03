@@ -15,7 +15,7 @@
           </div>
           <span class="toggle_icon" onclick="openNav()"><img src="{% static "images/toggle-icon.png" %}"></span>
           <a class="logo" href="index.html"><img src="{% static "images/logo.png" %}"></a></a>
-          <form class="form-inline ">
+          <form class="form-inline">
              <div class="login_text">
                 <ul>
                    <li><a href="#"><img src="{% static "images/user-icon.png" %}"></a></li>
@@ -28,6 +28,17 @@
  </div>
  <!-- header section end -->
  <!-- banner section start -->
+
+
+<script>
+   function openNav() {
+      document.getElementById("mySidenav").style.width = "100%";
+      }
+            
+   function closeNav() {
+      document.getElementById("mySidenav").style.width = "0";
+      }
+</script> 
 
 
 
