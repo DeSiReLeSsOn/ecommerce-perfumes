@@ -92,3 +92,18 @@ def add_to_favorite_ajax(request, product_id):
     else:
         message = 'Товар уже есть в избранном'
     return JsonResponse({'message': message, 'created': created})
+
+
+@login_required
+def remove_from_favorite_ajax(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    removed = FavoriteProduct.objects.filter(user=request.user, product=product).delete()
+    
+    if removed:
+        message = 'Товар успешно удален из избранного'
+        deleted = True
+    else:
+        message = 'Товар не найден в избранном'
+        deleted = False
+    
+    return JsonResponse({'message': message, 'deleted': deleted})
