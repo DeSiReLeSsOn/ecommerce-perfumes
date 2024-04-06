@@ -105,6 +105,3 @@ def remove_from_favorite_ajax(request, product_id):
 
 
 
-def get_cart_info(request):
-    total_items = Cart.objects.filter(user=request.user).count()
-    return JsonResponse({'total_items': total_items})

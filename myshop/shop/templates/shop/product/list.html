@@ -127,117 +127,137 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    function setInitialImages() {
+        document.querySelectorAll('.favorite-link').forEach(function(link) {
+            const productId = link.getAttribute('data-product-id');
+            const inFavorites = localStorage.getItem(`favorite_${productId}`) === 'true';
+            
+            if (inFavorites) {
+                document.getElementById(`heart-icon-${productId}`).src = '{% static "images/like.png" %}';
+            } else {
+                document.getElementById(`heart-icon-${productId}`).src = '{% static "images/heart.png" %}';
+            }
+        });
+
+        document.querySelectorAll('.add-to-cart-link').forEach(function(link) {
+            const productId = link.getAttribute('data-product-id');
+            const inCart = localStorage.getItem(`cart_${productId}`) === 'true';
+            
+            if (inCart) {
+                link.querySelector('img').setAttribute('src', '{% static "img/ok.png" %}');
+                link.dataset.added = 'true';
+            } else {
+                link.querySelector('img').setAttribute('src', '{% static "img/cart.png" %}');
+                link.dataset.added = 'false';
+            }
+        });
+    }
+
+    setInitialImages();
+
+    // Код добавления и удаления избранного
     document.querySelectorAll('.favorite-link').forEach(function(link) {
         link.addEventListener('click', function(event) {
             event.preventDefault();
-
             const productId = link.getAttribute('data-product-id');
             const heartIcon = document.getElementById(`heart-icon-${productId}`);
 
-            fetch(`/add-to-favorite/${productId}/`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': getCookie('csrftoken'),
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Товар успешно добавлен в избранное
+            if (heartIcon.src.includes('like.png')) {
+                fetch(`/remove-from-favorite/${productId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': getCookie('csrftoken'),
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    heartIcon.src = '{% static "images/heart.png" %}';
+                    localStorage.removeItem(`favorite_${productId}`);
+                })
+                .catch(error => console.error('Произошла ошибка при удалении товара из избранного:', error));
+            } else {
+                fetch(`/add-to-favorite/${productId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': getCookie('csrftoken'),
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
                     heartIcon.src = '{% static "images/like.png" %}';
-                } else {
-                    // Товар удален из избранного или не был добавлен
-                    fetch(`/remove-from-favorite/${productId}/`, {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRFToken': getCookie('csrftoken'),
-                            'Content-Type': 'application/json'
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        // Товар успешно удален из избранного
-                        heartIcon.src = '{% static "images/heart.png" %}';
-                    })
-                    .catch(error => console.error('Произошла ошибка при удалении товара из избранного:', error));
-                }
-            })
-            .catch(error => console.error('Произошла ошибка:', error));
+                    localStorage.setItem(`favorite_${productId}`, 'true');
+                })
+                .catch(error => console.error('Произошла ошибка:', error));
+            }
         });
     });
-});
 
-function getCookie(name) {
-    return document.cookie.split('; ').find(c => c.startsWith(name + '=')).split('=')[1];
-}
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
+    // Код добавления и удаления из корзины
     document.querySelectorAll('.add-to-cart-link').forEach(function(link) {
         link.addEventListener('click', function(event) {
             event.preventDefault();
-
             const productId = link.getAttribute('data-product-id');
 
-            fetch(`/cart/ajax/add/${productId}/`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': getCookie('csrftoken'),
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Обновляем данные корзины и изображение
+            if (link.dataset.added === 'true') { // Удаление товара из корзины
+                fetch(`/cart/ajax/remove/${productId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': getCookie('csrftoken'),
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    link.querySelector('img').setAttribute('src', '{% static "img/cart.png" %}');
+                    link.dataset.added = 'false';
+                    localStorage.removeItem(`cart_${productId}`);
                     updateCartData();
-                    if (link.dataset.added === 'true') {
-                        fetch(`/cart/ajax/remove/${productId}/`, {
-                            method: 'POST',
-                            headers: {
-                                'X-CSRFToken': getCookie('csrftoken'),
-                                'Content-Type': 'application/json'
-                            }
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            link.querySelector('img').setAttribute('src', '{% static "img/cart.png" %}');
-                            link.dataset.added = 'false';
-                            updateCartData();
-                        })
-                        .catch(error => console.error('Произошла ошибка при удалении товара из корзины:', error));
-                    } else {
+                })
+                .catch(error => console.error('Произошла ошибка при удалении товара из корзины:', error));
+            } else {
+                fetch(`/cart/ajax/add/${productId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': getCookie('csrftoken'),
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
                         link.querySelector('img').setAttribute('src', '{% static "img/ok.png" %}');
                         link.dataset.added = 'true';
+                        localStorage.setItem(`cart_${productId}`, 'true');
+                        updateCartData();
                     }
-                }
-            })
-            .catch(error => console.error('Произошла ошибка:', error));
+                })
+                .catch(error => console.error('Произошла ошибка:', error));
+            }
         });
     });
+
+    function getCookie(name) {
+        return document.cookie.split('; ').find(c => c.startsWith(name + '=')).split('=')[1];
+    }
+
+    function updateCartData() {
+        fetch('/cart/count/', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            const cartCountElement = document.querySelector('#cart-count-element');
+            cartCountElement.textContent = data.total_items;
+        })
+        .catch(error => console.error('Произошла ошибка при обновлении количества товаров в корзине:', error));
+    }
 });
-
-function getCookie(name) {
-    return document.cookie.split('; ').find(c => c.startsWith(name + '=')).split('=')[1];
-}
-
-function updateCartData() {
-    fetch('/cart/count/', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        const cartCountElement = document.querySelector('#cart-count-element');
-        cartCountElement.textContent = data.total_items;
-    })
-    .catch(error => console.error('Произошла ошибка при обновлении количества товаров в корзине:', error));
-}
 </script>
-
 
 
 {% endblock %}

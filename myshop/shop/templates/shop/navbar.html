@@ -54,7 +54,7 @@
             <a href="contact.html">Contact</a>
          </div>
          <span class="toggle_icon" onclick="openNav()"><img src="{% static "images/toggle-icon.png" %}"></span>
-         <a class="logo" href="index.html"><img src="{% static "images/dior.png" %}" style="height: 80px;"></a>
+         <a class="logo" href="{% url "shop:product_list" %}"><img src="{% static "images/dior.png" %}" style="height: 80px;"></a>
          <form class="form-inline ">
             <div class="login_text">
                <ul>
