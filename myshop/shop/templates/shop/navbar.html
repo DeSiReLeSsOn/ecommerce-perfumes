@@ -58,14 +58,18 @@
          <form class="form-inline ">
             <div class="login_text">
                <ul>
-                  <li><a href="#" ><img src="{% static "images/heart.png" %}"></a></li>
+                  <li><a href="{% url 'account:favorites' %}" ><img src="{% static "images/heart.png" %}"></a></li>
                   <li><a href="{% url "account:dashboard" %}"><img src="{% static "images/acc1.png" %}" ></a></li> 
                   
                   <li>
                      <a href="{% url "cart:cart_detail" %}">
                      <div class="cart-icon">
                         <img src="{% static "images/cart1.png" %}" alt="Cart icon">
-                        <span class="cart-count">5</span>
+                        <span class="cart-count" id="cart-count-element">
+                           {% with total_items=cart|length %}
+                              {{ total_items }}
+                           {% endwith %}
+                        </span>
                      </div>
                      </a>
                   </li>
@@ -89,7 +93,10 @@
    function closeNav() {
       document.getElementById("mySidenav").style.width = "0";
       }
+
+
 </script> 
+
 
 
 

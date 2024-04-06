@@ -8,6 +8,7 @@ from banner.models import Banner
 from .models import FavoriteProduct
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
+from cart.context_processors import *
 
 
 
@@ -88,11 +89,9 @@ def add_to_favorite_ajax(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     favorite_product, created = FavoriteProduct.objects.get_or_create(user=request.user, product=product)
     if created:
-        message = 'Товар успешно добавлен в избранное'
-    else:
-        message = 'Товар уже есть в избранном'
-    return JsonResponse({'message': message, 'created': created})
-
+        return JsonResponse({'success': True})
+    
+    return JsonResponse({'success': False})
 
 @login_required
 def remove_from_favorite_ajax(request, product_id):
@@ -100,10 +99,12 @@ def remove_from_favorite_ajax(request, product_id):
     removed = FavoriteProduct.objects.filter(user=request.user, product=product).delete()
     
     if removed:
-        message = 'Товар успешно удален из избранного'
-        deleted = True
-    else:
-        message = 'Товар не найден в избранном'
-        deleted = False
+        return JsonResponse({'success': True})
     
-    return JsonResponse({'message': message, 'deleted': deleted})
+    return JsonResponse({'success': False})
+
+
+
+def get_cart_info(request):
+    total_items = Cart.objects.filter(user=request.user).count()
+    return JsonResponse({'total_items': total_items})

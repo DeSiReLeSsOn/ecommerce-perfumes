@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django_email_verification import send_email
 from shop.models import FavoriteProduct
+from django.http.response import JsonResponse
 
 User = get_user_model()
 
@@ -113,3 +114,10 @@ def delete_user(request):
 def favorite_list(request):
     favorite_products = FavoriteProduct.objects.filter(user=request.user)
     return render(request, 'account/dashboard/favorites.html', {'favorite_products': favorite_products})
+
+
+
+@login_required
+def get_favorite_products(request):
+    favorite_products = list(FavoriteProduct.objects.filter(user=request.user).values_list('product_id', flat=True))
+    return JsonResponse({'favoriteProducts': favorite_products})

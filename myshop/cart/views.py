@@ -53,3 +53,11 @@ def cart_detail(request):
     coupon_apply_form = CouponApplyForm()
     cart_products = [item['product'] for item in cart] 
     return render(request, 'cart/detail.html', {'cart': cart, 'coupon_apply_form': coupon_apply_form})
+
+
+
+
+def cart_count(request):
+    cart = Cart(request)
+    total_items = len(cart)
+    return JsonResponse({'total_items': total_items})

@@ -102,7 +102,7 @@
                                     <img src="{% static "img/cart.png" %}" alt="Корзина">
                                     <img src="{% static "img/ok.png" %}" style="display: none;">
                                 </a>
-                                <a href="javascript:void(0);" onclick="addToFavorites({{ product.id }})" data-tip="В избранное">
+                                <a href="#" class="favorite-link" data-product-id="{{ product.id }}" data-tip="В избранное">
                                     <img id="heart-icon-{{ product.id }}" src="{% static 'images/heart.png' %}" alt="Сердце">
                                     <img id="like-icon-{{ product.id }}" src="{% static 'images/like.png' %}" style="display: none;" alt="Лайк">
                                 </a>
@@ -126,34 +126,50 @@
 
 
 <script>
-const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.favorite-link').forEach(function(link) {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
 
-function addToFavorites(product_id) {
-    const heartIcon = document.getElementById(`heart-icon-${product_id}`);
-    const likeIcon = document.getElementById(`like-icon-${product_id}`);
-    
-    fetch(`/add-to-favorite/${product_id}/`, {
-        method: 'POST',
-        headers: {
-            'X-CSRFToken': csrftoken,
-            'Content-Type': 'application/json'
-        },
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.created) {
-            alert(data.message); // Показать сообщение об успешном добавлении товара в избранное
-            heartIcon.style.display = 'none'; // Скрыть сердечко
-            likeIcon.style.display = 'block'; // Показать изображение лайка
-        } else {
-            alert(data.message); // Показать сообщение о том, что товар уже в избранном
-            heartIcon.style.display = 'block'; // Показать сердечко
-            likeIcon.style.display = pins`none`; // Скрыть изображение лайка
-        }
-    })
-    .catch(error => {
-        console.error('Ошибка:', error);
+            const productId = link.getAttribute('data-product-id');
+            const heartIcon = document.getElementById(`heart-icon-${productId}`);
+
+            fetch(`/add-to-favorite/${productId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken'),
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Товар успешно добавлен в избранное
+                    heartIcon.src = '{% static "images/like.png" %}';
+                } else {
+                    // Товар удален из избранного или не был добавлен
+                    fetch(`/remove-from-favorite/${productId}/`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': getCookie('csrftoken'),
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Товар успешно удален из избранного
+                        heartIcon.src = '{% static "images/heart.png" %}';
+                    })
+                    .catch(error => console.error('Произошла ошибка при удалении товара из избранного:', error));
+                }
+            })
+            .catch(error => console.error('Произошла ошибка:', error));
+        });
     });
+});
+
+function getCookie(name) {
+    return document.cookie.split('; ').find(c => c.startsWith(name + '=')).split('=')[1];
 }
 </script>
 <script>
@@ -161,8 +177,9 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.add-to-cart-link').forEach(function(link) {
         link.addEventListener('click', function(event) {
             event.preventDefault();
-            
+
             const productId = link.getAttribute('data-product-id');
+
             fetch(`/cart/ajax/add/${productId}/`, {
                 method: 'POST',
                 headers: {
@@ -173,8 +190,9 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
+                    // Обновляем данные корзины и изображение
+                    updateCartData();
                     if (link.dataset.added === 'true') {
-                        // Удаляем товар из корзины
                         fetch(`/cart/ajax/remove/${productId}/`, {
                             method: 'POST',
                             headers: {
@@ -184,13 +202,12 @@ document.addEventListener('DOMContentLoaded', function() {
                         })
                         .then(response => response.json())
                         .then(data => {
-                            // Обновляем изображение и сбрасываем флаг добавления
                             link.querySelector('img').setAttribute('src', '{% static "img/cart.png" %}');
                             link.dataset.added = 'false';
+                            updateCartData();
                         })
                         .catch(error => console.error('Произошла ошибка при удалении товара из корзины:', error));
                     } else {
-                        // Добавляем товар в корзину
                         link.querySelector('img').setAttribute('src', '{% static "img/ok.png" %}');
                         link.dataset.added = 'true';
                     }
@@ -203,6 +220,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function getCookie(name) {
     return document.cookie.split('; ').find(c => c.startsWith(name + '=')).split('=')[1];
+}
+
+function updateCartData() {
+    fetch('/cart/count/', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        const cartCountElement = document.querySelector('#cart-count-element');
+        cartCountElement.textContent = data.total_items;
+    })
+    .catch(error => console.error('Произошла ошибка при обновлении количества товаров в корзине:', error));
 }
 </script>
 

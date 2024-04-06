@@ -12,5 +12,6 @@ urlpatterns = [
     path('search/', views.search, name='search'),
     path('add-to-favorite/<int:product_id>/', views.add_to_favorite_ajax, name='add-to-favorite'),
     path('remove-from-favorite/<int:product_id>/', views.remove_from_favorite_ajax, name='remove-to-favorite'),
+    path('get-cart-count/', views.get_cart_info, name='get_cart_info'),
 
 ]
