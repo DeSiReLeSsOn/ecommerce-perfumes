@@ -24,7 +24,8 @@ urlpatterns = [
     # Dashboard
     path('dashboard/', views.dashboard_user, name='dashboard'),
     path('favorites/', views.favorite_list, name='favorites'),
-    path('is-product-in-favorites/<int:product_id>/', views.is_product_in_favorites, name='is_product_in_favorites'),
+    path('favorites/<int:product_id>/', views.favorite_list, name='favorites'),
+    
     #path('get-favorite-products/', views.get_favorite_products, name='get_favorite_products'),
     path('profile-management/', views.profile_user, name='profile-management'),
     path('delete-user/', views.delete_user, name='delete-user'),

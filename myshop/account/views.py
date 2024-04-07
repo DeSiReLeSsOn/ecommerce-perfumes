@@ -111,9 +111,17 @@ def delete_user(request):
 
 
 @login_required
-def favorite_list(request):
-    favorite_products = FavoriteProduct.objects.filter(user=request.user)
-    return render(request, 'account/dashboard/favorites.html', {'favorite_products': favorite_products})
+def favorite_list(request, product_id=None):
+    if product_id:
+        favorite_product = FavoriteProduct.objects.filter(user=request.user, product_id=product_id)
+        
+        if favorite_product:
+            return JsonResponse({'inFavorites': True})
+        else:
+            return JsonResponse({'inFavorites': False})
+    else:
+        favorite_products = FavoriteProduct.objects.filter(user=request.user)
+        return render(request, 'account/dashboard/favorites.html', {'favorite_products': favorite_products})
 
 
 
@@ -124,11 +132,3 @@ def favorite_list(request):
 
 
 
-def is_product_in_favorites(request, product_id):
-    user = request.user
-    favorite_product = FavoriteProduct.objects.filter(user=user, product_id=product_id)
-    
-    if favorite_product:
-        return JsonResponse({'inFavorites': True})
-    else:
-        return JsonResponse({'inFavorites': False})
