@@ -117,7 +117,18 @@ def favorite_list(request):
 
 
 
-@login_required
-def get_favorite_products(request):
-    favorite_products = list(FavoriteProduct.objects.filter(user=request.user).values_list('product_id', flat=True))
-    return JsonResponse({'favoriteProducts': favorite_products})
+# @login_required
+# def get_favorite_products(request):
+#     favorite_products = list(FavoriteProduct.objects.filter(user=request.user).values_list('product_id', flat=True))
+#     return JsonResponse({'favoriteProducts': favorite_products}) 
+
+
+
+def is_product_in_favorites(request, product_id):
+    user = request.user
+    favorite_product = FavoriteProduct.objects.filter(user=user, product_id=product_id)
+    
+    if favorite_product:
+        return JsonResponse({'inFavorites': True})
+    else:
+        return JsonResponse({'inFavorites': False})

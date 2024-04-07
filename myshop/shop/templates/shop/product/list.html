@@ -99,12 +99,12 @@
                             </div>
                             <div class="product-links">
                                 <a href="#" class="add-to-cart-link" data-product-id="{{ product.id }}" data-tip="В корзину">
-                                    <img src="{% static "img/cart.png" %}" alt="Корзина">
-                                    <img src="{% static "img/ok.png" %}" style="display: none;">
+                                    <img id="c-icon-{{ product.id }}" src="{% static 'img/cart.png' %}" alt="Корзина">
+                                    <img id="ok-icon-{{ product.id }}" src="{% static 'img/ok.png' %}" style="display: none;">
                                 </a>
                                 <a href="#" class="favorite-link" data-product-id="{{ product.id }}" data-tip="В избранное">
                                     <img id="heart-icon-{{ product.id }}" src="{% static 'images/heart.png' %}" alt="Сердце">
-                                    <img id="like-icon-{{ product.id }}" src="{% static 'images/like.png' %}" style="display: none;" alt="Лайк">
+                                    <img id="like-icon-{{ product.id }}" src="{% static 'images/like.png' %}" style="display: none;">
                                 </a>
                                 
                             </div>
@@ -127,31 +127,35 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    function setInitialImages() {
-        document.querySelectorAll('.favorite-link').forEach(function(link) {
-            const productId = link.getAttribute('data-product-id');
-            const inFavorites = localStorage.getItem(`favorite_${productId}`) === 'true';
-            
-            if (inFavorites) {
-                document.getElementById(`heart-icon-${productId}`).src = '{% static "images/like.png" %}';
-            } else {
-                document.getElementById(`heart-icon-${productId}`).src = '{% static "images/heart.png" %}';
-            }
-        });
-
-        document.querySelectorAll('.add-to-cart-link').forEach(function(link) {
-            const productId = link.getAttribute('data-product-id');
-            const inCart = localStorage.getItem(`cart_${productId}`) === 'true';
-            
-            if (inCart) {
-                link.querySelector('img').setAttribute('src', '{% static "img/ok.png" %}');
-                link.dataset.added = 'true';
-            } else {
-                link.querySelector('img').setAttribute('src', '{% static "img/cart.png" %}');
-                link.dataset.added = 'false';
-            }
-        });
+    async function setInitialImages() {
+    const favoriteLinks = document.querySelectorAll('.favorite-link');
+    for (const link of favoriteLinks) {
+        const productId = link.getAttribute('data-product-id');
+        const response = await fetch(`account/is-product-in-favorites/${productId}/`);
+        const data = await response.json();
+        const inFavorites = data.inFavorites;
+        if (inFavorites) {
+            document.getElementById(`heart-icon-${productId}`).src = '{% static "images/like.png" %}';
+        } else {
+            document.getElementById(`heart-icon-${productId}`).src = '{% static "images/heart.png" %}';
+        }
     }
+
+    const toCart = document.querySelectorAll('.add-to-cart-link');
+    for (const link of toCart) {
+        const productId = link.getAttribute('data-product-id');
+        const response = await fetch(`cart/is-product-in-cart/${productId}/`);
+        const data = await response.json();
+        const inCart = data.inCart;
+        if (inCart) {
+            document.getElementById(`c-icon-${productId}`).src = '{% static "img/ok.png" %}';
+        } else {
+            document.getElementById(`c-icon-${productId}`).src = '{% static "img/cart.png" %}';
+        }
+    }
+
+    
+}
 
     setInitialImages();
 
@@ -257,6 +261,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => console.error('Произошла ошибка при обновлении количества товаров в корзине:', error));
     }
 });
+
 </script>
 
 

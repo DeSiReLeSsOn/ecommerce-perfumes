@@ -57,7 +57,18 @@ def cart_detail(request):
 
 
 
+
 def cart_count(request):
     cart = Cart(request)
     total_items = len(cart)
     return JsonResponse({'total_items': total_items})
+
+
+def is_product_in_cart(request, product_id):
+    cart = Cart(request)
+    product = get_object_or_404(Product, id=product_id)
+    cart_products = [item['product'] for item in cart]
+    if product in cart_products:
+        return JsonResponse({'inCart': True})
+    else:
+        return JsonResponse({'inCart': False})
