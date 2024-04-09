@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     #'django.contrib.sites', 
     'banner',
     'social_django',
+    'reviews',
     
     
     

@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const toCart = document.querySelectorAll('.add-to-cart-link');
     for (const link of toCart) {
         const productId = link.getAttribute('data-product-id');
-        const response = await fetch(`cart/${productId}/`);
+        const response = await fetch(`cart/is-product-in-cart/${productId}/`);
         const data = await response.json();
         const inCart = data.inCart;
         if (inCart) {
@@ -247,7 +247,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updateCartData() {
-        fetch('/cart/True/', {
+        fetch('/cart/count/', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'

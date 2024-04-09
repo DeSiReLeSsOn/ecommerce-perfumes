@@ -83,7 +83,7 @@ order_pdf.short_description = 'Invoice'"""
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['id', 'full_name', 'email',
+    list_display = ['user','id', 'full_name', 'email',
                     'address', 'postal_code', 'phone', 'paid',
                     order_yookassa_payment, 'created', 'updated', 'get_total_cost', order_detail,]# order_pdf]
     list_filter = ['paid', 'created', 'updated']

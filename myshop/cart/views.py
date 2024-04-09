@@ -53,25 +53,30 @@ def cart_remove_ajax(request, product_id):
     
 
 
-def cart_detail(request, json=False, product_id=None):
+def cart_detail(request):
     cart = Cart(request)
-    cart_products = [item['product'] for item in cart]
-    if json:
-        total_items = len(cart)
-        return JsonResponse({'total_items': total_items})
-    elif product_id:
-        product = get_object_or_404(Product, id=product_id)
-        if product in cart_products:
-            return JsonResponse({'inCart': True})
-        else:
-            return JsonResponse({'inCart': False})
-    else:
-        for item in cart:
-            item['update_quantity_form'] = CartAddProductForm(initial={
-                                'quantity': item['quantity'],
-                                'override': True})
-        coupon_apply_form = CouponApplyForm()
-        return render(request, 'cart/detail.html', {'cart': cart, 'coupon_apply_form': coupon_apply_form})
+    for item in cart:
+        item['update_quantity_form'] = CartAddProductForm(initial={
+                            'quantity': item['quantity'],
+                            'override': True})
+    coupon_apply_form = CouponApplyForm()
+    cart_products = [item['product'] for item in cart] 
+    return render(request, 'cart/detail.html', {'cart': cart, 'coupon_apply_form': coupon_apply_form})
 
 
     
+def cart_count(request):
+    cart = Cart(request)
+    total_items = len(cart)
+    return JsonResponse({'total_items': total_items})
+    
+
+
+def is_product_in_cart(request, product_id):
+    cart = Cart(request)
+    product = get_object_or_404(Product, id=product_id)
+    cart_products = [item['product'] for item in cart]
+    if product in cart_products:
+        return JsonResponse({'inCart': True})
+    else:
+        return JsonResponse({'inCart': False})

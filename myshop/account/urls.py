@@ -26,6 +26,7 @@ urlpatterns = [
     path('favorites/', views.favorite_list, name='favorites'),
     path('favorites/<int:product_id>/', views.favorite_list, name='favorites'),
     
+    
     #path('get-favorite-products/', views.get_favorite_products, name='get_favorite_products'),
     path('profile-management/', views.profile_user, name='profile-management'),
     path('delete-user/', views.delete_user, name='delete-user'),

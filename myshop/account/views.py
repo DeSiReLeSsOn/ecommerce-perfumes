@@ -125,10 +125,7 @@ def favorite_list(request, product_id=None):
 
 
 
-# @login_required
-# def get_favorite_products(request):
-#     favorite_products = list(FavoriteProduct.objects.filter(user=request.user).values_list('product_id', flat=True))
-#     return JsonResponse({'favoriteProducts': favorite_products}) 
+
 
 
 
