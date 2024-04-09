@@ -9,7 +9,7 @@ from .models import FavoriteProduct
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from cart.context_processors import *
-from account.views import favorite_list
+
 
 
 
@@ -39,7 +39,7 @@ from account.views import favorite_list
 def product_list(request, category_slug=None):
     category = None
     categories = Category.objects.all()
-    products = Product.objects.filter(available=True)
+    products = Product.objects.filter(available=True)  
     
     if category_slug:
         category = get_object_or_404(Category, slug=category_slug)
@@ -50,8 +50,7 @@ def product_list(request, category_slug=None):
                   'shop/product/list.html',
                   {'category': category,
                    'categories': categories,
-                   'products': products,
-                   'favorite_product': favorite_list(request)})
+                   'products': products})
 
 
 

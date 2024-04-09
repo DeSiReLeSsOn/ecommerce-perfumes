@@ -177,7 +177,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(response => response.json())
                 .then(data => {
                     heartIcon.src = '{% static "images/heart.png" %}';
-                    localStorage.removeItem(`favorite_${productId}`);
                 })
                 .catch(error => console.error('Произошла ошибка при удалении товара из избранного:', error));
             } else {
@@ -191,7 +190,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(response => response.json())
                 .then(data => {
                     heartIcon.src = '{% static "images/like.png" %}';
-                    localStorage.setItem(`favorite_${productId}`, 'true');
                 })
                 .catch(error => console.error('Произошла ошибка:', error));
             }
@@ -216,7 +214,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(data => {
                     link.querySelector('img').setAttribute('src', '{% static "img/cart.png" %}');
                     link.dataset.added = 'false';
-                    localStorage.removeItem(`cart_${productId}`);
                     updateCartData();
                 })
                 .catch(error => console.error('Произошла ошибка при удалении товара из корзины:', error));
@@ -233,7 +230,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (data.success) {
                         link.querySelector('img').setAttribute('src', '{% static "img/ok.png" %}');
                         link.dataset.added = 'true';
-                        localStorage.setItem(`cart_${productId}`, 'true');
                         updateCartData();
                     }
                 })
