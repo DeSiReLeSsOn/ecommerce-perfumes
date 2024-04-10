@@ -36,10 +36,18 @@ from cart.context_processors import *
                    'products': products})"""
 
 
+
+def get_user_favorite_products(user):
+    return FavoriteProduct.objects.filter(user=user).values_list('product_id', flat=True)
+
+
 def product_list(request, category_slug=None):
     category = None
     categories = Category.objects.all()
     products = Product.objects.filter(available=True)  
+    
+    favorite_products = get_user_favorite_products(request.user)
+
     
     if category_slug:
         category = get_object_or_404(Category, slug=category_slug)
@@ -50,7 +58,8 @@ def product_list(request, category_slug=None):
                   'shop/product/list.html',
                   {'category': category,
                    'categories': categories,
-                   'products': products})
+                   'products': products,
+                   'favorite_products': favorite_products})
 
 
 

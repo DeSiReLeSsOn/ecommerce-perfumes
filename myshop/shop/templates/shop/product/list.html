@@ -103,8 +103,12 @@
                                     <img id="ok-icon-{{ product.id }}" src="{% static 'img/ok.png' %}" style="display: none;">
                                 </a>
                                 <a href="#" class="favorite-link" data-product-id="{{ product.id }}" data-tip="В избранное">
-                                    <img id="heart-icon-{{ product.id }}" src="{% static 'images/heart.png' %}" alt="Сердце">
-                                    <img id="like-icon-{{ product.id }}" src="{% static 'images/like.png' %}" style="display: none;">
+
+                                    {% if product.id in favorite_products %}
+                                        <img src="{% static "images/like.png" %}">
+                                    {% else %}
+                                        <img src="{% static "images/heart.png" %}">
+                                    {% endif %}
                                 </a>
                                 
                             </div>
@@ -127,44 +131,13 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    async function setInitialImages() {
-    const favoriteLinks = document.querySelectorAll('.favorite-link');
-    for (const link of favoriteLinks) {
-        const productId = link.getAttribute('data-product-id');
-        const response = await fetch(`account/favorites/${productId}/`);
-        const data = await response.json();
-        const inFavorites = data.inFavorites;
-        if (inFavorites) {
-            document.getElementById(`heart-icon-${productId}`).src = '{% static "images/like.png" %}';
-        } else {
-            document.getElementById(`heart-icon-${productId}`).src = '{% static "images/heart.png" %}';
-        }
-    }
-
-    const toCart = document.querySelectorAll('.add-to-cart-link');
-    for (const link of toCart) {
-        const productId = link.getAttribute('data-product-id');
-        const response = await fetch(`cart/is-product-in-cart/${productId}/`);
-        const data = await response.json();
-        const inCart = data.inCart;
-        if (inCart) {
-            document.getElementById(`c-icon-${productId}`).src = '{% static "img/ok.png" %}';
-        } else {
-            document.getElementById(`c-icon-${productId}`).src = '{% static "img/cart.png" %}';
-        }
-    }
-
     
-}
-
-    setInitialImages();
-
     // Код добавления и удаления избранного
     document.querySelectorAll('.favorite-link').forEach(function(link) {
         link.addEventListener('click', function(event) {
             event.preventDefault();
             const productId = link.getAttribute('data-product-id');
-            const heartIcon = document.getElementById(`heart-icon-${productId}`);
+            const heartIcon = link.querySelector('img'); // Update this line
 
             if (heartIcon.src.includes('like.png')) {
                 fetch(`/remove-from-favorite/${productId}/`, {
