@@ -46,20 +46,25 @@ def product_list(request, category_slug=None):
     categories = Category.objects.all()
     products = Product.objects.filter(available=True)  
     
-    favorite_products = get_user_favorite_products(request.user)
 
     
     if category_slug:
         category = get_object_or_404(Category, slug=category_slug)
         products = products.filter(category=category)
 
-
+    if request.user.is_authenticated:
+        favorite_products = get_user_favorite_products(request.user)
+        return render(request,
+                    'shop/product/list.html',
+                    {'category': category,
+                    'categories': categories,
+                    'products': products,
+                    'favorite_products': favorite_products})
     return render(request,
-                  'shop/product/list.html',
-                  {'category': category,
-                   'categories': categories,
-                   'products': products,
-                   'favorite_products': favorite_products})
+                    'shop/product/list.html',
+                    {'category': category,
+                    'categories': categories,
+                    'products': products})
 
 
 

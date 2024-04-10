@@ -1,21 +1,19 @@
 {% load static %}
 
-
 <link href="https://use.fontawesome.com/releases/v5.0.1/css/all.css" rel="stylesheet">
 
 <style>
 @media (max-width: 900px) {
    .container-fluid {
-      max-width: 100%; /* Максимальная ширина контейнера на устройствах с шириной экрана до 900px */
-      padding-left: 5px; /* Дополнительный внутренний отступ слева для контейнера */
-      padding-right: 5px; /* Дополнительный внутренний отступ справа для контейнера */
+      max-width: 100%;
+      padding-left: 5px;
+      padding-right: 5px;
    }
 
    .login_text {
-      display: inline-block; /* Отображение блока с иконками как inline-block для сохранения на одной линии */
+      display: inline-block;
    }
 }
-
 
 .cart-icon {
   position: relative;
@@ -34,15 +32,9 @@
   padding: 5px;
   font-size: 9px;
 }
-
 </style>
 
-
-
-
-
-
-<div class="header_section">
+<div class="header_section" style="margin-bottom: 45px;">
    <div class="container-fluid">
       <nav class="navbar navbar-light bg-light justify-content-between">
          <div id="mySidenav" class="sidenav">
@@ -55,12 +47,12 @@
          </div>
          <span class="toggle_icon" onclick="openNav()"><img src="{% static "images/toggle-icon.png" %}"></span>
          <a class="logo" href="{% url "shop:product_list" %}"><img src="{% static "images/dior.png" %}" style="height: 80px;"></a>
-         <form class="form-inline ">
+         <form class="form-inline">
             <div class="login_text">
                <ul>
                   <li><a href="{% url 'account:favorites' %}" ><img src="{% static "images/heart.png" %}"></a></li>
                   <li><a href="{% url "account:dashboard" %}"><img src="{% static "images/acc1.png" %}" ></a></li> 
-                  
+
                   <li>
                      <a href="{% url "cart:cart_detail" %}">
                      <div class="cart-icon">
@@ -74,30 +66,24 @@
                      </a>
                   </li>
                   <li><a href="#" id="search-icon"><img src="{% static "images/search1.png" %}"></a></li>
+               </ul>
             </div>
          </form>
       </nav>
    </div>
 </div>
 
-
-
-
-
-
 <script>
    function openNav() {
       document.getElementById("mySidenav").style.width = "100%";
-      }
+      document.body.style.overflow = "hidden";
+   }
             
    function closeNav() {
       document.getElementById("mySidenav").style.width = "0";
-      }
-
-
-</script> 
-
-
+      document.body.style.overflow = "auto";
+   }
+</script>
 
 
  

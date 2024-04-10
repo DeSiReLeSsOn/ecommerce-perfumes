@@ -1,13 +1,10 @@
-{%  include "shop/base.html" %}
+{% extends "shop/base.html" %}
 
 {% load static %}
 
-
-
 {% block content %}
-
     <br>
-    <div class="container bg-white shadow-md p-3">
+    <div class="container bg-white shadow-md p-3" style="margin-top: 60px;">
         <h4>Приветствуем, {{ user.username }}!</h4>
 
         <hr>
@@ -17,37 +14,33 @@
         <p>Дата регистрации: {{ user.date_joined }}</p>
 
         <a href="{% url 'account:logout' %}">
-        <button class="btn btn-primary">
-            Выйти
+            <button class="btn btn-primary">
+                Выйти
             </button>
         </a>
 
         <a href="{% url 'account:profile-management' %}">
             <button class="btn btn-success">
                 Управление профилем
-                </button>
-            </a>
-        
-            <a href="{% url 'orders:get_user_orders' %}">
-                <button class="btn btn-success">
-                    Просмотр заказов
-                    </button>
-                </a>
-            
-                <a href="{% url 'account:favorites' %}">
-                    <button class="btn btn-success">
-                        Избранные товары
-                        </button>
-                </a>
+            </button>
+        </a>
 
-            
-        
-        
-            <a href="{% url 'account:delete-user' %}">
-                <button class="btn btn-warning">
-                    Удалить аккаунт
-                    </button>
-                </a>
+        <a href="{% url 'orders:get_user_orders' %}">
+            <button class="btn btn-success">
+                Просмотр заказов
+            </button>
+        </a>
 
+        <a href="{% url 'account:favorites' %}">
+            <button class="btn btn-success">
+                Избранные товары
+            </button>
+        </a>
+
+        <a href="{% url 'account:delete-user' %}">
+            <button class="btn btn-warning">
+                Удалить аккаунт
+            </button>
+        </a>
     </div>
 {% endblock %}
