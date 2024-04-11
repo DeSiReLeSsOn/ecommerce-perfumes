@@ -1,10 +1,12 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, get_user_model, login, logout
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django_email_verification import send_email
 from shop.models import FavoriteProduct
+from shop.models import Category, Product 
 from django.http.response import JsonResponse
+
 
 User = get_user_model()
 
@@ -110,18 +112,27 @@ def delete_user(request):
 
 
 
-@login_required
+
+
 def favorite_list(request, product_id=None):
-    if product_id:
-        favorite_product = FavoriteProduct.objects.filter(user=request.user, product_id=product_id)
-        
-        if favorite_product:
-            return JsonResponse({'inFavorites': True})
+    user = request.user
+    if user.is_authenticated:
+        if product_id:
+            favorite_product = FavoriteProduct.objects.filter(user=user, product_id=product_id)
+            
+            if favorite_product:
+                return JsonResponse({'inFavorites': True})
+            else:
+                return JsonResponse({'inFavorites': False})
         else:
-            return JsonResponse({'inFavorites': False})
+            favorite_products = FavoriteProduct.objects.filter(user=user)
+            return render(request, 'account/dashboard/favorites.html', {'favorite_products': favorite_products})
     else:
-        favorite_products = FavoriteProduct.objects.filter(user=request.user)
-        return render(request, 'account/dashboard/favorites.html', {'favorite_products': favorite_products})
+        return redirect('account:login')
+    
+
+
+
 
 
 

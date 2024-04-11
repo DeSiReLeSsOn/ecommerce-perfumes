@@ -88,10 +88,10 @@
             <div class="col-lg-4 col-sm-6 mb-3">
                 <div class="product-card">
                     <div class="product-thumb">
-                        <a href="#"><img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.jpg" %}{% endif %}" alt=""></a>
+                        <a href="{{ product.get_absolute_url }}"><img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.jpg" %}{% endif %}" alt=""></a>
                     </div>
                     <div class="product-details">
-                        <h4><a href="#" style="font-size: 25px;">{{ product.name }}</a></h4>
+                        <h4><a href="{{ product.get_absolute_url }}" style="font-size: 25px;">{{ product.name }}</a></h4>
                         <p>{{ product.description }}</p>
                         <div class="product-bottom-details d-flex justify-content-between">
                             <div class="product-price">
@@ -99,8 +99,12 @@
                             </div>
                             <div class="product-links">
                                 <a href="#" class="add-to-cart-link" data-product-id="{{ product.id }}" data-tip="В корзину">
-                                    <img id="c-icon-{{ product.id }}" src="{% static 'img/cart.png' %}" alt="Корзина">
-                                    <img id="ok-icon-{{ product.id }}" src="{% static 'img/ok.png' %}" style="display: none;">
+                                    {% if product.id in inCart %}
+                                        <img src="{% static "images/ok.png" %}">
+                                    {% else %}
+                                        <img src="{% static "images/cart.png" %}">
+                                    {% endif %}
+                  
                                 </a>
                                 <a href="#" class="favorite-link" data-product-id="{{ product.id }}" data-tip="В избранное">
 
@@ -129,109 +133,6 @@
 {% csrf_token %}
 
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    
-    // Код добавления и удаления избранного
-    document.querySelectorAll('.favorite-link').forEach(function(link) {
-        link.addEventListener('click', function(event) {
-            event.preventDefault();
-            const productId = link.getAttribute('data-product-id');
-            const heartIcon = link.querySelector('img'); // Update this line
-
-            if (heartIcon.src.includes('like.png')) {
-                fetch(`/remove-from-favorite/${productId}/`, {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRFToken': getCookie('csrftoken'),
-                        'Content-Type': 'application/json'
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    heartIcon.src = '{% static "images/heart.png" %}';
-                })
-                .catch(error => console.error('Произошла ошибка при удалении товара из избранного:', error));
-            } else {
-                fetch(`/add-to-favorite/${productId}/`, {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRFToken': getCookie('csrftoken'),
-                        'Content-Type': 'application/json'
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    heartIcon.src = '{% static "images/like.png" %}';
-                })
-                .catch(error => console.error('Произошла ошибка:', error));
-            }
-        });
-    });
-
-    // Код добавления и удаления из корзины
-    document.querySelectorAll('.add-to-cart-link').forEach(function(link) {
-        link.addEventListener('click', function(event) {
-            event.preventDefault();
-            const productId = link.getAttribute('data-product-id');
-
-            if (link.dataset.added === 'true') { // Удаление товара из корзины
-                fetch(`/cart/ajax/remove/${productId}/`, {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRFToken': getCookie('csrftoken'),
-                        'Content-Type': 'application/json'
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    link.querySelector('img').setAttribute('src', '{% static "img/cart.png" %}');
-                    link.dataset.added = 'false';
-                    updateCartData();
-                })
-                .catch(error => console.error('Произошла ошибка при удалении товара из корзины:', error));
-            } else {
-                fetch(`/cart/ajax/add/${productId}/`, {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRFToken': getCookie('csrftoken'),
-                        'Content-Type': 'application/json'
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        link.querySelector('img').setAttribute('src', '{% static "img/ok.png" %}');
-                        link.dataset.added = 'true';
-                        updateCartData();
-                    }
-                })
-                .catch(error => console.error('Произошла ошибка:', error));
-            }
-        });
-    });
-
-    function getCookie(name) {
-        return document.cookie.split('; ').find(c => c.startsWith(name + '=')).split('=')[1];
-    }
-
-    function updateCartData() {
-        fetch('/cart/count/', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            const cartCountElement = document.querySelector('#cart-count-element');
-            cartCountElement.textContent = data.total_items;
-        })
-        .catch(error => console.error('Произошла ошибка при обновлении количества товаров в корзине:', error));
-    }
-});
-
-</script>
 
 
 {% endblock %}

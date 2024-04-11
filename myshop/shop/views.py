@@ -9,6 +9,8 @@ from .models import FavoriteProduct
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from cart.context_processors import *
+from cart.cart import Cart
+from cart.views import is_product_in_cart
 
 
 
@@ -37,34 +39,40 @@ from cart.context_processors import *
 
 
 
-def get_user_favorite_products(user):
-    return FavoriteProduct.objects.filter(user=user).values_list('product_id', flat=True)
 
 
-def product_list(request, category_slug=None):
+
+def product_list(request, category_slug=None, template_name='shop/product/list.html'):
     category = None
     categories = Category.objects.all()
     products = Product.objects.filter(available=True)  
+
+
+    
     
 
     
     if category_slug:
         category = get_object_or_404(Category, slug=category_slug)
         products = products.filter(category=category)
+        
+        
 
     if request.user.is_authenticated:
-        favorite_products = get_user_favorite_products(request.user)
-        return render(request,
-                    'shop/product/list.html',
+        favorite_products = FavoriteProduct.objects.filter(user=request.user).values_list('product_id', flat=True)
+        return render(request, template_name,
                     {'category': category,
                     'categories': categories,
                     'products': products,
-                    'favorite_products': favorite_products})
-    return render(request,
-                    'shop/product/list.html',
+                    'favorite_products': favorite_products
+                    })
+    return render(request, 'shop/product/list.html',
                     {'category': category,
                     'categories': categories,
-                    'products': products})
+                    'products': products
+                    })
+
+
 
 
 
@@ -118,6 +126,9 @@ def remove_from_favorite_ajax(request, product_id):
         return JsonResponse({'success': True})
     
     return JsonResponse({'success': False})
+
+
+
 
 
 
