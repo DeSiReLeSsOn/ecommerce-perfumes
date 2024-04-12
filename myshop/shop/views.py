@@ -8,9 +8,10 @@ from banner.models import Banner
 from .models import FavoriteProduct
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
-from cart.context_processors import *
-from cart.cart import Cart
 from cart.views import is_product_in_cart
+import json
+
+
 
 
 
@@ -46,17 +47,17 @@ def product_list(request, category_slug=None, template_name='shop/product/list.h
     category = None
     categories = Category.objects.all()
     products = Product.objects.filter(available=True)  
+    inCart = []
+    for product in products:
+        response = is_product_in_cart(request, product.id)
+        response_content = json.loads(response.content.decode('utf-8'))
+        if response_content.get('inCart', False):
+            inCart.append(product.id)
 
 
-    
-    
-
-    
     if category_slug:
         category = get_object_or_404(Category, slug=category_slug)
-        products = products.filter(category=category)
-        
-        
+        products = products.filter(category=category)   
 
     if request.user.is_authenticated:
         favorite_products = FavoriteProduct.objects.filter(user=request.user).values_list('product_id', flat=True)
@@ -64,12 +65,14 @@ def product_list(request, category_slug=None, template_name='shop/product/list.h
                     {'category': category,
                     'categories': categories,
                     'products': products,
-                    'favorite_products': favorite_products
+                    'favorite_products': favorite_products,
+                    'inCart': inCart
                     })
     return render(request, 'shop/product/list.html',
                     {'category': category,
                     'categories': categories,
-                    'products': products
+                    'products': products,
+                    'inCart': inCart
                     })
 
 
