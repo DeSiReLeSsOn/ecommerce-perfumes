@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, reverse
 from .models import Category, Product 
 from cart.forms import CartAddProductForm 
 #from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -6,13 +6,10 @@ from django.http import HttpResponse
 from django.db.models import Q, Max, Min
 from banner.models import Banner
 from .models import FavoriteProduct
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from cart.views import is_product_in_cart
 import json
-
-
-
 
 
 
@@ -111,19 +108,31 @@ def index(request):
 
 
 
-@login_required
+
 def add_to_favorite_ajax(request, product_id):
-    product = get_object_or_404(Product, id=product_id)
-    favorite_product, created = FavoriteProduct.objects.get_or_create(user=request.user, product=product)
-    if created:
-        return JsonResponse({'success': True})
+    user = request.user
+
+    if user.is_authenticated:
+        product = get_object_or_404(Product, id=product_id)
+        favorite_product, created = FavoriteProduct.objects.get_or_create(user=request.user, product=product)
+
+        if created:
+            return JsonResponse({'success': True, 'authenticated': True})
+        
+        return JsonResponse({'success': False, 'authenticated': True})
     
-    return JsonResponse({'success': False})
+    else:
+        login_url = reverse('account:login')
+        return JsonResponse({'authenticated': False, 'redirect': login_url})
+
+
+
 
 @login_required
 def remove_from_favorite_ajax(request, product_id):
+    user = request.user
     product = get_object_or_404(Product, id=product_id)
-    removed = FavoriteProduct.objects.filter(user=request.user, product=product).delete()
+    removed = FavoriteProduct.objects.filter(user=user, product=product).delete()
     
     if removed:
         return JsonResponse({'success': True})

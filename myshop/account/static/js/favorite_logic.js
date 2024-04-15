@@ -1,8 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const heartImgPath = 'shop/static/images/heart.png';
-    const likeImgPath = 'shop/static/images/like.png';
-    const cartImgPath = 'shop/static/img/cart.png';
-    const okImgPath = 'shop/static/img/ok.png';
+    const heartImgPath = 'images/heart.png';
+    const likeImgPath = 'images/like.png';
+    const cartImgPath = 'img/cart.png';
+    const okImgPath = 'shop/img/ok.png';
+    
     
     // Код добавления и удаления избранного
     document.querySelectorAll('.favorite-link').forEach(function(link) {
