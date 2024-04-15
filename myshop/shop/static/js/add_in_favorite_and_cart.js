@@ -1,8 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const heartImgPath = 'static/images/heart.png';
-    const likeImgPath = 'static/images/like.png';
-    const cartImgPath = 'static/img/cart.png';
-    const okImgPath = 'static/img/ok.png';
+    const heartImgPath = '/static/images/heart.png';
+    const likeImgPath = '/static/images/like.png';
+    const cartImgPath = '/static/img/cart.png';
+    const okImgPath = '/static/img/ok.png';
+    const csrfToken = document.querySelector('script[data-csrf-token]').getAttribute('data-csrf-token');
     
     // Код добавления и удаления избранного
     document.querySelectorAll('.favorite-link').forEach(function(link) {

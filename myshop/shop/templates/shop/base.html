@@ -33,7 +33,7 @@
 
         {% endblock %}
 
-        <script src="{% static "js/add_in_favorite_and_cart.js" %}"></script>
+        <script src="{% static "js/add_in_favorite_and_cart.js" %}" data-csrf-token="{% csrf_token %}"></script>
 
 </body>
 </html>
