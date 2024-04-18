@@ -1,10 +1,10 @@
 from django.db import models
 
 class Banner(models.Model):
-    image = models.ImageField(upload_to='banners/', blank=False)  # Поле для изображения
-    link = models.CharField(max_length=200)  # Поле для ссылки
-    advertisement_text = models.TextField(blank=True)  # Поле для текста рекламы
-    is_active = models.BooleanField(default=True) 
+    image = models.ImageField("Изображение", upload_to='banners/', blank=False)  
+    link = models.CharField("Ссылка", max_length=200)  
+    advertisement_text = models.TextField("Текст рекламы", blank=True)  
+    is_active = models.BooleanField("Активна/Неактивна", default=True) 
 
     def __str__(self):
         return self.advertisement_text
