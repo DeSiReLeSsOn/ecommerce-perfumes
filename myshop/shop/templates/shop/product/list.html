@@ -71,6 +71,48 @@
 	font-size: 20px;
 	margin-left: 10px;
 }
+
+
+.pagination {
+  margin-top: 20px; /* Adjust spacing as needed */
+}
+
+/* Style individual page items */
+.page-item {
+  margin: 0 5px; /* Space between page items */
+}
+
+/* Style page links */
+.page-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px; /* Adjust size as needed */
+  height: 35px; /* Adjust size as needed */
+  border-radius: 50%; /* Make them circular */
+  border: 2px solid #ddd; /* Subtle border */
+  color: #333; /* Text color */
+  transition: all 0.3s ease; /* Smooth transition for hover effect */
+}
+
+/* Hover effect for page links */
+.page-link:hover {
+  background-color: #898b8f; /* Light background on hover */
+  border-color: #ccc; /* Slightly darker border on hover */
+}
+
+/* Style the active page link */
+.page-item.active .page-link {
+  background-color: #e9ecef; /* Light background for active page */
+  border-color: #ced4da; /* Slightly darker border for active page */
+  font-weight: bold;
+  color: #000;
+}
+
+/* Style the previous and next arrows */
+.page-link .rounded-circle {
+  font-size: 18px; /* Adjust size as needed */
+}
 </style>
 
 
@@ -84,7 +126,7 @@
 <section class="main-content">
     <div class="container">
         <div class="row">
-            {% for product in products %}
+            {% for product in page_obj %}
             <div class="col-lg-4 col-sm-6 mb-3">
                 <div class="product-card">
                     <div class="product-thumb">
@@ -122,6 +164,43 @@
             </div>
             {% endfor %}
         </div>
+        <div class="row" style="margin-bottom: 20px;">
+            <div class="col-12">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center pagination-sm">
+                        {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1"><span class="rounded-circle">«</span></a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1"><span class="rounded-circle">«</span></a>
+                        </li>
+                        {% endif %}
+
+                        {% for p in page_obj.paginator.page_range %}
+                        {% if page_obj.number == p %}
+                        <li class="page-item active">
+                            <a class="page-link" href="#"><span class="rounded-circle">{{ p }}</span></a>
+                        </li>
+                        {% else %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ p }}"><span class="rounded-circle">{{ p }}</span></a>
+                        </li>
+                        {% endif %}
+                        {% endfor %}
+
+                        {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.next_page_number }}"><span class="rounded-circle">»</span></a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1"><span class="rounded-circle">»</span></a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
     </div>
 </section>
 

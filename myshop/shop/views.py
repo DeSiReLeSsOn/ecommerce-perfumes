@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from .models import Category, Product 
 from cart.forms import CartAddProductForm 
-#from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse
 from django.db.models import Q, Max, Min
 from banner.models import Banner
@@ -44,6 +44,9 @@ def product_list(request, category_slug=None, template_name='shop/product/list.h
     category = None
     categories = Category.objects.all()
     products = Product.objects.filter(available=True)  
+    paginator = Paginator(products, 9)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     inCart = []
     for product in products:
         response = is_product_in_cart(request, product.id)
@@ -61,14 +64,14 @@ def product_list(request, category_slug=None, template_name='shop/product/list.h
         return render(request, template_name,
                     {'category': category,
                     'categories': categories,
-                    'products': products,
+                    'page_obj': page_obj,
                     'favorite_products': favorite_products,
                     'inCart': inCart
                     })
     return render(request, 'shop/product/list.html',
                     {'category': category,
                     'categories': categories,
-                    'products': products,
+                    'page_obj': page_obj,
                     'inCart': inCart
                     })
 
