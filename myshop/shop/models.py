@@ -9,6 +9,8 @@ class Category(models.Model):
     name = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200,
                             unique=True)
+    image = models.ImageField(upload_to='brands/%Y/%m',
+                              blank=True, verbose_name='Фото бренда')
 
     class Meta:
         ordering = ['name']

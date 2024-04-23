@@ -60,7 +60,7 @@ def cart_detail(request):
                             'quantity': item['quantity'],
                             'override': True})
     coupon_apply_form = CouponApplyForm()
-    cart_products = [item['product'] for item in cart] 
+    cart_products = [item['product'] for item in cart]
     return render(request, 'cart/detail.html', {'cart': cart, 'coupon_apply_form': coupon_apply_form})
 
 
@@ -70,6 +70,13 @@ def cart_count(request):
     total_items = len(cart)
     return JsonResponse({'total_items': total_items})
     
+
+
+
+    
+
+
+
 
 
 def is_product_in_cart(request, product_id):

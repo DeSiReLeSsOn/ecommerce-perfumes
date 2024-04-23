@@ -1,16 +1,71 @@
-{% extends 'base.html' %}
-{% block content %}
-  <h1>Search Results</h1>
-  {% if products %}
-    <ul>
-      {% for product in products %}
-        <li>{{ product.name }}</li>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <p>No products found.</p>
-  {% endif %}
-{% endblock %}
+{% extends 'shop/base.html' %}
 
+{% block content %}
+
+
+<style>
+  .main-content {
+  margin-top: 200px; 
+}
+
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 100%;
+  margin: 0px auto;
+  margin-top: 250px;
+
+
+}
+
+.search-form {
+  display: flex;
+  border-radius: 25px;
+  background-color: #fff;
+  overflow: hidden;
+  justify-content: center;
+
+}
+
+
+
+.search-form input[type="text"] {
+  border: 2px solid #ccc;
+  padding: 10px 20px;
+  font-size: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.search-form button {
+  background-color: #6c5ce7;
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search-form button:hover {
+  background-color: #5a4fc3;
+}
+</style>
+
+
+
+
+
+    <div class="container">
+      <form class="search-form" action="{% url 'shop:search' %}" method="get">
+        <input type="text" name="q" placeholder="Поиск..." aria-label="Search for perfumes">
+        <button type="submit" aria-label="Search">Поиск</button>
+      </form>
+    </div>
+
+
+{% endblock %}
 
 

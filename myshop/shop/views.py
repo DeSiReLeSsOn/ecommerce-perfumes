@@ -99,10 +99,31 @@ def product_detail(request, id, slug):
 def search(request):
     query = request.GET.get('q')
     if query:
-        products = Product.objects.filter(Q(name__icontains=query))
+        products = Product.objects.filter(name__icontains=query)
     else:
         products = Product.objects.all()
-    return render(request, 'shop/product/list.html', {'products': products})
+
+
+    paginator = Paginator(products, 9)  # 9 products per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'shop/product/list.html', {'page_obj': page_obj, 'query': query})
+
+
+def search_category(request):
+    query = request.GET.get('q')
+    if query:
+        categories = Category.objects.filter(category__name__icontains=query)
+    else:
+        categories = Category.objects.all()
+
+    # Pagination
+    paginator = Paginator(categories, 9)  # 9 categories per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'shop/product/list.html', {'page_obj': page_obj, 'query': query})
 
 def index(request):
     #banners = Banner.objects.filter(is_active=True)
