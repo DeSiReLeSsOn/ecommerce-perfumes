@@ -11,6 +11,7 @@ class Category(models.Model):
                             unique=True)
     image = models.ImageField(upload_to='brands/%Y/%m',
                               blank=True, verbose_name='Фото бренда')
+    description = models.TextField(blank=True, verbose_name='Описание бренда')
 
     class Meta:
         ordering = ['name']

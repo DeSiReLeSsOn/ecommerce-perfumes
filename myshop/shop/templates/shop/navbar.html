@@ -102,8 +102,12 @@ nav {
       <nav class="navbar navbar-light bg-light justify-content-between">
          <div id="mySidenav" class="sidenav">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <a href="index.html">Home</a>
-            <a href="products.html">Products</a>
+            <a href="#">Главная</a>
+            {% if category_slug %}
+               <a href="{% url 'shop:brands' category_slug=category_slug %}">Бренды</a>
+            {% else %}
+               <a href="{% url 'shop:all_brands' %}">Бренды</a>
+            {% endif %}
             <a href="about.html">About</a>
             <a href="client.html">Client</a>
             <a href="contact.html">Contact</a>

@@ -43,21 +43,23 @@ import json
 def product_list(request, category_slug=None, template_name='shop/product/list.html'):
     category = None
     categories = Category.objects.all()
-    products = Product.objects.filter(available=True)  
+    products = Product.objects.filter(available=True)
+
+    if category_slug:
+        category = get_object_or_404(Category, slug=category_slug)
+        products = products.filter(category=category)
+
+    # Pagination
     paginator = Paginator(products, 9)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+
     inCart = []
     for product in products:
         response = is_product_in_cart(request, product.id)
         response_content = json.loads(response.content.decode('utf-8'))
         if response_content.get('inCart', False):
             inCart.append(product.id)
-
-
-    if category_slug:
-        category = get_object_or_404(Category, slug=category_slug)
-        products = products.filter(category=category)   
 
     if request.user.is_authenticated:
         favorite_products = FavoriteProduct.objects.filter(user=request.user).values_list('product_id', flat=True)
@@ -111,25 +113,41 @@ def search(request):
     return render(request, 'shop/product/list.html', {'page_obj': page_obj, 'query': query})
 
 
-def search_category(request):
-    query = request.GET.get('q')
-    if query:
-        categories = Category.objects.filter(category__name__icontains=query)
-    else:
-        categories = Category.objects.all()
+# def brands(request):
+
+#     categories = Category.objects.all()
+
+#     # Pagination
+#     paginator = Paginator(categories, 9)  # 9 categories per page
+#     page_number = request.GET.get('page')
+#     page_obj = paginator.get_page(page_number)
+
+#     return render(request, 'shop/brands.html', {'page_obj': page_obj})
+
+# def index(request):
+#     #banners = Banner.objects.filter(is_active=True)
+#     banners = Banner.objects.all()
+#     return render(request, 'shop/banner.html', {'banners': banners})
+
+
+def brands(request, category_slug=None):
+    categories = Category.objects.all()
+    if category_slug:
+        category = get_object_or_404(Category, slug=category_slug)
+        categories = categories.filter(slug=category_slug)
 
     # Pagination
     paginator = Paginator(categories, 9)  # 9 categories per page
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    return render(request, 'shop/product/list.html', {'page_obj': page_obj, 'query': query})
+    context = {
+        'page_obj': page_obj,
+        'categories': categories,
+        'category_slug': category_slug,
+    }
 
-def index(request):
-    #banners = Banner.objects.filter(is_active=True)
-    banners = Banner.objects.all()
-    return render(request, 'shop/banner.html', {'banners': banners})
-
+    return render(request, 'shop/brands.html', context)
 
 
 
