@@ -9,6 +9,10 @@ from django.http.response import JsonResponse
 from .forms import LoginForm, UserCreateForm, UserUpdateForm
 from cart.views import is_product_in_cart
 import json
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+
+
 User = get_user_model()
 
 
@@ -119,23 +123,6 @@ def delete_user(request):
 
 
 
-def favorite_list(request):
-    user = request.user
-
-    if user.is_authenticated:
-        favorite_products = FavoriteProduct.objects.filter(user=user)
-        inCart = []
-
-        for favorite_product in favorite_products:
-            response = is_product_in_cart(request, favorite_product.product_id)
-            response_content = json.loads(response.content.decode('utf-8'))
-            if response_content.get('inCart', False):
-                inCart.append(favorite_product.product_id)
-        
-        return render(request, 'account/dashboard/favorites.html', {'favorite_products': favorite_products, 'inCart': inCart})
-    else:
-        return redirect('account:login')
-    
 
 
 

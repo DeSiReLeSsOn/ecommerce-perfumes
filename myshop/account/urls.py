@@ -22,7 +22,7 @@ urlpatterns = [
 
     # Dashboard
     path('dashboard/', views.dashboard_user, name='dashboard'),
-    path('favorites/', views.favorite_list, name='favorites'),
+    #path('favorites/', views.favorite_list, name='favorites'),
     
     
     
