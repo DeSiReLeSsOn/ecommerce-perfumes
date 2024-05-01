@@ -6,124 +6,105 @@
 {% endblock %}
 {% block content %}
 
+<style>
+body {
+  background: #eecda3;
+  background: -webkit-linear-gradient(to right, #eecda3, #ef629f);
+  background: linear-gradient(to right, #eecda3, #ef629f);
+  min-height: 100vh;
+}
 
-<div class="bg-light py-3">
+</style>
+
+
+
+
+
+<div class="pb-5">
     <div class="container">
-        <div class="row">
-            <div class="col-md-12 mb-0"><a href="{% url "shop:product_list" %}">Главная</a> <span class="mx-2 mb-0">/</span> <strong
-                    class="text-black">Cart</strong></div>
-        </div>
-    </div>
-</div>
+      <div class="row"style="margin-top: 15px;">
+        <div class="col-lg-12 p-5 bg-white rounded shadow-sm mb-5">
 
-<div  class="site-blocks-table table-responsive">
-    <div class="container-fluid">
-        <div class="row mb-5">
-            <form class="col-md-12" method="post">
-                <div class="site-blocks-table" >
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th class="product-thumbnail">Фото</th>
-                                <th class="product-name">Товар</th>
-                                <th class="product-price">Цена</th>
-                                <th class="product-quantity" style="text-align: center;">Количество</th>
-                                <th class="product-total">Цена заказа</th>
-                                <th class="product-remove">Удалить</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>{% for item in cart %}
-                                {% with product=item.product %}
-                            <tr>
-                                <td class="product-thumbnail">
-                                    <img src="{% if product.image %}{{ product.image.url }}
-                                    {% else %}{% static "img/no_image.jpg" %}{% endif %}" alt="Image" class="img-fluid">
-                                </td>
-                                <td class="product-name">
-                                    <h2 class="h5 text-black">{{ product.name }}</h2>
-                                </td>
-                                <td>₽{{ item.price }}</td>
-                                <td>
-                                    <div class="input-group mb-3"  style="display: flex; justify-content: center;">
-                                        <div class="input-group-prepend" style="display: flex; justify-content: center;">
-                                            <form action="{% url "cart:cart_add" product.id %}" method="post" style="display: flex; flex-direction: column; align-items: center;">
-                                                {{ item.quantity }}
-                                                {% csrf_token %}
-                                            </form>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>₽{{ item.total_price }}</td>
-                                <td><form action="{% url "cart:cart_remove" product.id %}" method="post">
-                                    <input type="submit" value="X"  class="btn btn-primary btn-sm">
-                                    {% csrf_token %}
-                                </form>
-                                </td>
-                            </tr>
-                            {% endwith %}
-                            {% endfor %}
-                            </tr>
-
-                        </tbody>
-                    </table>
-                </div>
-            </form>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6">
-                <div class="row mb-5">
-                    <div class="col-md-6 mb-3 mb-md-0">
-                        <button onclick="window.location='{% url "shop:product_list" %}'" class="btn btn-primary btn-sm btn-block">Продолжить покупки</button>
+          <!-- Shopping cart table -->
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col" class="border-0 bg-light">
+                    <div class="p-2 px-3 text-uppercase">Товар</div>
+                  </th>
+                  <th scope="col" class="border-0 bg-light">
+                    <div class="py-2 text-uppercase">Цена</div>
+                  </th>
+                  <th scope="col" class="border-0 bg-light">
+                    <div class="py-2 text-uppercase">Количество</div>
+                  </th>
+                  <th scope="col" class="border-0 bg-light">
+                    <div class="py-2 text-uppercase">Удалить</div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in cart %}
+                {% with product=item.product %}
+                <tr>
+                  <th scope="row" class="border-0">
+                    <div class="p-2">
+                      <img src="{% if product.image %}{{ product.image.url }}
+                      {% else %}{% static "img/no_image.jpg" %}{% endif %}" alt="" width="70" class="img-fluid rounded shadow-sm">
+                      <div class="ml-3 d-inline-block align-middle">
+                        <h5 class="mb-0"> <a href="#" class="text-dark d-inline-block align-middle">{{ product.name }}</a></h5><span class="text-muted font-weight-normal font-italic d-block">Бренд: {{ product.category }}</span>
+                      </div>
                     </div>
-                    <div class="col-md-6">
-                        
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <label class="text-black h4" for="coupon">Скидочный купон</label>
-                        <p>Введите скидочный купон</p>
-                    </div>
-                    <form action="{% url "coupons:apply" %}" method="post">
+                  </th>
+                  <td class="border-0 align-middle"><strong>{{ item.price }}₽</strong></td>
+                  <td class="border-0 align-middle"><strong>{{ item.quantity }}</strong></td>
+                  <td class="border-0 align-middle">
+                    <form action="{% url "cart:cart_remove" product.id %}" method="post">
                         {% csrf_token %}
-                        <div class="col-md-8 mb-3 mb-md-0">
-                            {{ coupon_apply_form.code }}
-                        </div>
-                        <div class="col-md-4">
-                            <button type="submit" class="btn btn-primary btn-sm">Применить купон</button>
-                        </div>
+                        <button type="submit" class="btn btn-link text-dark"><i class="fa fa-trash"></i></button>
                     </form>
-                </div>
-            </div>
-            <div class="col-md-6 pl-5">
-                <div class="row justify-content-end">
-                    <div class="col-md-7">
-                        <div class="row">
-                            <div class="col-md-12 text-right border-bottom mb-5">
-                                <h3 class="text-black h4 text-uppercase">Сумма заказа</h3>
-                            </div>
-                        </div>
-
-                        <div class="row mb-5 d-flex align-items-center">
-                            <div class="col-md-6 col-12">
-                                <span class="text-black">Всего</span>
-                            </div>
-                            <div class="col-md-6 col-12 text-md-right text-start">
-                                <strong class="text-black">{{ cart.get_total_price_after_discount|floatformat:"2" }}</strong>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <button class="btn btn-primary btn-lg py-3 btn-block"
-                                    onclick="window.location='{% url "orders:order_create" %}'">Оплата</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                  </td>
+                </tr>
+                {% endwith %}
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <!-- End -->
         </div>
+      </div>
+
+      <div class="row py-5 p-4 bg-white rounded shadow-sm">
+        <div class="col-lg-6">
+          <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Скидочный купон</div>
+          <div class="p-4">
+            <p class="font-italic mb-4">Если у вас есть скидочный купон,подалуйста введите его ниже</p>
+            <div class="input-group mb-4 border rounded-pill p-2">
+              <form action="{% url "coupons:apply" %}" method="post">
+                {% csrf_token %}
+                <input type="text" name="coupon_code" placeholder="Введите купон" aria-describedby="button-addon3" class="form-control border-0">
+                <div class="input-group-append border-0">
+                  <button id="button-addon3" type="submit" class="btn btn-dark px-4 rounded-pill">Применить купон</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Заказ </div>
+          <div class="p-4">
+            <p class="font-italic mb-4"></p>
+            <ul class="list-unstyled mb-4">
+              <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Сумма заказа</strong>
+                <h5 class="font-weight-bold">₽{{ cart.get_total_price_after_discount|floatformat:"2" }}</h5>
+              </li>
+            </ul><a href="{% url "orders:order_create" %}" class="btn btn-dark rounded-pill py-2 btn-block">Перейти к оплате</a>
+          </div>
+        </div>
+      </div>
+
     </div>
+  </div>
 </div>
 {% endblock %}

@@ -1,5 +1,5 @@
 {% extends "shop/base.html" %}
-{% load i18n %}  
+{% load i18n static %}
 
 {% block title %}
   Расчет
@@ -7,56 +7,163 @@
 
 
 
+<style>
+.order-info {
+  background-color: #f8f9fa;
+  padding: 30px;
+  border-radius: 10px;
+}
+
+.ul1 {
+  list-style-type: none;
+  padding: 0;
+}
+
+.li1 {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.product-info {
+  display: flex;
+  align-items: center;
+}
+
+.product-img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  margin-right: 15px;
+  border-radius: 10px;
+}
+
+.product-name-price {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-name {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.product-price {
+  font-size: 16px;
+  font-weight: 500;
+  color: #343a40;
+}
+
+.total-price {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.total-price-num {
+  font-size: 24px;
+  font-weight: 500;
+  color: #343a40;
+}
+
+.order-form {
+  background-color: #f8f9fa;
+  padding: 30px;
+  border-radius: 10px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  font-size: 16px;
+  font-weight: 500;
+  color: #343a40;
+}
+
+.form-control {
+  border-radius: 10px;
+}
+
+.btn-primary {
+  background-color: #6c5ce7;
+  border-color: #6c5ce7;
+  border-radius: 10px;
+}
+
+.btn-primary:hover {
+  background-color: #5a52e0;
+  border-color: #5a52e0;
+}
+
+@media (max-width: 991px) {
+  .order-info,
+  .order-form {
+    margin-bottom: 20px;
+  }
+}
+
+</style>
+
 
 {% block content %}
-  <h1 class="create_ord">Расчет</h1>
-  <div class="order-info">
-    <h3 class="create_ord">Ваш заказ</h3>
-    <ul class="ul1">
-      {% for item in cart %}
-        <li class="li1">
-          {{ item.quantity }}x {{ item.product.name }}
-          <span class="sp1">₽{{ item.total_price }}</span>
-        </li>
-      {% endfor %}
-      {% if cart.coupon %}
-        <li class="create_ord">
-            {% blocktrans with code=cart.coupon.code discount=cart.coupon.discount %}
-            "{{ code }}" ({{ discount }}% off)
-          {% endblocktrans %}
-          <span class="create_ord">- ₽{{ cart.get_discount|floatformat:2 }}</span>
-        </li>
-      {% endif %}
-    </ul>
-    <p class="create_ord">Итог: ₽{{ cart.get_total_price_after_discount|floatformat:2 }}</p>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 order-info">
+        <h3 class="create_ord">Ваш заказ</h3>
+        <ul class="ul1">
+          {% for item in cart %}
+            <li class="li1">
+              {{ item.quantity }}x {{ item.product.name }}
+              <span class="sp1">₽{{ item.total_price }}</span>
+            </li>
+          {% endfor %}
+          {% if cart.coupon %}
+            <li class="create_ord">
+                {% blocktrans with code=cart.coupon.code discount=cart.coupon.discount %}
+                "{{ code }}" ({{ discount }}% off)
+              {% endblocktrans %}
+              <span class="create_ord">- ₽{{ cart.get_discount|floatformat:2 }}</span>
+            </li>
+          {% endif %}
+        </ul>
+        <p class="create_ord">Итог: ₽{{ cart.get_total_price_after_discount|floatformat:2 }}</p>
+      </div>
+      <div class="col-md-6 order-form">
+        <h3 class="create_ord">Контактная информация</h3>
+        <form method="post">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="{{ form.full_name.id_for_label }}">ФИО:</label>
+            <input type="text" id="{{ form.full_name.id_for_label }}" name="{{ form.full_name.html_name }}" placeholder="ФИО" class="form-control" required>
+          </div>
+
+          <div class="form-group">
+            <label for="{{ form.email.id_for_label }}">Имейл:</label>
+            <input type="email" id="{{ form.email.id_for_label }}" name="{{ form.email.html_name }}" placeholder="E-mail" class="form-control" required>
+          </div>
+
+          <div class="form-group">
+            <label for="{{ form.address.id_for_label }}">Адрес доставки:</label>
+            <input type="text" id="{{ form.address.id_for_label }}" name="{{ form.address.html_name }}" placeholder="адрес доставки" class="form-control" required>
+          </div>
+
+          <div class="form-group">
+            <label for="{{ form.postal_code.id_for_label }}">Почтовый индекс:</label>
+            <input type="text" id="{{ form.postal_code.id_for_label }}" name="{{ form.postal_code.html_name }}" placeholder="почтовый индекс" class="form-control" required>
+          </div>
+
+          <div class="form-group">
+            <label for="{{ form.phone.id_for_label }}">Телефон:</label>
+            <input type="text" id="{{ form.phone.id_for_label }}" name="{{ form.phone.html_name }}" placeholder="номер телефона в формате +7XXXXXXXXXX или 8XXXXXXXXXX" class="form-control" required>
+          </div>
+
+          <input type="submit" value="Оплатить" class="btn btn-primary">
+        </form>
+      </div>
+    </div>
   </div>
-  <form method="post" class="order-form">
-    <div>
-      <label for="{{ form.full_name.id_for_label }}">ФИО:</label>
-      <input type="text" id="{{ form.full_name.id_for_label }}" name="{{ form.full_name.html_name }}" placeholder="ФИО">
-    </div>
-    
-    <div>
-      <label for="{{ form.email.id_for_label }}">Имейл:</label>
-      <input type="email" id="{{ form.email.id_for_label }}" name="{{ form.email.html_name }}" placeholder="E-mail">
-    </div>
-    
-    <div>
-      <label for="{{ form.address.id_for_label }}">Адрес доставки:</label>
-      <input type="text" id="{{ form.address.id_for_label }}" name="{{ form.address.html_name }}" placeholder="адрес доставки">
-    </div>
-    
-    <div>
-      <label for="{{ form.postal_code.id_for_label }}">Почтовый индекс:</label>
-      <input type="text" id="{{ form.postal_code.id_for_label }}" name="{{ form.postal_code.html_name }}" placeholder="почтовый индекс">
-    </div>
-    
-    <div>
-      <label for="{{ form.phone.id_for_label }}">Телефон:</label>
-      <input type="text" id="{{ form.phone.id_for_label }}" name="{{ form.phone.html_name }}" placeholder="Введите корректный номер телефона в формате +7XXXXXXXXXX или 8XXXXXXXXXX">
-    </div>
-    
-    <input type="submit" value="Оплатить" class="btn">
-    {% csrf_token %}
-  </form>
 {% endblock %}

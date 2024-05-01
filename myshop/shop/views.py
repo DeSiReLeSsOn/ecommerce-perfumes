@@ -9,6 +9,7 @@ from .models import FavoriteProduct
 from django.http import JsonResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from cart.views import is_product_in_cart
+from cart.cart import Cart
 import json
 
 
@@ -102,18 +103,21 @@ def product_list(request, category_slug=None, template_name='shop/product/list.h
     page_obj = paginator.get_page(page_number)
 
     # Создаем список товаров, которые находятся в корзине пользователя
-    in_cart = []
+    inCart = []
+    for product in products:
+        response = is_product_in_cart(request, product.id)
+        response_content = json.loads(response.content.decode('utf-8'))
+        if response_content.get('inCart', False):
+            inCart.append(product.id)
+
     if request.user.is_authenticated:
         favorite_products = FavoriteProduct.objects.filter(user=request.user).values_list('product_id', flat=True)
-        for product in products:
-            if product.id in favorite_products:
-                in_cart.append(product.id)
 
     context = {
         'category': category,
         'categories': categories,
         'page_obj': page_obj,
-        'in_cart': in_cart,
+        'inCart': inCart,
     }
 
     if request.user.is_authenticated:
