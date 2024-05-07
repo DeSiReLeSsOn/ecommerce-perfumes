@@ -352,7 +352,7 @@ def search(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    return render(request, 'shop/product/list_after_search.html', {'page_obj': page_obj, 'query': query})
+    return render(request, 'shop/product/list.html', {'page_obj': page_obj, 'query': query})
 
 
 # def brands(request):
