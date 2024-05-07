@@ -129,16 +129,79 @@ import json
 
 
 
-def product_list(request, category_slug=None, template_name='shop/product/list.html'):
-    category = None
-    categories = Category.objects.all()
+
+
+
+
+
+# def product_list(request, category_slug=None, template_name='shop/product/list.html'):
+#     category = None
+#     categories = Category.objects.all()
+#     products = Product.objects.filter(available=True)
+
+#     is_favorites = request.GET.get('is_favorites', False) == 'True'
+
+#     if category_slug:
+#         category = get_object_or_404(Category, slug=category_slug)
+#         products = products.filter(category=category)
+
+#     # Фильтрация продуктов по избранным товарам пользователя
+#     if request.user.is_authenticated and is_favorites:
+#         favorite_products = FavoriteProduct.objects.filter(user=request.user).values_list('product_id', flat=True)
+#         products = products.filter(id__in=favorite_products)
+
+#     # Сортировка товаров
+#     sort_by = request.GET.get('sort_by', 'name')  # Use 'name' as the default sort order
+#     if sort_by == 'price-asc':
+#         products = products.order_by('price')
+#     elif sort_by == 'price-desc':
+#         products = products.order_by('-price')
+#     elif sort_by == 'views-desc':
+#         products = products.order_by('-views_count')
+#     elif sort_by == 'search-desc':
+#         products = products.order_by('-search_count')
+#     else:
+#         products = products.order_by(sort_by)
+
+#     # Pagination
+#     paginator = Paginator(products, 9)
+#     page_number = request.GET.get('page')
+#     page_obj = paginator.get_page(page_number)
+
+#     # Создаем список товаров, которые находятся в корзине пользователя
+#     inCart = []
+#     for product in products:
+#         response = is_product_in_cart(request, product.id)
+#         response_content = json.loads(response.content.decode('utf-8'))
+#         if response_content.get('inCart', False):
+#             inCart.append(product.id)
+
+#     if request.user.is_authenticated:
+#         favorite_products = FavoriteProduct.objects.filter(user=request.user).values_list('product_id', flat=True)
+
+#     context = {
+#         'category': category,
+#         'categories': categories,
+#         'page_obj': page_obj,
+#         'inCart': inCart,
+#         'sort_by': sort_by,
+#     }
+
+#     if request.user.is_authenticated:
+#         context['favorite_products'] = favorite_products
+
+#     return render(request, template_name, context)
+
+
+
+
+
+def product_list(request, template_name='shop/product/list.html'):
+
     products = Product.objects.filter(available=True)
 
     is_favorites = request.GET.get('is_favorites', False) == 'True'
 
-    if category_slug:
-        category = get_object_or_404(Category, slug=category_slug)
-        products = products.filter(category=category)
 
     # Фильтрация продуктов по избранным товарам пользователя
     if request.user.is_authenticated and is_favorites:
@@ -180,8 +243,6 @@ def product_list(request, category_slug=None, template_name='shop/product/list.h
         favorite_products = FavoriteProduct.objects.filter(user=request.user).values_list('product_id', flat=True)
 
     context = {
-        'category': category,
-        'categories': categories,
         'page_obj': page_obj,
         'inCart': inCart,
         'sort_by': sort_by,
@@ -191,6 +252,7 @@ def product_list(request, category_slug=None, template_name='shop/product/list.h
         context['favorite_products'] = favorite_products
 
     return render(request, template_name, context)
+
 
 
 
