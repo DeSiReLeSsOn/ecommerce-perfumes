@@ -44,6 +44,8 @@ class Product(models.Model):
     created = models.DateTimeField(auto_now_add=True, verbose_name='Товар создан')
     updated = models.DateTimeField(auto_now=True, verbose_name='Товар обновлен')
     volume = models.CharField(max_length=10, verbose_name="Обьем флакона", blank=False, default="50ml")
+    views_count = models.PositiveIntegerField(default=0, verbose_name='Количество просмотров')
+    search_count = models.PositiveIntegerField(default=0, verbose_name='Количество поисковых запросов')
 
 
 

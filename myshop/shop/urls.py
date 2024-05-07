@@ -16,5 +16,4 @@ urlpatterns = [
     path('<int:id>/<slug:slug>/', views.product_detail, name='product_detail'),
     path('add-to-favorite/<int:product_id>/', views.add_to_favorite_ajax, name='add-to-favorite'),
     path('remove-from-favorite/<int:product_id>/', views.remove_from_favorite_ajax, name='remove-to-favorite'),
-
 ]

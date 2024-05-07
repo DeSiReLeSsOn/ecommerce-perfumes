@@ -81,6 +81,54 @@ import json
 
 
 
+# def product_list(request, category_slug=None, template_name='shop/product/list.html'):
+#     category = None
+#     categories = Category.objects.all()
+#     products = Product.objects.filter(available=True)
+
+#     is_favorites = request.GET.get('is_favorites', False) == 'True'
+
+#     if category_slug:
+#         category = get_object_or_404(Category, slug=category_slug)
+#         products = products.filter(category=category)
+
+#     # Фильтрация продуктов по избранным товарам пользователя
+#     if request.user.is_authenticated and is_favorites:
+#         favorite_products = FavoriteProduct.objects.filter(user=request.user).values_list('product_id', flat=True)
+#         products = products.filter(id__in=favorite_products)
+
+#     # Pagination
+#     paginator = Paginator(products, 9)
+#     page_number = request.GET.get('page')
+#     page_obj = paginator.get_page(page_number)
+
+#     # Создаем список товаров, которые находятся в корзине пользователя
+#     inCart = []
+#     for product in products:
+#         response = is_product_in_cart(request, product.id)
+#         response_content = json.loads(response.content.decode('utf-8'))
+#         if response_content.get('inCart', False):
+#             inCart.append(product.id)
+
+#     if request.user.is_authenticated:
+#         favorite_products = FavoriteProduct.objects.filter(user=request.user).values_list('product_id', flat=True)
+
+#     context = {
+#         'category': category,
+#         'categories': categories,
+#         'page_obj': page_obj,
+#         'inCart': inCart,
+#     }
+
+#     if request.user.is_authenticated:
+#         context['favorite_products'] = favorite_products
+
+#     return render(request, template_name, context)
+
+
+
+
+
 def product_list(request, category_slug=None, template_name='shop/product/list.html'):
     category = None
     categories = Category.objects.all()
@@ -96,6 +144,24 @@ def product_list(request, category_slug=None, template_name='shop/product/list.h
     if request.user.is_authenticated and is_favorites:
         favorite_products = FavoriteProduct.objects.filter(user=request.user).values_list('product_id', flat=True)
         products = products.filter(id__in=favorite_products)
+
+
+    # Сортировка товаров
+    sort_by = request.GET.get('sort_by', 'name')  # Use 'name' as the default sort order
+    if sort_by == 'price-asc':
+        products = products.order_by('price')
+    elif sort_by == 'price-desc':
+        products = products.order_by('-price')
+    elif sort_by == 'views-desc':
+        products = products.order_by('-views_count')
+    elif sort_by == 'search-desc':
+        products = products.order_by('-search_count')
+    else:
+        products = products.order_by(sort_by)
+
+    
+
+
 
     # Pagination
     paginator = Paginator(products, 9)
@@ -118,6 +184,7 @@ def product_list(request, category_slug=None, template_name='shop/product/list.h
         'categories': categories,
         'page_obj': page_obj,
         'inCart': inCart,
+        'sort_by': sort_by,
     }
 
     if request.user.is_authenticated:
@@ -159,11 +226,17 @@ def favorite_products(request, template_name='shop/product/list.html'):
 
 
 
+
 def product_detail(request, id, slug):
-    product = get_object_or_404(Product, 
+    product = get_object_or_404(Product,
                                 id=id,
                                 slug=slug,
                                 available=True)
+
+    # Обновление счетчика просмотров товара
+    product.views_count += 1
+    product.save()
+
     cart_product_form = CartAddProductForm()
     return render(request,
                   'shop/product/detail.html',
@@ -171,24 +244,47 @@ def product_detail(request, id, slug):
                    'cart_product_form': cart_product_form})
 
 
+
 """def search(request):
 	query = request.POST.get('q')
 	products = Product.objects.filter(name__icontains=query).all()
 	return render(request, 'shop/product/list.html', {'products': products}) """
 
+# def search(request):
+#     query = request.GET.get('q')
+#     if query:
+#         products = Product.objects.filter(name__icontains=query)
+#     else:
+#         products = Product.objects.all()
+
+
+#     paginator = Paginator(products, 9)  # 9 products per page
+#     page_number = request.GET.get('page')
+#     page_obj = paginator.get_page(page_number)
+
+#     return render(request, 'shop/product/list.html', {'page_obj': page_obj, 'query': query})
+
+
 def search(request):
     query = request.GET.get('q')
     if query:
         products = Product.objects.filter(name__icontains=query)
+
+        # Обновление счетчика поисковых запросов для товаров
+        for product in products:
+            product.search_count += 1
+            product.save()
+
+        # Сортировка товаров по частоте поиска
+        products = products.order_by('-search_count')
     else:
         products = Product.objects.all()
-
 
     paginator = Paginator(products, 9)  # 9 products per page
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    return render(request, 'shop/product/list.html', {'page_obj': page_obj, 'query': query})
+    return render(request, 'shop/product/list_after_search.html', {'page_obj': page_obj, 'query': query})
 
 
 # def brands(request):
