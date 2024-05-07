@@ -196,12 +196,16 @@ import json
 
 
 
-def product_list(request, template_name='shop/product/list.html'):
-
+def product_list(request, category_slug=None, template_name='shop/product/list.html'):
+    category = None
+    categories = Category.objects.all()
     products = Product.objects.filter(available=True)
 
     is_favorites = request.GET.get('is_favorites', False) == 'True'
 
+    if category_slug:
+        category = get_object_or_404(Category, slug=category_slug)
+        products = products.filter(category=category)
 
     # Фильтрация продуктов по избранным товарам пользователя
     if request.user.is_authenticated and is_favorites:
@@ -243,6 +247,8 @@ def product_list(request, template_name='shop/product/list.html'):
         favorite_products = FavoriteProduct.objects.filter(user=request.user).values_list('product_id', flat=True)
 
     context = {
+        'category': category,
+        'categories': categories,
         'page_obj': page_obj,
         'inCart': inCart,
         'sort_by': sort_by,
