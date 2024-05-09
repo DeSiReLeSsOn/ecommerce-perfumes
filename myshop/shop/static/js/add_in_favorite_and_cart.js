@@ -22,7 +22,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 })
                 .then(response => response.json())
                 .then(data => {
-                    heartIcon.src = heartImgPath;
+                    if (data.authenticated) {
+                        heartIcon.src = heartImgPath;
+                    } else {
+                        heartIcon.src = heartImgPath;
+                      //  window.location.href = data.redirect;
+                    }
                 })
                 .catch(error => console.error('Произошла ошибка при удалении товара из избранного:', error));
             } else {
@@ -35,8 +40,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 })
                 .then(response => response.json())
                 .then(data => {
-                    heartIcon.src = likeImgPath;
-                    if (!data.authenticated) {
+                    if (data.authenticated) {
+                        heartIcon.src = likeImgPath;
+                    } else {
                         window.location.href = data.redirect;
                     }
                 })
