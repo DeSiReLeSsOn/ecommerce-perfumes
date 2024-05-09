@@ -4,30 +4,44 @@ document.addEventListener('DOMContentLoaded', function() {
     const cartImgPath = '/static/img/cart.png';
     const okImgPath = '/static/img/ok.png';
     const csrfToken = document.querySelector('script[data-csrf-token]').getAttribute('data-csrf-token');
-    
+
     // Код добавления и удаления избранного
     document.querySelectorAll('.favorite-link').forEach(function(link) {
         link.addEventListener('click', function(event) {
             event.preventDefault();
             const productId = link.getAttribute('data-product-id');
             const heartIcon = link.querySelector('img');
-
-            fetch(`/add-to-favorite/${productId}/`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': getCookie('csrftoken'),
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.authenticated && data.success) {
+    
+            if (heartIcon.src.includes('like.png')) {
+                fetch(`/remove-from-favorite/${productId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': getCookie('csrftoken'),
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    heartIcon.src = heartImgPath;
+                })
+                .catch(error => console.error('Произошла ошибка при удалении товара из избранного:', error));
+            } else {
+                fetch(`/add-to-favorite/${productId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': getCookie('csrftoken'),
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
                     heartIcon.src = likeImgPath;
-                } else if (!data.authenticated) {
-                    window.location.href = data.redirect;
-                }
-            })
-            .catch(error => console.error('Произошла ошибка:', error));
+                    if (!data.authenticated) {
+                        window.location.href = data.redirect;
+                    }
+                })
+                .catch(error => console.error('Произошла ошибка:', error));
+            }
         });
     });
     // Код добавления и удаления из корзины

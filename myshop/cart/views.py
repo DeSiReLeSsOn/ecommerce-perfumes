@@ -87,3 +87,6 @@ def is_product_in_cart(request, product_id):
         return JsonResponse({'inCart': True})
     else:
         return JsonResponse({'inCart': False})
+    
+
+

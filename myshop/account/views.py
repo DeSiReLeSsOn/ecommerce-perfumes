@@ -7,7 +7,6 @@ from shop.models import FavoriteProduct
 from shop.models import Category, Product 
 from django.http.response import JsonResponse
 from .forms import LoginForm, UserCreateForm, UserUpdateForm
-from cart.views import is_product_in_cart
 import json
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 

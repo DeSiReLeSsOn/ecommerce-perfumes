@@ -262,35 +262,7 @@ def product_list(request, category_slug=None, template_name='shop/product/list.h
 
 
 
-def favorite_products(request, template_name='shop/product/list.html'):
-    if not request.user.is_authenticated:
-        return redirect('account:login')
 
-    favorite_products_ids = FavoriteProduct.objects.filter(user=request.user).values_list('product_id', flat=True)
-    products = Product.objects.filter(id__in=favorite_products_ids, available=True)
-
-    # Pagination
-    paginator = Paginator(products, 9)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-
-    # Create a list of products that are in the user's cart
-    in_cart = []
-    for product in products:
-        if product.id in favorite_products_ids:
-            in_cart.append(product.id)
-
-    context = {
-        'category': None,
-        'categories': Category.objects.all(),
-        'page_obj': page_obj,
-        'in_cart': in_cart,
-    }
-
-    if request.user.is_authenticated:
-        context['favorite_products'] = favorite_products_ids
-
-    return render(request, template_name, context)
 
 
 
@@ -425,6 +397,30 @@ def remove_from_favorite_ajax(request, product_id):
 
 
 
+def favorite_products(request, template_name='shop/product/list.html'):
+    if not request.user.is_authenticated:
+        return redirect('account:login')
 
+    favorite_products_ids = FavoriteProduct.objects.filter(user=request.user).values_list('product_id', flat=True)
+    products = Product.objects.filter(id__in=favorite_products_ids, available=True)
 
+    paginator = Paginator(products, 9)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
 
+    in_cart = []
+    for product in products:
+        if product.id in favorite_products_ids:
+            in_cart.append(product.id)
+
+    context = {
+        'category': None,
+        'categories': Category.objects.all(),
+        'page_obj': page_obj,
+        'in_cart': in_cart,
+    }
+
+    if request.user.is_authenticated:
+        context['favorite_products'] = favorite_products_ids
+
+    return render(request, template_name, context)
