@@ -12,3 +12,11 @@ class Review(models.Model):
     text = models.TextField("Отзыв")
     created = models.DateTimeField("Создан",auto_now_add=True)
     updated = models.DateTimeField("Обновлен",auto_now=True)
+
+
+class Comment(models.Model):
+    review = models.ForeignKey(Review, on_delete=models.CASCADE, related_name='comments')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    text = models.TextField("Комментарий")
+    created = models.DateTimeField("Создан", auto_now_add=True)
+    updated = models.DateTimeField("Обновлен", auto_now=True)

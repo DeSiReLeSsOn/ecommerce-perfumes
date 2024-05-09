@@ -33,6 +33,7 @@ urlpatterns = [
     path('coupons/', include('coupons.urls', namespace='coupons')),
     path('email/', include(email_urls), name='email-verification'),
     path('banner/', include('banner.urls', namespace='banner')),
+    path('reviews/', include('reviews.urls', namespace='reviews')),
     path('', include('shop.urls', namespace='shop')),
 ]
 

@@ -1,0 +1,53 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+<div class="container my-5">
+  <h1 class="text-center mb-4">Отзывы о нашем парфюмерном магазине</h1>
+
+  {% if user.is_authenticated %}
+    <div class="row mb-4">
+      <div class="col-12">
+        <h2>Оставьте свой отзыв</h2>
+        <form method="post">
+          {% csrf_token %}
+          {{ review_form.as_p }}
+          <button type="submit" name="review_text" class="btn btn-primary mt-3">Отправить отзыв</button>
+        </form>
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="row">
+    {% for review in reviews %}
+      <div class="col-12 mb-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">{{ review.user }}</h5>
+            <p class="card-text">{{ review.text }}</p>
+            <small class="text-muted">{{ review.created|date:"d M Y" }}</small>
+          </div>
+          {% for comment in review.comments.all %}
+            {% if comment.user.is_staff %}
+              <div class="card-footer">
+                <small class="text-muted">{{ comment.user }}: {{ comment.text }}</small>
+              </div>
+            {% endif %}
+          {% empty %}
+            <p class="text-center"></p>
+          {% endfor %}
+          {% if user.is_staff %}
+            <form method="post">
+              {% csrf_token %}
+              {{ comment_form.as_p }}
+              <input type="hidden" name="review_id" value="{{ review.id }}">
+              <button type="submit" name="comment_text" class="btn btn-primary mt-3">Добавить комментарий</button>
+            </form>
+          {% endif %}
+        </div>
+      </div>
+    {% empty %}
+      <p class="text-center">Пока нет отзывов.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
