@@ -9,10 +9,7 @@ from .forms import OrderCreateForm
 #from .tasks import order_created
 from cart.cart import Cart
 from django.contrib.auth.decorators import login_required 
-from django.contrib.auth import get_user_model
 
-
-User = get_user_model()
 
 
 
