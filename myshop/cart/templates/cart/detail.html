@@ -83,7 +83,7 @@ body {
             <div class="input-group mb-4 border rounded-pill p-2">
               <form action="{% url "coupons:apply" %}" method="post">
                 {% csrf_token %}
-                <input type="text" name="coupon_code" placeholder="Введите купон" aria-describedby="button-addon3" class="form-control border-0">
+                {{ coupon_apply_form.code }}
                 <div class="input-group-append border-0">
                   <button id="button-addon3" type="submit" class="btn btn-dark px-4 rounded-pill">Применить купон</button>
                 </div>
@@ -96,6 +96,9 @@ body {
           <div class="p-4">
             <p class="font-italic mb-4"></p>
             <ul class="list-unstyled mb-4">
+              <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Скидка</strong>
+                <h5 class="font-weight-bold">₽{{ cart.get_discount }}</h5>
+              </li>
               <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Сумма заказа</strong>
                 <h5 class="font-weight-bold">₽{{ cart.get_total_price_after_discount|floatformat:"2" }}</h5>
               </li>

@@ -24,7 +24,7 @@
           <div class="card-body">
             <h5 class="card-title">{{ review.user }}</h5>
             <p class="card-text">{{ review.text }}</p>
-            <small class="text-muted">{{ review.created|date:"d M Y" }}</small>
+            <small class="text-muted">/ {{ review.created|date:"d M Y" }}</small>
           </div>
           {% for comment in review.comments.all %}
             {% if comment.user.is_staff %}
