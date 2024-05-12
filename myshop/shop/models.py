@@ -56,6 +56,11 @@ class Product(models.Model):
             models.Index(fields=['id', 'slug']),
             models.Index(fields=['name']),
             models.Index(fields=['-created']),
+            models.Index(fields=['available']),
+            models.Index(fields=['price']),
+            models.Index(fields=['views_count']),
+            models.Index(fields=['search_count']),
+            models.Index(fields=['category_id']),
         ]
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'

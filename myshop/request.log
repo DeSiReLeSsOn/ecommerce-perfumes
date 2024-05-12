@@ -6,3 +6,17 @@
 {"path": "/api/product/16/", "request_total": 0.109, "sql_count": 0, "sql_total": 0}
 {"path": "/api/product/", "request_total": 0.14, "sql_count": 0, "sql_total": 0}
 {"path": "/api/product/", "request_total": 0.343, "sql_count": 0, "sql_total": 0}
+{"path": "/", "request_total": 0.609, "sql_count": 0, "sql_total": 0}
+{"path": "/media/products/2024/04/23/a1.jpg", "request_total": 0.015, "sql_count": 0, "sql_total": 0}
+{"path": "/media/products/2024/04/23/c1.jpg", "request_total": 0.0, "sql_count": 0, "sql_total": 0}
+{"path": "/media/products/2024/04/23/a2.jpg", "request_total": 0.0, "sql_count": 0, "sql_total": 0}
+{"path": "/media/products/2024/04/23/a3.jpg", "request_total": 0.016, "sql_count": 0, "sql_total": 0}
+{"path": "/media/products/2024/04/23/c3.jpg", "request_total": 0.016, "sql_count": 0, "sql_total": 0}
+{"path": "/media/products/2024/04/23/d3.jpg", "request_total": 0.0, "sql_count": 0, "sql_total": 0}
+{"path": "/media/products/2024/04/23/c2.jpg", "request_total": 0.0, "sql_count": 0, "sql_total": 0}
+{"path": "/media/products/2024/04/23/d2.jpg", "request_total": 0.0, "sql_count": 0, "sql_total": 0}
+{"path": "/media/products/2024/04/23/d1.jpg", "request_total": 0.0, "sql_count": 0, "sql_total": 0}
+{"path": "/media/banners/22.png", "request_total": 0.015, "sql_count": 0, "sql_total": 0}
+{"path": "/", "request_total": 0.328, "sql_count": 0, "sql_total": 0}
+{"path": "/", "request_total": 0.266, "sql_count": 0, "sql_total": 0}
+{"path": "/api/product/", "request_total": 0.188, "sql_count": 0, "sql_total": 0}
