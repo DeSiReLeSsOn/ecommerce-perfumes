@@ -63,9 +63,8 @@
     <div class="social">
         <ul>
             <li class="vk">
-                <a href="{% url "social:begin" "vk-oauth2" %}" >
-                    Войти через ВК
-                    <img src="/static/vk.png">
+                <a href="{% url 'social:begin' 'yandex-oauth2' %}">
+                    <img src="{% static 'img/vk.png' %}">
                 </a>
             </li>
         </ul>

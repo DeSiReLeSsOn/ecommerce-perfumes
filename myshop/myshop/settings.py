@@ -16,6 +16,7 @@ from django.utils.translation import gettext_lazy as _
 from dotenv import load_dotenv 
 import os
 from django.contrib import messages
+from django.urls import reverse_lazy
 
 
 load_dotenv()
@@ -34,9 +35,11 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*', 'https://c685-195-184-202-202.ngrok-free.app'] 
+#ALLOWED_HOSTS = ['donetsk_parfum.com', 'localhost', '127.0.0.1', 'https://78c1-195-184-202-89.ngrok-free.app',]
+ALLOWED_HOSTS = ['*', '78c1-195-184-202-89.ngrok-free.app'] 
 
-CSRF_TRUSTED_ORIGINS = ['https://c685-195-184-202-202.ngrok-free.app',]
+
+CSRF_TRUSTED_ORIGINS = ['https://189b-195-184-202-89.ngrok-free.app',]
 
 
 # Application definition
@@ -262,15 +265,39 @@ SOCIAL_AUTH_POSTGRES_JSONFIELD = True
 AUTHENTICATION_BACKENDS = [
  'django.contrib.auth.backends.ModelBackend',
  'account.authentication.EmailAuthBackend',
- 'social_core.backends.vk.VKOAuth2',
- #'social_core.backends.yandex.YandexOAuth2',
+ 'social_core.backends.yandex.YandexOAuth2',
 ]
 
-SOCIAL_AUTH_VK_OAUTH2_KEY = os.getenv('SOCIAL_AUTH_VK_OAUTH2_KEY')
-SOCIAL_AUTH_VK_OAUTH2_SECRET = os.getenv('SOCIAL_AUTH_VK_OAUTH2_SECRET')
-VK_OAUTH2_CALLBACK_URL = 'http://127.0.0.1:8000/social-auth/login/vk-oauth2/'
-SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['email']
-SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
+
+SOCIAL_AUTH_YANDEX_OAUTH2_KEY = os.getenv('SOCIAL_AUTH_YANDEX_OAUTH2_KEY')
+SOCIAL_AUTH_YANDEX_OAUTH2_SECRET = os.getenv('SOCIAL_AUTH_YANDEX_OAUTH2_SECRET')
+SOCIAL_AUTH_YANDEX_OAUTH2_SCOPE = ['email']
+
+
+SOCIAL_AUTH_PIPELINE = [
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.auth_allowed',
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.user.get_username',
+    'social_core.pipeline.user.create_user',
+    'account.authentication.create_profile',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
+]
+
+
+if DEBUG:
+    import mimetypes
+    mimetypes.add_type('application/javascript', '.js', True)
+    mimetypes.add_type('text/css', '.css', True)
+
+
+ABSOLUTE_URL_OVERRIDES = {
+    'auth.user': lambda u: reverse_lazy('user_detail', args=[u.username])
+}
 
 
 #LOggins SQL-queries 
