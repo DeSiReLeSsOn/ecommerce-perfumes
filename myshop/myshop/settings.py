@@ -49,10 +49,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'shop.apps.ShopConfig',
-    'cart.apps.CartConfig',
-    'orders.apps.OrdersConfig',
-    'payment.apps.PaymentConfig',
+    #local
     'stripe',
     'coupons.apps.CouponsConfig',
     'crispy_forms',
@@ -60,10 +57,17 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
     'django_email_verification',
     'django_extensions',
+    'rest_framework',
     #'django.contrib.sites', 
+    #3rd party 
+    'shop.apps.ShopConfig',
+    'cart.apps.CartConfig',
+    'orders.apps.OrdersConfig',
+    'payment.apps.PaymentConfig',
     'banner',
     'social_django',
     'reviews',
+    'api',
     
     
     
