@@ -5,42 +5,58 @@
 {% block content %}
     <br>
     <div class="container bg-white shadow-md p-3" style="margin-top: 60px;">
-        <h4>Приветствуем, {{ user.username }}!</h4>
-
-        <hr>
-
-        <h6>Личная информация</h6>
-        <p>Ваш E-mail: {{ user.email }}</p>
-        <p>Дата регистрации: {{ user.date_joined }}</p>
-
-        <a href="{% url 'account:logout' %}">
-            <button class="btn btn-primary">
-                Выйти
-            </button>
-        </a>
-
-        <a href="{% url 'account:profile-management' %}">
-            <button class="btn btn-success">
-                Управление профилем
-            </button>
-        </a>
-
-        <a href="{% url 'orders:get_user_orders' %}">
-            <button class="btn btn-success">
-                Просмотр заказов
-            </button>
-        </a>
-
-        <a href="{% url 'shop:product_list_favorites' %}">
-            <button class="btn btn-success">
-                Избранные товары
-            </button>
-        </a>
-
-        <a href="{% url 'account:delete-user' %}">
-            <button class="btn btn-warning">
-                Удалить аккаунт
-            </button>
-        </a>
+        <div class="row align-items-stretch">
+            <div class="col-md-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <img src="{% static 'img/anon.png' %}" alt="User Avatar" class="img-fluid rounded-circle mb-3" width="100">
+                        <h5 class="card-title">{{ user.username }}</h5>
+                        <p class="card-text">{{ user.email }}</p>
+                        <p class="card-text">Дата регистрации:</p>
+                        <p class="card-text">{{ user.date_joined }}</p>
+                        <a href="{% url 'account:profile-management' %}" class="btn btn-primary">Управление профилем</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <h4>Добро пожаловать, {{ user.username }}!</h4>
+                <hr>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <i class="fas fa-list-alt fa-3x"></i>
+                                <h5 class="card-title">Мои заказы</h5>
+                                <p class="card-text">Просмотрите и отследите свои заказы</p>
+                                <a href="{% url 'orders:get_user_orders' %}" class="btn btn-primary">История заказов</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <i class="fas fa-heart fa-3x"></i>
+                                <h5 class="card-title">Избранное</h5>
+                                <p class="card-text">Сохраните свои любимые товары</p>
+                                <a href="{% url 'shop:product_list_favorites' %}" class="btn btn-primary">Избранные товары</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <i class="fas fa-cogs fa-3x"></i>
+                                <h5 class="card-title">Настройки</h5>
+                                <p class="card-text">Изменить пароль</p>
+                                <a href="{% url 'account:password_reset' %}" class="btn btn-primary">Сбросить пароль</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <a href="{% url 'account:logout' %}" class="btn btn-danger">Выйти</a>
+                <a href="{% url 'account:delete-user' %}" class="btn btn-warning">Удалить аккаунт</a>
+            </div>
+        </div>
     </div>
 {% endblock %}

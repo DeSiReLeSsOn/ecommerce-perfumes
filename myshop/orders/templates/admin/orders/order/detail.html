@@ -72,11 +72,30 @@
                     <td class="num">₽{{ item.get_cost }}</td>
                 </tr>
             {% endfor %}
-            <tr class="total">
-                <td colspan="3">Итоговая цена</td>
-                <td class="num">₽{{ order.get_total_cost }}</td>
+            {% if order.coupon %}
+            <tr class="subtotal">
+              <td colspan="3">Сумма заказа без скидки</td>
+              <td class="num">
+                ${{ order.get_total_cost_before_discount|floatformat:2 }}
+              </td>
             </tr>
+            <tr>
+              <td colspan="3">
+                "{{ order.coupon.code }}" купон
+                ({{ order.discount }}% off)
+              </td>
+              <td class="num neg">
+                - ${{ order.get_discount|floatformat:2 }}
+              </td>
+            </tr>
+          {% endif %}
+          <tr class="total">
+            <td colspan="3">итоговая цена</td>
+            <td class="num">
+              ${{ order.get_total_cost|floatformat:2 }}
+            </td>
+          </tr>
         </tbody>
-    </table>
-</div>
-{% endblock %}
+      </table>
+    </div>
+    {% endblock %}

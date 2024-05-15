@@ -27,9 +27,13 @@
 
 <body>
         {% include 'shop/navbar.html' %}
+
         {% if request.path == "/" %}
-          {% show_banner is_homepage=True %}
+          {% if banners %}
+            {% show_banner is_homepage=True %}
+          {% endif %}
         {% endif %}
+
         
         
         {% block content %}

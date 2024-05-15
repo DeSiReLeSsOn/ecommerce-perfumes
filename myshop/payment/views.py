@@ -12,7 +12,7 @@ from coupons.models import Coupon
 import json
 from django.http import HttpResponse
 from yookassa.domain.notification import WebhookNotificationEventType, WebhookNotificationFactory, WebhookNotification
-
+from .tasks import payment_completed
 
 #stripe
 #stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -110,6 +110,7 @@ def yookassa_webhook(request):
             order = get_object_or_404(Order, id=order_id)
             order.paid = True
             order.save() 
+            payment_completed.delay(order.id)
                 
             return HttpResponse(status=200)
         else:

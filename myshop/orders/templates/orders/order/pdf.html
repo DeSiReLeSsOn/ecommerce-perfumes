@@ -1,18 +1,18 @@
 <html>
 <body>
-    <h1>Магазин</h1>
+    <h1>Выписка заказа</h1>
     <p>
         Номер заказа {{ order.id }}<br>
         <span class="secondary">
             {{ order.created|date:"M d, Y" }}
         </span>
     </p>
-    <h3>Bill to</h3>
+    <h3>Данные для оплаты.</h3>
     <p>
-        {{ order.full_name }}<br>
-        {{ order.email }}<br>
-        {{ order.address }}<br>
-        {{ order.postal_code }}
+      Имя заказчика : {{ order.full_name }}<br>
+      E-mail заказчика : {{ order.email }}<br>
+      Адрес заказчика : {{ order.address }}<br>
+      Почтовый код : {{ order.postal_code }}
     <h3>Товары в заказе</h3>
     <table>
         <thead>
@@ -40,7 +40,7 @@
     </table>
 
     <span class="{% if order.paid %}paid{% else %}pending{% endif %}">
-        {% if order.paid %}Paid{% else %}Pending payment{% endif %}
+        {% if order.paid %}Оплачен{% else %}Ожидается платеж{% endif %}
     </span>
 </body>
 </html>

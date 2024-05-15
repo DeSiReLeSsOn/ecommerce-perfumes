@@ -1,13 +1,13 @@
 from io import BytesIO
 from celery import shared_task
-#import weasyprint
+import weasyprint
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from django.conf import settings
 from orders.models import Order
 
 
-"""@shared_task
+@shared_task
 def payment_completed(order_id):
     
     #Task to send an e-mail notification when an order is
@@ -18,7 +18,7 @@ def payment_completed(order_id):
     message = 'Пожалуйста, найдите в приложении счет за вашу недавнюю покупку.'
     email = EmailMessage(subject,
                          message,
-                         'admin@myshop.com',
+                         'theproblemdi@gmail.com',
                          [order.email])
     # generate PDF
     html = render_to_string('orders/order/pdf.html', {'order': order})
@@ -31,4 +31,4 @@ def payment_completed(order_id):
                  out.getvalue(),
                  'application/pdf')
     # send e-mail
-    email.send()"""
+    email.send()
