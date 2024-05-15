@@ -12,6 +12,10 @@ from cart.views import is_product_in_cart
 from cart.cart import Cart
 import json
 from .recommender import Recommender
+from django.views.decorators.cache import cache_page
+
+
+
 
 
 
@@ -196,7 +200,7 @@ from .recommender import Recommender
 
 
 
-
+@cache_page(300)
 def product_list(request, category_slug=None, template_name='shop/product/list.html'):
     category = None
     categories = Category.objects.all()
