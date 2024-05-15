@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 from cart.views import is_product_in_cart
 from cart.cart import Cart
 import json
+from .recommender import Recommender
 
 
 
@@ -278,10 +279,13 @@ def product_detail(request, id, slug):
     product.save()
 
     cart_product_form = CartAddProductForm()
+    r = Recommender()
+    recommended_products = r.suggest_products_for([product], 4)
     return render(request,
                   'shop/product/detail.html',
                   {'product': product,
-                   'cart_product_form': cart_product_form})
+                   'cart_product_form': cart_product_form,
+                   'recommended_products': recommended_products})
 
 
 

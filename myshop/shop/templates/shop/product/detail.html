@@ -107,6 +107,44 @@ input[type=number] {
     margin-top: 60px; /* Adjust this value as needed */
 }
 
+.recommendations-section {
+    font-family: 'EB Garamond', serif;
+    background-color: #f5f5f5;
+    padding: 60px 0;
+  }
+  
+  .recommendation-card {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .recommendation-card:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(135deg, #fff 50%, transparent 50%);
+    opacity: 0.2;
+    z-index: 1;
+  }
+  
+  .recommendation-card img {
+    transition: transform .3s;
+  }
+  
+  .recommendation-card:hover img {
+    transform: scale(1.1);
+  }
+  
+  .recommendation-card .card-body {
+    z-index: 2;
+    position: relative;
+    padding: 30px;
+  }
 
 </style>
 
@@ -139,6 +177,27 @@ input[type=number] {
     </div>
   </div>
 </div>
+
+{% if recommended_products %}
+<div class="container mt-5 recommendations-section">
+  <h3 class="text-center mb-4" style="font-family: 'Playfair Display', serif; font-size: 2rem;">Вам может понравиться</h3>
+  <div class="row">
+    {% for p in recommended_products %}
+    <div class="col-md-3 mb-4">
+      <div class="card h-100 recommendation-card" style="border: none;">
+        <a href="{{ p.get_absolute_url }}">
+          <img src="{% if p.image %}{{ p.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}" class="card-img-top" alt="{{ p.name }}" style="border-radius: 5px;">
+        </a>
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title"><a href="{{ p.get_absolute_url }}" style="font-family: 'Lora', serif; color: #333;">{{ p.name }}</a></h5>
+          <p class="card-text mt-auto" style="font-family: 'Roboto', sans-serif; font-size: 1.2rem; color: #666;">₽{{ p.price }}</p>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
 
 <script>
   document.querySelector('.increment-btn').addEventListener('click', function() {
