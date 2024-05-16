@@ -197,7 +197,7 @@ from django.views.decorators.cache import cache_page
 
 
 
-@cache_page(100)
+@cache_page(300)
 def product_list(request, category_slug=None, template_name='shop/product/list.html'):
     category = None
     categories = Category.objects.all()
