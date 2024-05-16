@@ -12,4 +12,6 @@ sudo -i -u postgres
 create user perfume_admin with password '1827';
 create database perfume owner perfume_admin encoding 'UTF8';
 grant all privileges on database perfume to perfume_admin;
+ALTER ROLE shop_admin WITH CREATEDB;
+DJANGO_SETTINGS_MODULE=myshop.settings pytest -v
 
