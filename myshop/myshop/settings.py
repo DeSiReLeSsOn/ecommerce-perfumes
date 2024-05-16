@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 86610150c9d829a575864b591ca5cccac2befe9d
 from pathlib import Path
 #from yookassa import Configuration
 from django.utils.translation import gettext_lazy as _
@@ -5,6 +10,7 @@ from dotenv import load_dotenv
 import os
 from django.contrib import messages
 from django.urls import reverse_lazy
+
 
 
 load_dotenv()
@@ -42,19 +48,20 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     #local
     'stripe',
-    'coupons.apps.CouponsConfig',
     'crispy_forms',
     "crispy_bootstrap5",
     'django.contrib.postgres',
     'django_email_verification',
     'django_extensions',
     'rest_framework',
+    'django_redis',
     #'django.contrib.sites', 
     #3rd party 
     'shop.apps.ShopConfig',
     'cart.apps.CartConfig',
     'orders.apps.OrdersConfig',
     'payment.apps.PaymentConfig',
+    'coupons.apps.CouponsConfig',
     'banner',
     'social_django',
     'reviews',
@@ -199,11 +206,19 @@ YOOKASSA_SHOP_ID = os.getenv('YOOKASSA_SHOP_ID')
 
 
 
-
+#Redis
 REDIS_HOST = 'localhost'
 REDIS_PORT = 6379
 REDIS_DB = 1
-
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
 
 """PARLER_LANGUAGES = {
     None: (
