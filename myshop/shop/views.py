@@ -13,12 +13,10 @@ from cart.cart import Cart
 import json
 from .recommender import Recommender
 from django.views.decorators.cache import cache_page
-<<<<<<< HEAD
-=======
 
 
 
->>>>>>> 86610150c9d829a575864b591ca5cccac2befe9d
+
 
 
 

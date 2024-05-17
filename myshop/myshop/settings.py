@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 86610150c9d829a575864b591ca5cccac2befe9d
 from pathlib import Path
 #from yookassa import Configuration
 from django.utils.translation import gettext_lazy as _

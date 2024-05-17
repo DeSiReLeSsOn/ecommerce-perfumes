@@ -4,86 +4,65 @@ from shop.models import Category, Product, FavoriteProduct
 
 
 
-@pytest.fixture
-def category():
-    return Category.objects.create(
-        name='Тестовая категория',
-        slug='test-category',
-        description='Описание тестовой категории'
-    )
+
+
+
 
 @pytest.fixture
-def product(category):
-    return Product.objects.create(
-        category=category,
-        name='Тестовый продукт',
-        slug='test-product',
-        description='Описание тестового продукта',
-        price=100.00,
-        volume='100ml'
-    )
+def test_category():
+    category = Category.objects.create(name='test_category', description='test_desc', slug='test-category')
+    return category
 
 @pytest.fixture
-def user():
-    return User.objects.create_user(username='testuser', password='testpassword')
-
-def test_category_creation(db, category):
-    assert str(category) == 'Тестовая категория'
-    assert category.get_absolute_url() == '/shop/test-category/'
-
-def test_product_creation(db, product):
-    assert str(product) == 'Тестовый продукт'
-    assert product.get_absolute_url() == f'/shop/{product.id}/test-product/'
-
-def test_favorite_product_creation(db, user, product):
-    favorite_product = FavoriteProduct.objects.create(user=user, product=product)
-    assert favorite_product.user == user
-    assert favorite_product.product == product
-
-@pytest.mark.django_db
-def test_category_creation():
-    category = Category.objects.create(
-        name='Тестовая категория',
-        slug='test-category',
-        description='Описание тестовой категории'
-    )
-    assert str(category) == 'Тестовая категория'
-    assert category.get_absolute_url() == '/test-category/'
-
-@pytest.mark.django_db
-def test_product_creation():
-    category = Category.objects.create(
-        name='Тестовая категория',
-        slug='test-category',
-        description='Описание тестовой категории'
-    )
+def test_product(test_category):
     product = Product.objects.create(
-        category=category,
-        name='Тестовый продукт',
+        category=test_category,
+        name='test_product',
         slug='test-product',
-        description='Описание тестового продукта',
-        price=100.00,
+        description='test_desc',
+        available=True,
+        price=1300,
         volume='100ml'
     )
-    assert str(product) == 'Тестовый продукт'
-    assert product.get_absolute_url() == f'/{product.id}/test-product/'
+    return product
+
+@pytest.fixture
+def test_user():
+    user = User.objects.create_user(username='test_user', password='test_password')
+    return user
+
+@pytest.fixture
+def test_favorite(test_user, test_product):
+    favorite_product = FavoriteProduct.objects.create(
+        user=test_user,
+        product=test_product
+    )
+    return favorite_product
 
 @pytest.mark.django_db
-def test_favorite_product_creation():
-    user = User.objects.create_user(username='testuser', password='testpassword')
-    category = Category.objects.create(
-        name='Тестовая категория',
-        slug='test-category',
-        description='Описание тестовой категории'
-    )
-    product = Product.objects.create(
-        category=category,
-        name='Тестовый продукт',
-        slug='test-product',
-        description='Описание тестового продукта',
-        price=100.00,
-        volume='100ml'
-    )
-    favorite_product = FavoriteProduct.objects.create(user=user, product=product)
-    assert favorite_product.user == user
-    assert favorite_product.product == product
+def test_category_saving(db, test_category):
+    assert Category.objects.all().count() == 1
+    assert test_category.name == 'test_category'
+    assert test_category.description == 'test_desc'
+    assert str(test_category) == 'test_category'
+    assert test_category.get_absolute_url() == f'/{test_category.slug}/'
+
+
+@pytest.mark.django_db
+def test_product_saving(db, test_category, test_product):
+    assert Product.objects.all().count() == 1
+    assert test_product.name == 'test_product'
+    assert test_product.category == test_category
+    assert test_product.price == 1300
+    assert test_product.available == True
+    assert test_product.volume == '100ml'
+    assert test_product.description == 'test_desc'
+    assert str(test_product) == 'test_product'
+    assert test_product.get_absolute_url() == f'/{test_product.id}/{test_product.slug}/'
+
+@pytest.mark.django_db
+def test_favorite_saving(db, test_user, test_product, test_favorite):
+    assert FavoriteProduct.objects.all().count() == 1
+    assert test_favorite.user == test_user
+    assert test_favorite.product == test_product
+    
