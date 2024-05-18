@@ -205,7 +205,7 @@ from django.views.decorators.cache import cache_page
 def product_list(request, category_slug=None, template_name='shop/product/list.html'):
     category = None
     categories = Category.objects.all()
-    products = Product.objects.filter(available=True)
+    products = Product.objects.filter(available=True).select_related('category')
 
     is_favorites = request.GET.get('is_favorites', False) == 'True'
 
@@ -248,6 +248,9 @@ def product_list(request, category_slug=None, template_name='shop/product/list.h
         response_content = json.loads(response.content.decode('utf-8'))
         if response_content.get('inCart', False):
             inCart.append(product.id)
+
+
+
 
     if request.user.is_authenticated:
         favorite_products = FavoriteProduct.objects.filter(user=request.user).values_list('product_id', flat=True)

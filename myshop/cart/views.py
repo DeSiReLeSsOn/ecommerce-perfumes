@@ -21,9 +21,9 @@ def cart_add(request, product_id):
                  quantity=cd['quantity'],
                  override_quantity=cd['override'])
     return redirect('cart:cart_detail')
+
+
 @require_POST
-
-
 def cart_add_ajax(request, product_id):
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
@@ -98,7 +98,15 @@ def is_product_in_cart(request, product_id):
     if product in cart_products:
         return JsonResponse({'inCart': True})
     else:
-        return JsonResponse({'inCart': False})
+        return JsonResponse({'inCart': False}) 
+    
+
+
+
+
+
+
+
     
 
 
