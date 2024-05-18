@@ -201,7 +201,7 @@ from django.views.decorators.cache import cache_page
 
 
 
-@cache_page(300)
+#@cache_page(300)
 def product_list(request, category_slug=None, template_name='shop/product/list.html'):
     category = None
     categories = Category.objects.all()
@@ -213,14 +213,14 @@ def product_list(request, category_slug=None, template_name='shop/product/list.h
         category = get_object_or_404(Category, slug=category_slug)
         products = products.filter(category=category)
 
-    # Фильтрация продуктов по избранным товарам пользователя
+    
     if request.user.is_authenticated and is_favorites:
         favorite_products = FavoriteProduct.objects.filter(user=request.user).values_list('product_id', flat=True)
         products = products.filter(id__in=favorite_products)
 
 
-    # Сортировка товаров
-    sort_by = request.GET.get('sort_by', 'name')  # Use 'name' as the default sort order
+    
+    sort_by = request.GET.get('sort_by', 'name')  
     if sort_by == 'price-asc':
         products = products.order_by('price')
     elif sort_by == 'price-desc':
@@ -236,12 +236,12 @@ def product_list(request, category_slug=None, template_name='shop/product/list.h
 
 
 
-    # Pagination
+    
     paginator = Paginator(products, 9)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    # Создаем список товаров, которые находятся в корзине пользователя
+    
     inCart = []
     for product in products:
         response = is_product_in_cart(request, product.id)
