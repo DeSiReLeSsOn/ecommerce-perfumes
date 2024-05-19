@@ -7,7 +7,6 @@ from shop.views import product_detail
 from cart.forms import CartAddProductForm
 from cart.cart import Cart
 from shop.recommender import Recommender
-from django.template.loader import select_template 
 from django.test import TestCase, Client
 
 
@@ -85,14 +84,14 @@ class TestProductListView:
 
         url = reverse('shop:product_list')
 
-        # Сортировка по возрастанию цены
+
         response = client.get(url, {'sort_by': 'price-asc'})
         assert response.status_code == 200
         assert response.context['page_obj'][0] == test_product_2
         assert response.context['page_obj'][1] == test_product_3
         assert response.context['page_obj'][2] == test_product
         assert response.templates[0].name == 'shop/product/list.html'
-        # Сортировка по убыванию цены
+
         response = client.get(url, {'sort_by': 'price-desc'})
         assert response.status_code == 200
         assert response.context['page_obj'][0] == test_product
@@ -116,13 +115,12 @@ class TestProductListView:
 
         url = reverse('shop:product_list')
 
-        # Проверка первой страницы
         response = client.get(url)
         assert response.status_code == 200
         
         
         assert response.templates[0].name == 'shop/product/list.html'
-        # Проверка второй страницы
+ 
         response = client.get(url, {'page': 2})
         assert response.status_code == 200
 
@@ -192,6 +190,14 @@ class TestBrandsView:
         assert response.context['category_slug'] == test_category.slug
         assert response.context['page_obj'][0] == test_category
         assert len(response.context['page_obj']) == 1 
+
+    def test_invalid_category(self, client, test_category):
+        url = reverse('shop:brands', kwargs={'category_slug': None})
+
+        response = client.get(url) 
+
+        assert response.status_code == 404
+
 
 
 

@@ -1,5 +1,4 @@
 .env 
 sh_vn/
 myshop/request.log
-note.txt
-psql.txt
+notes.txt

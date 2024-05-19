@@ -2,6 +2,7 @@
 import pytest
 from django.contrib.auth.models import User
 from shop.models import Category, Product, FavoriteProduct
+from banner.models import Banner
 
 
 
@@ -40,4 +41,7 @@ def test_favorite(test_user, test_product):
     )
     return favorite_product 
 
-
+@pytest.fixture
+def test_banner():
+    banner = Banner.objects.create(advertisement_text="Test_Banner", image="test.jpg", is_active=True, link='#')
+    return banner
