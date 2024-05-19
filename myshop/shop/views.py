@@ -322,17 +322,16 @@ def search(request):
     if query:
         products = Product.objects.filter(name__icontains=query)
 
-        # Обновление счетчика поисковых запросов для товаров
         for product in products:
             product.search_count += 1
             product.save()
 
-        # Сортировка товаров по частоте поиска
+
         products = products.order_by('-search_count')
     else:
         products = Product.objects.all()
 
-    paginator = Paginator(products, 9)  # 9 products per page
+    paginator = Paginator(products, 9)  
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
@@ -362,8 +361,8 @@ def brands(request, category_slug=None):
         category = get_object_or_404(Category, slug=category_slug)
         categories = categories.filter(slug=category_slug)
 
-    # Pagination
-    paginator = Paginator(categories, 9)  # 9 categories per page
+
+    paginator = Paginator(categories, 9)  
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 

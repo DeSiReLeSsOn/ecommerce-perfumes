@@ -139,4 +139,59 @@ class TestProductDetailView:
         assert response.context['product'] == test_product 
         assert response.templates[0].name == 'shop/product/detail.html'
         test_product.refresh_from_db()
-        assert test_product.views_count == 1
+        assert test_product.views_count == 1 
+
+
+@pytest.mark.django_db
+class TestSearchView:
+    def test_search(self, client, test_product):
+        query = 'test_product'
+        url = reverse('shop:search') + f'?q={query}'
+        response = client.get(url)
+        assert response.status_code == 200 
+        assert response.templates[0].name == 'shop/product/list.html' 
+        assert response.context['query'] == 'test_product' 
+        assert len(response.context['page_obj']) == 1
+        assert response.context['page_obj'][0] == test_product
+        test_product.refresh_from_db()
+        assert test_product.search_count == 1 
+
+    def test_search_view_pagination(self, test_product, client):
+        for i in range(10):
+            Product.objects.create(
+                category=test_product.category,
+                name=f'test_product_{i}',
+                slug=f'test-product_{i}',
+                description='test_desc',
+                available=True,
+                price=1300,
+                volume='100ml'
+            )
+
+        query = 'test_product'
+        url = reverse('shop:search') + f'?q={query}'
+
+        response = client.get(url)
+
+        assert response.status_code == 200
+        assert response.context['query'] == query
+        assert len(response.context['page_obj']) == 9
+
+
+
+@pytest.mark.django_db
+class TestBrandsView:
+    def test_all_brands(self, client, test_category):
+        url = reverse('shop:brands', kwargs={'category_slug': test_category.slug})
+        response = client.get(url) 
+
+
+        assert response.status_code == 200
+        assert response.templates[0].name == 'shop/brands.html'
+        assert response.context['categories'][0] == test_category
+        assert response.context['category_slug'] == test_category.slug
+        assert response.context['page_obj'][0] == test_category
+        assert len(response.context['page_obj']) == 1 
+
+
+
