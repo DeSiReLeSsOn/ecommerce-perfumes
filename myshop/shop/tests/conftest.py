@@ -1,3 +1,4 @@
+
 import pytest
 from django.contrib.auth.models import User
 from shop.models import Category, Product, FavoriteProduct
@@ -37,4 +38,6 @@ def test_favorite(test_user, test_product):
         user=test_user,
         product=test_product
     )
-    return favorite_product
+    return favorite_product 
+
+
