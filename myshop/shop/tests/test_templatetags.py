@@ -15,4 +15,6 @@ class TestBannerTagsView:
         assert response.status_code == 200 
         assert test_banner.advertisement_text == "Test_Banner"
         assert test_banner.image == "test.jpg"
-        assert test_banner.is_active == True
+        assert test_banner.is_active == True 
+
+

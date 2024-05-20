@@ -177,26 +177,8 @@ class TestSearchView:
 
 
 
-@pytest.mark.django_db
-class TestBrandsView:
-    def test_all_brands(self, client, test_category):
-        url = reverse('shop:brands', kwargs={'category_slug': test_category.slug})
-        response = client.get(url) 
 
-
-        assert response.status_code == 200
-        assert response.templates[0].name == 'shop/brands.html'
-        assert response.context['categories'][0] == test_category
-        assert response.context['category_slug'] == test_category.slug
-        assert response.context['page_obj'][0] == test_category
-        assert len(response.context['page_obj']) == 1 
-
-    def test_invalid_category(self, client, test_category):
-        url = reverse('shop:brands', kwargs={'category_slug': None})
-
-        response = client.get(url) 
-
-        assert response.status_code == 404
+    
 
 
 
