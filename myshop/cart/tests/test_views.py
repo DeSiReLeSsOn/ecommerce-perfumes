@@ -5,6 +5,7 @@ from django.urls import reverse
 from shop.tests.conftest import *
 from cart.cart import Cart
 from coupons.forms import CouponApplyForm
+import json
 
 
 
@@ -48,4 +49,17 @@ class TestViews:
         assert response.context['recommended_products'] is not None
         assert len(response.context['recommended_products']) == 0
 
-        
+    def test_cart_count(self, client, test_product):
+        url = reverse('cart:cart_add', kwargs={'product_id': test_product.id})
+        data = {'quantity': 2, 'override': False}
+        response = client.post(url) 
+
+        cart = Cart(client)
+
+
+        url = reverse('cart:cart_count')
+        response = client.get(url) 
+
+
+        assert response.status_code == 200 
+        assert response.json()['total_items'] == len(cart)
