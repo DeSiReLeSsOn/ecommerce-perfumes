@@ -5,7 +5,8 @@ from django.urls import reverse
 from shop.tests.conftest import *
 from cart.cart import Cart
 from coupons.forms import CouponApplyForm
-import json
+import json 
+from django.http.response import JsonResponse
 
 
 
@@ -30,6 +31,10 @@ class TestViews:
             assert False, 'test_product not found in cart' 
 
     def test_cart_remove_item(self, client, test_product):
+        url = reverse('cart:cart_add', kwargs={'product_id': test_product.id})
+        data = {'quantity': 1, 'override': False}
+        response = client.post(url, data)
+
         url = reverse('cart:cart_remove', kwargs={'product_id': test_product.id})
         response = client.post(url) 
         cart = Cart(client) 
@@ -52,7 +57,7 @@ class TestViews:
     def test_cart_count(self, client, test_product):
         url = reverse('cart:cart_add', kwargs={'product_id': test_product.id})
         data = {'quantity': 2, 'override': False}
-        response = client.post(url) 
+        response = client.post(url, data) 
 
         cart = Cart(client)
 
@@ -62,4 +67,42 @@ class TestViews:
 
 
         assert response.status_code == 200 
-        assert response.json()['total_items'] == len(cart)
+        assert response.json()['total_items'] == len(cart) 
+
+    def test_cart_add_and_remove_ajax(self, client, test_product):
+        url = reverse('cart:cart_add_ajax', kwargs={'product_id': test_product.id})
+        data = {'quantity': 1, 'override': False}
+        response = client.post(url, data) 
+
+        assert response.status_code == 200
+        assert isinstance(response, JsonResponse)
+        assert 'success' in json.loads(response.content)
+        assert json.loads(response.content)['success'] == True 
+        cart = Cart(client)
+        assert len(cart) == 1 
+
+        url = reverse('cart:cart_remove_ajax', kwargs={'product_id': test_product.id})
+        response = client.post(url) 
+
+        assert response.status_code == 200 
+        assert isinstance(response, JsonResponse) 
+        assert json.loads(response.content)['success'] == True 
+        cart = Cart(client)
+        assert len(cart) == 0 
+
+
+    def test_is_product_in_cart(self, client, test_product):
+        url = reverse('cart:cart_add_ajax', kwargs={'product_id': test_product.id})
+        data = {'quantity': 1, 'override': False}
+        response = client.post(url, data) 
+
+        url = reverse('cart:is_product_in_cart', kwargs={'product_id': test_product.id}) 
+
+        response = client.get(url)
+
+
+        assert response.status_code == 200 
+        assert response.json()['inCart'] == True
+
+
+
