@@ -23,5 +23,5 @@ def test_product_saving(test_product):
 
 def test_favorite_saving(test_favorite):
     assert FavoriteProduct.objects.all().count() == 1
-    assert test_favorite.user == test_favorite.user
-    assert test_favorite.product == test_favorite.product
+    assert test_favorite.user == test_user
+    assert test_favorite.product == test_product

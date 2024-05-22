@@ -1,8 +1,8 @@
-
 import pytest
 from django.contrib.auth.models import User
 from shop.models import Category, Product, FavoriteProduct
-from banner.models import Banner
+from banner.models import Banner 
+from orders.models import *
 
 
 
@@ -30,7 +30,7 @@ def test_product(test_category):
 
 @pytest.fixture
 def test_user():
-    user = User.objects.create_user(username='test_user', password='test_password')
+    user = User.objects.create_user(username='test_user', password='test_password', email='test@gmail.com')
     return user
 
 @pytest.fixture
@@ -44,4 +44,28 @@ def test_favorite(test_user, test_product):
 @pytest.fixture
 def test_banner():
     banner = Banner.objects.create(advertisement_text="Test_Banner", image="test.jpg", is_active=True, link='#')
-    return banner
+    return banner 
+
+
+@pytest.fixture
+def test_order(test_user):
+    order = Order.objects.create(user=test_user, 
+                                 full_name='Ronaldo', 
+                                 email='test@gmail.com', 
+                                 address='Pogtugal', 
+                                 postal_code='123456',
+                                 phone='+79495328151',
+                                 )
+    return order 
+
+
+@pytest.fixture
+def test_order_item(test_order, test_product, test_user):
+    order_item = OrderItem.objects.create(
+        order=test_order,
+        product=test_product, 
+        price=test_product.price, 
+        quantity=1, 
+        user=test_user
+    )
+    return order_item
