@@ -83,7 +83,11 @@ class Cart:
                 return Coupon.objects.get(id=self.coupon_id)
             except Coupon.DoesNotExist:
                 pass
-        return None
+        return None  
+    
+    @coupon.setter
+    def coupon(self, coupon):
+        self._coupon = coupon 
 
     def get_discount(self):
         if self.coupon:

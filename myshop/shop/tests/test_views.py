@@ -14,10 +14,8 @@ from django.test import TestCase, Client
 
 @pytest.mark.django_db
 class TestProductListView:
-    def test_product_list_view(self, client, test_category, test_product):
-        """
-        Тест проверяет, что список товаров отображается корректно.
-        """
+    def test_product_list_view(self, client):
+
         url = reverse('shop:product_list')
         response = client.get(url)
 
@@ -30,9 +28,7 @@ class TestProductListView:
 
 
     def test_product_list_by_category(self, client, test_category, test_product):
-        """
-        Тест проверяет, что список товаров фильтруется по категории.
-        """
+
         test_product.category = test_category
         test_product.save()
 
@@ -46,9 +42,7 @@ class TestProductListView:
         assert response.templates[0].name == 'shop/product/list.html'
 
     def test_product_list_by_favorites(self, client, test_user, test_favorite):
-        """
-        Тест проверяет, что список товаров фильтруется по избранным товарам пользователя.
-        """
+
         client.force_login(test_user)
 
         url = reverse('shop:product_list_favorites')
@@ -60,9 +54,7 @@ class TestProductListView:
         assert list(response.context['favorite_products']) == [test_favorite.product_id]
 
     def test_product_list_sort_by(self, client, test_product):
-        """
-        Тест проверяет, что список товаров сортируется корректно.
-        """
+
         test_product_2 = Product.objects.create(
             category=test_product.category,
             name='test_product_2',
@@ -99,9 +91,7 @@ class TestProductListView:
         assert response.context['page_obj'][2] == test_product_2
 
     def test_product_list_pagination(self, client, test_product):
-        """
-        Тест проверяет, что пагинация списка товаров работает корректно.
-        """
+
         for i in range(10):
             Product.objects.create(
                 category=test_product.category,

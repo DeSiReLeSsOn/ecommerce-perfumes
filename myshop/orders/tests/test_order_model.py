@@ -12,7 +12,7 @@ class TestOrderModel:
         assert test_order.email == 'test@gmail.com'
         assert test_order.address == 'Pogtugal'
         assert test_order.postal_code == '123456'
-        assert test_order.phone == '+79495328151'
+        assert test_order.phone == '+79595628159'
         assert str(test_order) == f'Order {test_order.id}'
         assert test_order.get_total_cost() == test_order_item.price 
         assert test_order.get_discount() == 0

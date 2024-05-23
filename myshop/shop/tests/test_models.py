@@ -21,7 +21,7 @@ def test_product_saving(test_product):
     assert str(test_product) == 'test_product'
     assert test_product.get_absolute_url() == f'/{test_product.id}/{test_product.slug}/'
 
-def test_favorite_saving(test_favorite):
+def test_favorite_saving(test_favorite, test_user, test_product):
     assert FavoriteProduct.objects.all().count() == 1
     assert test_favorite.user == test_user
     assert test_favorite.product == test_product
