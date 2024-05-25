@@ -7,6 +7,11 @@ from coupons.models import Coupon
 import datetime
 from django.utils import timezone
 from cart.cart import Cart
+from django.urls import reverse
+
+
+
+
 
 
 @pytest.fixture
@@ -23,12 +28,12 @@ def admin_user(db):
 
 
 @pytest.fixture
-def test_category():
+def test_category(db):
     category = Category.objects.create(name='test_category', description='test_desc', slug='test-category')
     return category
 
 @pytest.fixture
-def test_product(test_category):
+def test_product(db ,test_category):
     product = Product.objects.create(
         category=test_category,
         name='test_product',
@@ -41,12 +46,12 @@ def test_product(test_category):
     return product
 
 @pytest.fixture
-def test_user():
+def test_user(db):
     user = User.objects.create_user(username='test_user', password='test_password', email='test@gmail.com')
     return user
 
 @pytest.fixture
-def test_favorite(test_user, test_product):
+def test_favorite(db ,test_user, test_product):
     favorite_product = FavoriteProduct.objects.create(
         user=test_user,
         product=test_product
@@ -54,13 +59,19 @@ def test_favorite(test_user, test_product):
     return favorite_product 
 
 @pytest.fixture
-def test_banner():
+def test_banner(db):
     banner = Banner.objects.create(advertisement_text="Test_Banner", image="test.jpg", is_active=True, link='#')
     return banner 
 
 
+
+
+
+
+
+
 @pytest.fixture
-def test_order(test_user):
+def test_order(db ,test_user):
     order = Order.objects.create(user=test_user, 
                                  full_name='Ronaldo', 
                                  email='test@gmail.com', 
@@ -72,7 +83,7 @@ def test_order(test_user):
 
 
 @pytest.fixture
-def test_order_item(test_order, test_product, test_user):
+def test_order_item(db ,test_order, test_product, test_user):
     order_item = OrderItem.objects.create(
         order=test_order,
         product=test_product, 
@@ -101,7 +112,7 @@ def test_coupon(db):
 
 
 @pytest.fixture
-def test_order_with_coupon(test_user, test_coupon):
+def test_order_with_coupon(db, test_user, test_coupon):
     order = Order.objects.create(user=test_user, 
                                  full_name='Ronaldo', 
                                  email='test@gmail.com', 
@@ -114,7 +125,7 @@ def test_order_with_coupon(test_user, test_coupon):
 
 
 @pytest.fixture
-def test_order_item_with_coupon(test_order_with_coupon, test_product, test_user):
+def test_order_item_with_coupon(db, test_order_with_coupon, test_product, test_user):
     order_item = OrderItem.objects.create(
         order=test_order_with_coupon,
         product=test_product, 
@@ -122,4 +133,21 @@ def test_order_item_with_coupon(test_order_with_coupon, test_product, test_user)
         quantity=1, 
         user=test_user
     )
-    return order_item 
+    return order_item  
+
+
+
+@pytest.fixture
+def test_cart(client, test_category):
+    test_product = Product.objects.create(
+        name='test_product',
+        price=100,
+        description='Test product description',
+        category=test_category,
+        image=None,
+        available=True,
+    )
+    cart = Cart(client)
+    cart.add(test_product, quantity=2)
+    cart.save()
+    return cart
