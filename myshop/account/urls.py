@@ -7,7 +7,7 @@ from . import views
 app_name = 'account'
 
 urlpatterns = [
-    # Registration and verification
+
 
     path('register/', views.register_user, name='register'),
     path('email-verification-sent/',
@@ -16,11 +16,11 @@ urlpatterns = [
          name='email-verification-sent'
          ),
 
-    # Login & Logout
+
     path('login/', views.login_user, name='login'),
     path('logout/', views.logout_user, name='logout'),
 
-    # Dashboard
+
     path('dashboard/', views.dashboard_user, name='dashboard'),
     #path('favorites/', views.favorite_list, name='favorites'),
     

@@ -17,7 +17,7 @@ User = get_user_model()
 
 
 
-#Register new user
+
 def register_user(request):
 
     if request.method == 'POST':
@@ -29,7 +29,7 @@ def register_user(request):
             user_username=form.cleaned_data.get('username')
             user_password=form.cleaned_data.get('password1')
 
-            #Create new user
+
             user = User.objects.create_user(
                 username=user_username, email=user_email, password=user_password
             )

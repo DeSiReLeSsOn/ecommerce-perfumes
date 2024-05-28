@@ -58,37 +58,46 @@ def payment_process(request):
 
 
 
+
+
 @csrf_exempt
 def yookassa_webhook(request):
-    #if request.method == 'POST':
+    print(f'Request body: {request.body}')
     event_json = json.loads(request.body)
+    print(f'Event json: {event_json}')
     try:
         if event_json['event'] == "payment.succeeded":
             payment_object = event_json['object']
-            order_id = int(event_json['object']['description'].split()[-1])
+            print(f'Payment object: {payment_object}')
+            order_id = int(payment_object['description'].split()[-1])
+            print(f'Order id: {order_id}')
             order = get_object_or_404(Order, id=order_id)
+            print(f'Order before update: {order}')
             order.paid = True
-            order.save() 
-            payment_completed.delay(order.id)
-                
+            order.save()
+            print(f'Order after update: {order}')
             return HttpResponse(status=200)
         else:
-                # Другие типы событий обработайте по необходимости
             return HttpResponse(status=404)
-        
+
     except KeyError:
-            # Обработка ошибок, если ключи отсутствуют в JSON или другие проблемы с данными
+        print('KeyError')
         return HttpResponse(status=400)
-        
+
     except Order.DoesNotExist:
-            # Обработка ошибок, если заказ с указанным ID не найден
+        print('Order.DoesNotExist')
         return HttpResponse(status=400)
-        
+
     except Exception as e:
-            # Обработка других исключений, если они возникнут
+        print(f'Exception: {e}')
         return HttpResponse(status=400)
 
     return HttpResponse(status=405)
+
+
+
+
+
 
 
 def payment_completed(request):

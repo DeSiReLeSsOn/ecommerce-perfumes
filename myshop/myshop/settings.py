@@ -25,10 +25,10 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = True
 
 #ALLOWED_HOSTS = ['donetsk_parfum.com', 'localhost', '127.0.0.1', 'https://78c1-195-184-202-89.ngrok-free.app',]
-ALLOWED_HOSTS = ['*', '78c1-195-184-202-89.ngrok-free.app'] 
+ALLOWED_HOSTS = ['*', 'https://cf10-195-184-202-91.ngrok-free.app'] 
 
 
-CSRF_TRUSTED_ORIGINS = ['https://189b-195-184-202-89.ngrok-free.app',]
+CSRF_TRUSTED_ORIGINS = ['https://cf10-195-184-202-91.ngrok-free.app',]
 
 
 # Application definition
