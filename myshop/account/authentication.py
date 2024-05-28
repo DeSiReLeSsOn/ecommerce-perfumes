@@ -3,9 +3,6 @@ from django.contrib.auth.models import User
 
 
 class EmailAuthBackend:
-    """
-    Аутентифицировать посредством адреса электронной почты.
-    """
     def authenticate(self, request, username=None, password=None):
         try:
             user = User.objects.get(email=username)

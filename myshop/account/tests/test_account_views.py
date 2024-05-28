@@ -5,6 +5,7 @@ from django.urls import reverse
 from account.forms import UserCreateForm, UserUpdateForm
 
 
+
 @pytest.mark.django_db
 class TestAuth:
     def test_register(self, client):
@@ -115,6 +116,26 @@ class TestAuth:
         assert 'form' in response.context 
         form = response.context['form'] 
         assert isinstance(form, UserUpdateForm)
+
+
+    def test_delete_user(self, client, test_user):
+        client.force_login(test_user) 
+
+
+        url = reverse('account:delete-user') 
+        response = client.get(url) 
+
+        assert response.status_code == 200
+        assert response.templates[0].name == 'account/dashboard/account-delete.html' 
+
+
+        response = client.post(url) 
+        assert response.status_code == 302
+        assert response.url == reverse('shop:product_list') 
+
+
+
+
 
 
 
