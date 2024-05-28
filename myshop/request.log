@@ -1944,3 +1944,5 @@
 {"path": "/account/login/", "request_total": 0.023, "sql_count": 0, "sql_total": 0}
 {"path": "/account/logout/", "request_total": 0.005, "sql_count": 0, "sql_total": 0}
 {"path": "/account/logout/", "request_total": 0.013, "sql_count": 0, "sql_total": 0}
+{"path": "/account/dashboard/", "request_total": 0.071, "sql_count": 0, "sql_total": 0}
+{"path": "/account/profile-management/", "request_total": 0.176, "sql_count": 0, "sql_total": 0}

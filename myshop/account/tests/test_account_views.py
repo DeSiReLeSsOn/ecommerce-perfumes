@@ -2,7 +2,7 @@ import pytest
 from shop.tests.conftest import * 
 from django.contrib.auth.models import User 
 from django.urls import reverse
-from account.forms import UserCreateForm
+from account.forms import UserCreateForm, UserUpdateForm
 
 
 @pytest.mark.django_db
@@ -87,9 +87,38 @@ class TestAuth:
         assert client.session.get('_auth_user_id') is None
         assert client.session.get('_auth_user_hash') is None
 
-        # Проверяем, что произошел редирект на страницу списка продуктов
+
         assert response.status_code == 302
-        assert response.url == reverse('shop:product_list')
+        assert response.url == reverse('shop:product_list') 
+
+
+    def test_dashboard_user(self, client, test_user):
+        client.force_login(test_user) 
+
+        url = reverse('account:dashboard') 
+
+        response = client.get(url) 
+
+
+        assert response.status_code == 200 
+        assert response.templates[0].name == 'account/dashboard/dashboard.html' 
+
+
+    def test_profile_user(self, client, test_user):
+        client.force_login(test_user) 
+
+        url = reverse('account:profile-management') 
+
+        response = client.get(url) 
+        assert response.status_code == 200 
+        assert response.templates[0].name == 'account/dashboard/profile-management.html'
+        assert 'form' in response.context 
+        form = response.context['form'] 
+        assert isinstance(form, UserUpdateForm)
+
+
+
+
 
         
         
