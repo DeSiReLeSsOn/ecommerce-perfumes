@@ -4,6 +4,7 @@ from shop.models import Category, Product, FavoriteProduct
 from banner.models import Banner 
 from orders.models import *
 from coupons.models import Coupon
+from reviews.models import Review, Comment
 import datetime
 from django.utils import timezone
 from cart.cart import Cart
@@ -138,7 +139,7 @@ def test_order_item_with_coupon(db, test_order_with_coupon, test_product, test_u
 
 
 @pytest.fixture
-def test_cart(client, test_category):
+def test_cart(db, client, test_category):
     test_product = Product.objects.create(
         name='test_product',
         price=100,
@@ -150,4 +151,23 @@ def test_cart(client, test_category):
     cart = Cart(client)
     cart.add(test_product, quantity=2)
     cart.save()
-    return cart
+    return cart 
+
+
+@pytest.fixture
+def test_review(db, client, test_user):
+    test_review = Review.objects.create(
+        user=test_user,
+        text='Test_review'
+    )
+    return test_review 
+
+
+@pytest.fixture
+def test_comment_review(db, client, test_review, test_user):
+    test_comment = Comment.objects.create(
+        review=test_review,
+        user=test_user, 
+        text='Test_comment_review'
+    )
+    return test_comment

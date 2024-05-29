@@ -22,6 +22,8 @@ from .forms import ReviewCreateForm, CommentForm
 
 def show_reviews(request, review_id=None):
     reviews = Review.objects.all().order_by('-created')
+    review_form = ReviewCreateForm()
+    comment_form = CommentForm()
 
     if request.method == 'POST':
         if 'review_text' in request.POST:

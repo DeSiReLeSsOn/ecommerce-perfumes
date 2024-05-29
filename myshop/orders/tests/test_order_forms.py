@@ -4,7 +4,7 @@ from orders.forms import OrderCreateForm
 
 @pytest.mark.django_db
 class TestOrderForms:
-    def test_order_form_fields(self, client, test_user, test_order):
+    def test_order_form_fields(self, client, test_order):
         data = {'full_name': test_order.full_name,
                 'email': test_order.email,
                 'address': test_order.address,

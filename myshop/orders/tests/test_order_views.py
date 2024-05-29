@@ -7,7 +7,7 @@ from orders.forms import OrderCreateForm
 
 @pytest.mark.django_db
 class TestOrderViews:
-    def test_order_create(self, client, test_order, test_user, test_coupon):
+    def test_order_create(self, client, test_order, test_user):
         client.force_login(test_user)
         data = {'full_name': test_order.full_name,
             'email': test_order.email,
