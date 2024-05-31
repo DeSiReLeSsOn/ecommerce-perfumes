@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from shop.models import Product 
-from django.contrib.auth.models import Group, User
+from django.contrib.auth.models import User
+from rest_framework_simplejwt.tokens import RefreshToken
+from django.contrib.auth import authenticate
 
 
 
@@ -19,11 +21,12 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('username', 'email', 'password',)
         extra_kwargs = {'password': {'write_only': True}}
 
-    def create(self, validated_data):
-        password = validated_data.pop('password', None)
-        user = User(**validated_data)
-        if password is not None:
-            user.set_password(password)
-        user.save() 
-        return user
 
+    def create(self, validated_data):
+        user = User(
+            username=validated_data['username'],
+            email=validated_data['email']
+        )
+        user.set_password(validated_data['password'])
+        user.save()
+        return user
