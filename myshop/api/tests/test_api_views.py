@@ -33,18 +33,29 @@ class TestUserView:
 
 
     def test_get_user_token(self, client, test_user):
+        endpoint = reverse('api:register')
+
+        data_user = {
+            'username': 'Greatest', 
+            'email': 'pinkfloyd@gmail.com',
+            'password': '12345678s'
+        }
+
+
+        response = client.post(endpoint, data_user)
+
         
         endpoint = reverse('api:token_obtain_pair') 
 
         data_user = {
-            'username': test_user.username, 
-            'password': test_user.password
+            "username": "Greatest", 
+            "password": "12345678s"
         }
 
-        #client.force_authenticate(user=test_user)
+        
         response = client.post(endpoint, data_user)
 
-
+        
         assert response.status_code == 200
         assert 'access' in response.data
         assert 'refresh' in response.data

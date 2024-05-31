@@ -32,6 +32,3 @@ class UserRegistrationView(generics.CreateAPIView):
         user = serializer.save()
         return Response({'user': UserSerializer(user, context=self.get_serializer_context()).data}, status=status.HTTP_201_CREATED) 
     
-
-class UserLoginView(TokenObtainPairView):
-    pass
