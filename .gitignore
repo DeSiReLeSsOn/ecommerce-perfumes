@@ -1,4 +1,7 @@
 .env 
 sh_vn/
 myshop/request.log
+myshop/django_queries.log
+myshop/data/
+data/
 notes.txt
