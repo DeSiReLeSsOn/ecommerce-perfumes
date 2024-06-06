@@ -19,7 +19,7 @@ class Order(models.Model):
     email = models.EmailField('Имейл', max_length=254, blank=False)
     address = models.CharField('Адрес' ,max_length=250, blank=False)
     postal_code = models.CharField('Почтовый код',max_length=20, blank=False)
-    phone = models.CharField('Телефон', blank=False, null=True, validators=[RegexValidator(
+    phone = models.CharField('Телефон', max_length=30, blank=False, null=True, validators=[RegexValidator(
         regex=r'^(\+7|8)\d{10}$', message='Введите корректный номер телефона,без тире и пробелов') 
     ])
     created = models.DateTimeField("Создан",auto_now_add=True)

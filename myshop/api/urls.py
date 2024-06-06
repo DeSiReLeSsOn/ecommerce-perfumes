@@ -5,7 +5,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
 
 router = routers.SimpleRouter()
-router.register(r'product', ProductViewSet)
+router.register(r'products', ProductViewSet)
 
 app_name = 'api'
 

@@ -110,16 +110,21 @@ WSGI_APPLICATION = "myshop.wsgi.application"
 
 
 
+
+
+
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "perfume",
         "USER": 'perfume_admin',
-        "PASSWORD": '1827',
-        "HOST": "localhost",
+        "PASSWORD":os.getenv('POSTGRES_PASSWORD'),
+        "HOST": 'postgres-db',
         "PORT": 5432,
     }
 }
+
 
 
 
@@ -335,6 +340,8 @@ LOGGING = {
 
 
 REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 3,
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
