@@ -1,0 +1,985 @@
+[{
+    "model": "orders.order",
+    "pk": 52,
+    "fields": {
+      "user": 35,
+      "full_name": "Light God",
+      "email": "loghtofgod@gmail.com",
+      "address": "Г. Москва Ул Перовская Д 25",
+      "postal_code": "111524",
+      "phone": "+79495328151",
+      "created": "2024-02-11T06:25:39.379Z",
+      "updated": "2024-02-11T06:25:39.379Z",
+      "paid": false,
+      "yookassa_id": "",
+      "coupon": null,
+      "discount": 0
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 53,
+    "fields": {
+      "user": 35,
+      "full_name": "Light God",
+      "email": "loghtofgod@gmail.com",
+      "address": "Г. Москва Ул Перовская Д 25",
+      "postal_code": "111524",
+      "phone": "+79495328151",
+      "created": "2024-02-11T06:32:16.052Z",
+      "updated": "2024-02-11T06:48:54.890Z",
+      "paid": true,
+      "yookassa_id": "",
+      "coupon": null,
+      "discount": 0
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 54,
+    "fields": {
+      "user": 35,
+      "full_name": "Light God",
+      "email": "loghtofgod@gmail.com",
+      "address": "Г. Москва Ул Перовская Д 25",
+      "postal_code": "111524",
+      "phone": "+79495328151",
+      "created": "2024-02-11T06:36:11.643Z",
+      "updated": "2024-02-11T06:36:11.643Z",
+      "paid": false,
+      "yookassa_id": "",
+      "coupon": null,
+      "discount": 0
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 55,
+    "fields": {
+      "user": 35,
+      "full_name": "Light God",
+      "email": "loghtofgod@gmail.com",
+      "address": "Г. Москва Ул Перовская Д 25",
+      "postal_code": "111524",
+      "phone": "+79495328151",
+      "created": "2024-02-11T06:41:55.922Z",
+      "updated": "2024-02-11T06:44:39.430Z",
+      "paid": true,
+      "yookassa_id": "",
+      "coupon": null,
+      "discount": 0
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 56,
+    "fields": {
+      "user": 35,
+      "full_name": "Light God",
+      "email": "loghtofgod@gmail.com",
+      "address": "Г. Москва Ул Перовская Д 25",
+      "postal_code": "111524",
+      "phone": "+79495328151",
+      "created": "2024-02-11T06:45:08.468Z",
+      "updated": "2024-02-11T06:45:42.777Z",
+      "paid": true,
+      "yookassa_id": "",
+      "coupon": null,
+      "discount": 0
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 57,
+    "fields": {
+      "user": 35,
+      "full_name": "Light God",
+      "email": "loghtofgod@gmail.com",
+      "address": "Г. Москва Ул Перовская Д 25",
+      "postal_code": "111524",
+      "phone": "+79495328151",
+      "created": "2024-02-11T06:47:32.572Z",
+      "updated": "2024-02-11T06:47:32.572Z",
+      "paid": false,
+      "yookassa_id": "",
+      "coupon": null,
+      "discount": 0
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 58,
+    "fields": {
+      "user": null,
+      "full_name": "Light God",
+      "email": "loghtofgod@gmail.com",
+      "address": "Г. Москва Ул Перовская Д 25",
+      "postal_code": "111524",
+      "phone": "+79495328151",
+      "created": "2024-02-14T08:13:10.092Z",
+      "updated": "2024-02-14T08:13:10.092Z",
+      "paid": false,
+      "yookassa_id": "",
+      "coupon": null,
+      "discount": 0
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 59,
+    "fields": {
+      "user": 35,
+      "full_name": "Light God",
+      "email": "loghtofgod@gmail.com",
+      "address": "Г. Москва Ул Перовская Д 25",
+      "postal_code": "111524",
+      "phone": "+79495328151",
+      "created": "2024-02-14T08:17:36.621Z",
+      "updated": "2024-02-14T08:17:36.621Z",
+      "paid": false,
+      "yookassa_id": "",
+      "coupon": null,
+      "discount": 0
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 60,
+    "fields": {
+      "user": 35,
+      "full_name": "Light God",
+      "email": "loghtofgod@gmail.com",
+      "address": "Г. Москва Ул Перовская Д 25",
+      "postal_code": "111524",
+      "phone": "+79495328151",
+      "created": "2024-02-14T08:18:13.185Z",
+      "updated": "2024-02-14T08:18:33.260Z",
+      "paid": true,
+      "yookassa_id": "",
+      "coupon": null,
+      "discount": 0
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 61,
+    "fields": {
+      "user": null,
+      "full_name": "Light God",
+      "email": "loghtofgod@gmail.com",
+      "address": "Г. Москва Ул Перовская Д 25",
+      "postal_code": "111524",
+      "phone": "+79495328151",
+      "created": "2024-05-07T09:24:13.066Z",
+      "updated": "2024-05-07T09:24:13.066Z",
+      "paid": false,
+      "yookassa_id": "",
+      "coupon": null,
+      "discount": 0
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 62,
+    "fields": {
+      "user": null,
+      "full_name": "Light God",
+      "email": "loghtofgod@gmail.com",
+      "address": "Г. Москва Ул Перовская Д 25",
+      "postal_code": "111524",
+      "phone": "+79495328151",
+      "created": "2024-05-11T02:53:44.804Z",
+      "updated": "2024-05-11T02:53:44.804Z",
+      "paid": false,
+      "yookassa_id": "",
+      "coupon": 1,
+      "discount": 10
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 63,
+    "fields": {
+      "user": null,
+      "full_name": "Light God",
+      "email": "loghtofgod@gmail.com",
+      "address": "Г. Москва Ул Перовская Д 25",
+      "postal_code": "111524",
+      "phone": "+79495328151",
+      "created": "2024-05-11T03:06:40.315Z",
+      "updated": "2024-05-11T03:06:40.315Z",
+      "paid": false,
+      "yookassa_id": "",
+      "coupon": 1,
+      "discount": 10
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 64,
+    "fields": {
+      "user": null,
+      "full_name": "Light God",
+      "email": "loghtofgod@gmail.com",
+      "address": "Г. Москва Ул Перовская Д 25",
+      "postal_code": "111524",
+      "phone": "+79495328151",
+      "created": "2024-05-11T03:10:03.963Z",
+      "updated": "2024-05-11T03:10:03.963Z",
+      "paid": false,
+      "yookassa_id": "",
+      "coupon": 1,
+      "discount": 10
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 65,
+    "fields": {
+      "user": null,
+      "full_name": "Light God",
+      "email": "loghtofgod@gmail.com",
+      "address": "Г. Москва Ул Перовская Д 25",
+      "postal_code": "111524",
+      "phone": "+79495328151",
+      "created": "2024-05-11T03:12:30.276Z",
+      "updated": "2024-05-11T03:12:30.276Z",
+      "paid": false,
+      "yookassa_id": "",
+      "coupon": null,
+      "discount": 0
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 66,
+    "fields": {
+      "user": null,
+      "full_name": "Light God",
+      "email": "loghtofgod@gmail.com",
+      "address": "Г. Москва Ул Перовская Д 25",
+      "postal_code": "111524",
+      "phone": "+79495328151",
+      "created": "2024-05-11T03:15:32.218Z",
+      "updated": "2024-05-11T03:15:32.218Z",
+      "paid": false,
+      "yookassa_id": "",
+      "coupon": null,
+      "discount": 0
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 67,
+    "fields": {
+      "user": null,
+      "full_name": "Light God",
+      "email": "loghtofgod@gmail.com",
+      "address": "Г. Москва Ул Перовская Д 25",
+      "postal_code": "111524",
+      "phone": "+79495328151",
+      "created": "2024-05-11T03:24:52.657Z",
+      "updated": "2024-05-11T03:24:52.657Z",
+      "paid": false,
+      "yookassa_id": "",
+      "coupon": 1,
+      "discount": 10
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 68,
+    "fields": {
+      "user": null,
+      "full_name": "Light God",
+      "email": "loghtofgod@gmail.com",
+      "address": "Г. Москва Ул Перовская Д 25",
+      "postal_code": "111524",
+      "phone": "+79495328151",
+      "created": "2024-05-11T03:27:03.592Z",
+      "updated": "2024-05-11T03:27:03.592Z",
+      "paid": false,
+      "yookassa_id": "",
+      "coupon": 1,
+      "discount": 10
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 69,
+    "fields": {
+      "user": null,
+      "full_name": "Light God",
+      "email": "loghtofgod@gmail.com",
+      "address": "Г. Москва Ул Перовская Д 25",
+      "postal_code": "111524",
+      "phone": "+79495328151",
+      "created": "2024-05-11T03:35:35.004Z",
+      "updated": "2024-05-11T03:35:35.004Z",
+      "paid": false,
+      "yookassa_id": "",
+      "coupon": 1,
+      "discount": 10
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 70,
+    "fields": {
+      "user": null,
+      "full_name": "Light God",
+      "email": "loghtofgod@gmail.com",
+      "address": "Г. Москва Ул Перовская Д 25",
+      "postal_code": "111524",
+      "phone": "+79495328151",
+      "created": "2024-05-11T03:49:22.107Z",
+      "updated": "2024-05-11T03:49:22.108Z",
+      "paid": false,
+      "yookassa_id": "",
+      "coupon": 1,
+      "discount": 10
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 71,
+    "fields": {
+      "user": null,
+      "full_name": "Light God",
+      "email": "loghtofgod@gmail.com",
+      "address": "Г. Москва Ул Перовская Д 25",
+      "postal_code": "111524",
+      "phone": "+79495328151",
+      "created": "2024-05-11T03:49:58.318Z",
+      "updated": "2024-05-11T03:49:58.318Z",
+      "paid": false,
+      "yookassa_id": "",
+      "coupon": 1,
+      "discount": 10
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 72,
+    "fields": {
+      "user": 35,
+      "full_name": "Light God",
+      "email": "loghtofgod@gmail.com",
+      "address": "Г. Москва Ул Перовская Д 25",
+      "postal_code": "111524",
+      "phone": "+79495328151",
+      "created": "2024-05-13T19:52:19.503Z",
+      "updated": "2024-05-13T19:52:19.503Z",
+      "paid": false,
+      "yookassa_id": "",
+      "coupon": 1,
+      "discount": 10
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 73,
+    "fields": {
+      "user": null,
+      "full_name": "vgvbvw",
+      "email": "loghtofgod@gmail.com",
+      "address": "moskow",
+      "postal_code": "12233",
+      "phone": "+79495328151",
+      "created": "2024-05-25T11:28:56.973Z",
+      "updated": "2024-05-25T11:28:56.974Z",
+      "paid": false,
+      "yookassa_id": "",
+      "coupon": null,
+      "discount": 0
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 74,
+    "fields": {
+      "user": null,
+      "full_name": "vgvbvw",
+      "email": "loghtofgod@gmail.com",
+      "address": "moskow",
+      "postal_code": "12233",
+      "phone": "+79495328151",
+      "created": "2024-05-25T11:46:55.366Z",
+      "updated": "2024-05-25T11:46:55.366Z",
+      "paid": false,
+      "yookassa_id": "",
+      "coupon": null,
+      "discount": 0
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 75,
+    "fields": {
+      "user": null,
+      "full_name": "vgvbvw",
+      "email": "loghtofgod@gmail.com",
+      "address": "moskow",
+      "postal_code": "12233",
+      "phone": "+79495328151",
+      "created": "2024-05-27T12:04:51.368Z",
+      "updated": "2024-05-27T12:04:51.368Z",
+      "paid": false,
+      "yookassa_id": "",
+      "coupon": null,
+      "discount": 0
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 76,
+    "fields": {
+      "user": null,
+      "full_name": "vgvbvw",
+      "email": "loghtofgod@gmail.com",
+      "address": "moskow",
+      "postal_code": "12233",
+      "phone": "+79495328151",
+      "created": "2024-05-27T12:08:13.313Z",
+      "updated": "2024-05-27T12:08:13.313Z",
+      "paid": false,
+      "yookassa_id": "",
+      "coupon": null,
+      "discount": 0
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 77,
+    "fields": {
+      "user": null,
+      "full_name": "vgvbvw",
+      "email": "loghtofgod@gmail.com",
+      "address": "moskow",
+      "postal_code": "12233",
+      "phone": "+79495328151",
+      "created": "2024-05-27T12:14:15.127Z",
+      "updated": "2024-05-27T12:14:15.127Z",
+      "paid": false,
+      "yookassa_id": "",
+      "coupon": null,
+      "discount": 0
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 78,
+    "fields": {
+      "user": 35,
+      "full_name": "vgvbvw",
+      "email": "loghtofgod@gmail.com",
+      "address": "moskow",
+      "postal_code": "12233",
+      "phone": "+79495328151",
+      "created": "2024-05-27T12:20:55.800Z",
+      "updated": "2024-05-27T12:20:55.800Z",
+      "paid": false,
+      "yookassa_id": "",
+      "coupon": null,
+      "discount": 0
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 79,
+    "fields": {
+      "user": 35,
+      "full_name": "vgvbvw",
+      "email": "loghtofgod@gmail.com",
+      "address": "moskow",
+      "postal_code": "12233",
+      "phone": "+79495328151",
+      "created": "2024-05-27T12:23:39.414Z",
+      "updated": "2024-05-27T12:23:39.414Z",
+      "paid": false,
+      "yookassa_id": "",
+      "coupon": null,
+      "discount": 0
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 80,
+    "fields": {
+      "user": 35,
+      "full_name": "vgvbvw",
+      "email": "loghtofgod@gmail.com",
+      "address": "moskow",
+      "postal_code": "12233",
+      "phone": "+79495328151",
+      "created": "2024-05-27T12:28:18.517Z",
+      "updated": "2024-05-27T12:28:18.517Z",
+      "paid": false,
+      "yookassa_id": "",
+      "coupon": null,
+      "discount": 0
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 81,
+    "fields": {
+      "user": 35,
+      "full_name": "vgvbvw",
+      "email": "loghtofgod@gmail.com",
+      "address": "moskow",
+      "postal_code": "12233",
+      "phone": "+79495328151",
+      "created": "2024-05-27T12:30:52.329Z",
+      "updated": "2024-05-27T12:30:52.329Z",
+      "paid": false,
+      "yookassa_id": "",
+      "coupon": null,
+      "discount": 0
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 82,
+    "fields": {
+      "user": 35,
+      "full_name": "vgvbvw",
+      "email": "loghtofgod@gmail.com",
+      "address": "moskow",
+      "postal_code": "12233",
+      "phone": "+79495328151",
+      "created": "2024-05-27T12:32:00.555Z",
+      "updated": "2024-05-27T12:32:00.555Z",
+      "paid": false,
+      "yookassa_id": "",
+      "coupon": null,
+      "discount": 0
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 83,
+    "fields": {
+      "user": 35,
+      "full_name": "vgvbvw",
+      "email": "loghtofgod@gmail.com",
+      "address": "moskow",
+      "postal_code": "12233",
+      "phone": "+79495328151",
+      "created": "2024-05-27T12:47:17.715Z",
+      "updated": "2024-05-27T12:47:17.716Z",
+      "paid": false,
+      "yookassa_id": "",
+      "coupon": null,
+      "discount": 0
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 84,
+    "fields": {
+      "user": 35,
+      "full_name": "vgvbvw",
+      "email": "loghtofgod@gmail.com",
+      "address": "moskow",
+      "postal_code": "12233",
+      "phone": "+79495328151",
+      "created": "2024-05-27T12:49:45.433Z",
+      "updated": "2024-05-27T12:49:45.433Z",
+      "paid": false,
+      "yookassa_id": "",
+      "coupon": null,
+      "discount": 0
+    }
+  (0.052) DECLARE "_django_curs_139797567305536_sync_24" NO SCROLL CURSOR WITH HOLD FOR SELECT "orders_orderitem"."id", "orders_orderitem"."order_id", "orders_orderitem"."product_id", "orders_orderitem"."price", "orders_orderitem"."quantity", "orders_orderitem"."user_id" FROM "orders_orderitem" ORDER BY "orders_orderitem"."id" ASC; args=(); alias=default
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 62,
+    "fields": {
+      "order": 62,
+      "product": 19,
+      "price": "12500.00",
+      "quantity": 1,
+      "user": null
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 63,
+    "fields": {
+      "order": 63,
+      "product": 18,
+      "price": "7000.00",
+      "quantity": 1,
+      "user": null
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 64,
+    "fields": {
+      "order": 64,
+      "product": 17,
+      "price": "8000.00",
+      "quantity": 1,
+      "user": null
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 65,
+    "fields": {
+      "order": 65,
+      "product": 17,
+      "price": "8000.00",
+      "quantity": 1,
+      "user": null
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 66,
+    "fields": {
+      "order": 66,
+      "product": 19,
+      "price": "12500.00",
+      "quantity": 1,
+      "user": null
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 67,
+    "fields": {
+      "order": 67,
+      "product": 17,
+      "price": "8000.00",
+      "quantity": 1,
+      "user": null
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 68,
+    "fields": {
+      "order": 68,
+      "product": 18,
+      "price": "7000.00",
+      "quantity": 1,
+      "user": null
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 69,
+    "fields": {
+      "order": 69,
+      "product": 18,
+      "price": "7000.00",
+      "quantity": 1,
+      "user": null
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 70,
+    "fields": {
+      "order": 70,
+      "product": 17,
+      "price": "8000.00",
+      "quantity": 1,
+      "user": null
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 71,
+    "fields": {
+      "order": 71,
+      "product": 17,
+      "price": "8000.00",
+      "quantity": 1,
+      "user": null
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 72,
+    "fields": {
+      "order": 71,
+      "product": 18,
+      "price": "7000.00",
+      "quantity": 1,
+      "user": null
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 73,
+    "fields": {
+      "order": 71,
+      "product": 19,
+      "price": "12500.00",
+      "quantity": 1,
+      "user": null
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 74,
+    "fields": {
+      "order": 71,
+      "product": 22,
+      "price": "8900.00",
+      "quantity": 1,
+      "user": null
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 75,
+    "fields": {
+      "order": 72,
+      "product": 17,
+      "price": "8000.00",
+      "quantity": 10,
+      "user": null
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 76,
+    "fields": {
+      "order": 73,
+      "product": 17,
+      "price": "8000.00",
+      "quantity": 1,
+      "user": null
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 77,
+    "fields": {
+      "order": 74,
+      "product": 19,
+      "price": "12500.00",
+      "quantity": 1,
+      "user": null
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 78,
+    "fields": {
+      "order": 75,
+      "product": 17,
+      "price": "8000.00",
+      "quantity": 1,
+      "user": null
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 79,
+    "fields": {
+      "order": 76,
+      "product": 17,
+      "price": "8000.00",
+      "quantity": 1,
+      "user": null
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 80,
+    "fields": {
+      "order": 77,
+      "product": 19,
+      "price": "12500.00",
+      "quantity": 1,
+      "user": null
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 81,
+    "fields": {
+      "order": 78,
+      "product": 17,
+      "price": "8000.00",
+      "quantity": 1,
+      "user": null
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 82,
+    "fields": {
+      "order": 79,
+      "product": 17,
+      "price": "8000.00",
+      "quantity": 1,
+      "user": null
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 83,
+    "fields": {
+      "order": 80,
+      "product": 17,
+      "price": "8000.00",
+      "quantity": 1,
+      "user": null
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 84,
+    "fields": {
+      "order": 81,
+      "product": 19,
+      "price": "12500.00",
+      "quantity": 1,
+      "user": null
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 85,
+    "fields": {
+      "order": 81,
+      "product": 18,
+      "price": "7000.00",
+      "quantity": 1,
+      "user": null
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 86,
+    "fields": {
+      "order": 82,
+      "product": 17,
+      "price": "8000.00",
+      "quantity": 1,
+      "user": null
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 87,
+    "fields": {
+      "order": 83,
+      "product": 17,
+      "price": "8000.00",
+      "quantity": 1,
+      "user": null
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 88,
+    "fields": {
+      "order": 84,
+      "product": 17,
+      "price": "8000.00",
+      "quantity": 1,
+      "user": null
+    }
+  (0.036) DECLARE "_django_curs_139797567305536_sync_25" NO SCROLL CURSOR WITH HOLD FOR SELECT "coupons_coupon"."id", "coupons_coupon"."code", "coupons_coupon"."valid_from", "coupons_coupon"."valid_to", "coupons_coupon"."discount", "coupons_coupon"."active" FROM "coupons_coupon" ORDER BY "coupons_coupon"."id" ASC; args=(); alias=default
+  },
+  {
+    "model": "coupons.coupon",
+    "pk": 1,
+    "fields": {
+      "code": "1111",
+      "valid_from": "2024-05-10T18:35:04Z",
+      "valid_to": "2024-05-31T17:25:38Z",
+      "discount": 10,
+      "active": true
+    }
+  (0.035) DECLARE "_django_curs_139797567305536_sync_26" NO SCROLL CURSOR WITH HOLD FOR SELECT "banner_banner"."id", "banner_banner"."image", "banner_banner"."link", "banner_banner"."advertisement_text", "banner_banner"."is_active" FROM "banner_banner" ORDER BY "banner_banner"."id" ASC; args=(); alias=default
+  },
+  {
+    "model": "banner.banner",
+    "pk": 1,
+    "fields": {
+      "image": "banners/22.png",
+      "link": "127.0.0.8000",
+      "advertisement_text": "sale 20%",
+      "is_active": true
+    }
+  },
+  {
+    "model": "banner.banner",
+    "pk": 2,
+    "fields": {
+      "image": "banners/23_DEIBXwv.png",
+      "link": "127.0.0.1.800",
+      "advertisement_text": "sale 55%",
+      "is_active": true
+    }
+  (0.040) DECLARE "_django_curs_139797567305536_sync_27" NO SCROLL CURSOR WITH HOLD FOR SELECT "social_auth_usersocialauth"."id", "social_auth_usersocialauth"."user_id", "social_auth_usersocialauth"."provider", "social_auth_usersocialauth"."uid", "social_auth_usersocialauth"."extra_data", "social_auth_usersocialauth"."created", "social_auth_usersocialauth"."modified" FROM "social_auth_usersocialauth" ORDER BY "social_auth_usersocialauth"."id" ASC; args=(); alias=default
+  (0.073) DECLARE "_django_curs_139797567305536_sync_28" NO SCROLL CURSOR WITH HOLD FOR SELECT "social_auth_nonce"."id", "social_auth_nonce"."server_url", "social_auth_nonce"."timestamp", "social_auth_nonce"."salt" FROM "social_auth_nonce" ORDER BY "social_auth_nonce"."id" ASC; args=(); alias=default
+  (0.002) DECLARE "_django_curs_139797567305536_sync_29" NO SCROLL CURSOR WITH HOLD FOR SELECT "social_auth_association"."id", "social_auth_association"."server_url", "social_auth_association"."handle", "social_auth_association"."secret", "social_auth_association"."issued", "social_auth_association"."lifetime", "social_auth_association"."assoc_type" FROM "social_auth_association" ORDER BY "social_auth_association"."id" ASC; args=(); alias=default
+  (0.003) DECLARE "_django_curs_139797567305536_sync_30" NO SCROLL CURSOR WITH HOLD FOR SELECT "social_auth_code"."id", "social_auth_code"."email", "social_auth_code"."code", "social_auth_code"."verified", "social_auth_code"."timestamp" FROM "social_auth_code" ORDER BY "social_auth_code"."id" ASC; args=(); alias=default
+  (0.003) DECLARE "_django_curs_139797567305536_sync_31" NO SCROLL CURSOR WITH HOLD FOR SELECT "social_auth_partial"."id", "social_auth_partial"."token", "social_auth_partial"."next_step", "social_auth_partial"."backend", "social_auth_partial"."data", "social_auth_partial"."timestamp" FROM "social_auth_partial" ORDER BY "social_auth_partial"."id" ASC; args=(); alias=default
+  (0.021) DECLARE "_django_curs_139797567305536_sync_32" NO SCROLL CURSOR WITH HOLD FOR SELECT "reviews_review"."id", "reviews_review"."user_id", "reviews_review"."text", "reviews_review"."created", "reviews_review"."updated" FROM "reviews_review" ORDER BY "reviews_review"."id" ASC; args=(); alias=default
+  },
+  {
+    "model": "reviews.review",
+    "pk": 3,
+    "fields": {
+      "user": 35,
+      "text": "гандоны",
+      "created": "2024-05-09T02:02:47.137Z",
+      "updated": "2024-05-09T02:02:47.137Z"
+    }
+  },
+  {
+    "model": "reviews.review",
+    "pk": 4,
+    "fields": {
+      "user": 35,
+      "text": "молодцы",
+      "created": "2024-05-09T02:03:10.710Z",
+      "updated": "2024-05-09T02:03:10.710Z"
+    }
+  },
+  {
+    "model": "reviews.review",
+    "pk": 6,
+    "fields": {
+      "user": 35,
+      "text": "хороши",
+      "created": "2024-05-09T02:25:52.177Z",
+      "updated": "2024-05-09T02:25:52.177Z"
+    }
+  (0.003) DECLARE "_django_curs_139797567305536_sync_33" NO SCROLL CURSOR WITH HOLD FOR SELECT "reviews_comment"."id", "reviews_comment"."review_id", "reviews_comment"."user_id", "reviews_comment"."text", "reviews_comment"."created", "reviews_comment"."updated" FROM "reviews_comment" ORDER BY "reviews_comment"."id" ASC; args=(); alias=default
+  },
+  {
+    "model": "reviews.comment",
+    "pk": 3,
+    "fields": {
+      "review": 4,
+      "user": 35,
+      "text": "спасибо",
+      "created": "2024-05-09T02:20:13.511Z",
+      "updated": "2024-05-09T02:20:13.511Z"
+    }
+  },
+  {
+    "model": "reviews.comment",
+    "pk": 4,
+    "fields": {
+      "review": 3,
+      "user": 35,
+      "text": "нахуй все..",
+      "created": "2024-05-09T02:21:18.159Z",
+      "updated": "2024-05-09T02:21:18.159Z"
+    }
+  } 
+]

@@ -49,6 +49,7 @@ Faker==25.2.0
 flower==1.2.0
 fonttools==4.47.0
 frozenlist==1.4.1
+gunicorn==22.0.0
 html5lib==1.1
 humanize==4.9.0
 idna==3.6
@@ -108,6 +109,4 @@ Werkzeug==2.2.2
 wrapt==1.16.0
 yarl==1.9.4
 yookassa==3.0.0
-zopfli==0.2.3 
-uwsgi==2.0.20
-gunicorn==22.0.0
+zopfli==0.2.3

@@ -1,26 +1,26 @@
 version: '3.8'
-
 services:
   postgres-db:
     image: postgres:latest
-    container_name: postgres 
+    container_name: postgres
     restart: always
     environment:
       POSTGRES_USER: perfume_admin
-      POSTGRES_PASSWORD: 1827 
+      POSTGRES_PASSWORD: 1827
       POSTGRES_DB: perfume
-    ports:
-      - "5433:5432" 
-
   myshop:
-    build: ./myshop 
-
+    build: ./myshop
+    restart: always
     ports:
-      - "8001:8000" 
-    
+      - "8000:8000"
     depends_on:
       - postgres-db
     environment:
-      DJANGO_SETTINGS_MODULE: myshop.settings.prod
       SECRET_KEY: "django-insecure-i8t-^!74-#_b-m3u@n)6t64vzktr)dx=h7b%t_wg85fre(cw04"
+      POSTGRES_USER: perfume_admin
       POSTGRES_PASSWORD: 1827
+      POSTGRES_DB: perfume 
+
+
+
+

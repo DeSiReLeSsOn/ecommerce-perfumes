@@ -5,3 +5,5 @@ myshop/django_queries.log
 myshop/data/
 data/
 notes.txt
+.vscode/
+.pytest_cashe/

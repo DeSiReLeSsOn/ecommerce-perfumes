@@ -143,6 +143,17 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
 
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "perfume",
+        "USER": 'perfume_admin',
+        "PASSWORD":os.getenv('POSTGRES_PASSWORD'),
+        'HOST': 'localhost',
+        "PORT": 5432,
+    }
+} 
+
 
 LANGUAGE_CODE = 'ru'
 
@@ -352,3 +363,8 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
+
+
+
+
+ROOT_URLCONF = 'myshop.urls'

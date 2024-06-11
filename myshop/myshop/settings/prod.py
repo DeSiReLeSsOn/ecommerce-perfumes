@@ -27,4 +27,7 @@ DATABASES = {
         'HOST': 'postgres-db',
         "PORT": 5432,
     }
-}
+} 
+
+
+
