@@ -19,8 +19,18 @@ services:
       SECRET_KEY: "django-insecure-i8t-^!74-#_b-m3u@n)6t64vzktr)dx=h7b%t_wg85fre(cw04"
       POSTGRES_USER: perfume_admin
       POSTGRES_PASSWORD: 1827
-      POSTGRES_DB: perfume 
+      POSTGRES_DB: perfume
+  nginx:
+    image: nginx:latest
+    restart: always
+    ports:
+      - "8080:80"
+    depends_on:
+      - myshop
+    volumes:
+      - ./config/nginx.conf:/etc/nginx/nginx.conf
+      - static_volume:/static 
 
 
-
-
+volumes:
+  static_volume:
